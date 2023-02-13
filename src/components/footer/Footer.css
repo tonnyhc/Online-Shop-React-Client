@@ -1,0 +1,147 @@
+.footer{
+    margin-top: 48px;
+}
+
+.footer-top{
+    display: flex;
+    padding: 24px 58px;
+    gap: 24px;
+}
+
+.footer-top_item{
+    padding: 0 12px;
+    width: 25%;
+    display: flex;
+}
+
+
+.footer-top_item .icon{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    border: 2px solid #777;
+    margin-right: 24px;
+    vertical-align: middle;
+    transition: 200ms ease-in-out;
+}
+
+.footer-top_item .icon:hover{
+    color: #FF4E00;
+
+}
+
+.footer-top_item .info{
+    display: inline-block;
+    width: 70%;
+    vertical-align: middle;
+}
+
+.item_title{
+    color: #FF4E00;
+}
+
+.info_desc{
+    color: #777;
+}
+
+/* Bottom Footer */
+
+
+.footer-bottom{
+    background-color: black;
+    color: #fff;
+    display: flex;
+    gap: 24px;
+    padding: 32px 48px;
+}
+
+.footer_botom__section{
+    width: 25%;
+}
+
+.footer_botom__section p{
+    color: #616263;
+    font-weight: ligther;
+    margin-top: 12px;
+}
+
+.footer_botom__section h3{
+    font-weight: 400;
+    border-bottom: 1px dotted #4d5052;
+    padding: 12px 0;
+}
+
+.footer__about_social .icons{
+    padding: 0;
+}
+
+.footer__about_social .icons li{
+    display: inline-block;
+    margin-right: 12px;
+}
+
+.footer__about_social .icon i{
+    color: #777;
+    margin-right: 8px;
+    font-size: 16px;
+    transition: 200ms ease-in-out;
+}
+
+.footer__about_social .icon:hover i{
+    color: #FF4E00;
+}
+
+.footer_botom__section .contact-info h4{
+    color: #FF4E00;
+    margin-top: 24px;
+    font-weight: 400;
+}
+
+.footer_botom__section a{
+    color: #616263;
+}
+.footer-bottom .links ul{
+    padding: 0;
+}
+.footer-bottom .links ul li{
+    margin-bottom: 12px;
+}
+
+.footer-bottom .offers .email_subscription{
+    border: 1px solid #3e3c3c;
+    margin-top: 24px;
+}
+
+.footer-bottom .offers input{
+    border: 0;
+    width: 84%;
+    background: transparent;
+    padding: 10px 24px;
+    color: #fff;
+    outline: none;
+    border: none;
+    letter-spacing: 1px;
+}
+
+.footer-bottom .offers .btn-icon{
+    background: none;
+    border: none;
+    color: #FF4E00;
+    width: 16%;
+}
+
+.footer-copyright{
+
+    background-color: black;
+    color: #616263;
+    text-align: center;
+    padding: 32px 48px;
+}
+.footer-copyright p{
+    border-top: 1px dotted #4d5052;
+    padding: 32px 0 0 0;
+}

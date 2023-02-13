@@ -1,0 +1,93 @@
+.login-register-backdrop{
+    position: absolute;
+    height: 100%;
+    position: fixed;
+    right: 0;
+    z-index: 9999;
+    background-color: #212529;
+}
+.login-register-backdrop{
+    color: #FFF;
+    padding: 70px;
+}
+
+.backdrop-closeButton{
+    background: transparent;
+    color: #FFF;
+    border: 1px solid #FFF;
+    border-radius: 3px;
+    height: 32px;
+    position: absolute;
+    width: 32px;
+    top: 25px;
+    left: 30px;
+    cursor: pointer;
+    transition: 200ms ease-in-out;
+}
+.backdrop-closeButton:hover{
+    width: 45px;
+    height: 45px;
+    transition: 200ms ease-in-out;
+
+}
+
+
+.login-register-backdrop .form{
+    /* margin-top: 100px; */
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%)
+
+}
+.login-register-backdrop .form h3{
+    text-align: center;
+    font-size: 25px;
+}
+.login-register-backdrop form{
+    background-color: #343A40;
+    padding: 50px;
+}
+.login-register-backdrop .form form label {
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.login-register-backdrop .form form input{
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-weight: bold;
+}
+.login-register-backdrop .form div{
+    margin-bottom: 15px;
+}
+
+.login-register-backdrop .form button{
+    background-color: #ff4e00;
+    box-shadow: 2px 2px #54575a;
+    letter-spacing: 1px;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-weight: bold;
+    border: 0;
+    cursor: pointer;
+}
+.login-register-backdrop .form button:hover{
+    background-color: #080808;
+    transition: 100ms ease-in;
+}
+
+.login-register-backdrop .reform{
+    margin-top: 15px;
+}
+
+.login-register-backdrop .reform p{
+    margin-top: 6px;
+    text-align: center;
+}
+.login-register-backdrop .reform p a{
+    color: #ff4e00;
+    font-size: 18px;
+    font-weight: bold;
+}

@@ -1,0 +1,28 @@
+.bannerSmall{
+    background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),
+                url('../../../public/images/BannerSmall/BannerSmall-Image.avif')no-repeat 0 -333px;
+    min-height: 160px;
+    max-height: 160px;
+    width: 100%;
+    background-size: cover;
+}
+
+.inlineLi{
+    display: inline-block;
+}
+.inlineLi span{
+    color: #fff;
+    letter-spacing: 3px;
+    margin-right: 12px;
+}
+
+.servicesBreadcrump{
+    padding:3.5rem 2rem 2rem 2rem;
+}
+.inlineLi.homeLink a{
+    color: #FF4E00;
+    font-weight: bold;
+    letter-spacing: 3px;
+    margin-right: 12px;
+
+}

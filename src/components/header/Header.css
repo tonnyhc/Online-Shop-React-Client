@@ -1,6 +1,6 @@
 a{
     text-decoration: none;
-    color: black;
+    color: #454546;
 }
 
 header{
@@ -12,10 +12,11 @@ header{
 .nav-ul .list-item{
     display: inline-block;
     margin-right: 3.2em;
+    font-weight: 400;
 }
 
 .nav-ul .list-item:hover a{
-    color: orange;
+    color: #FF4E00;
 
 }
 .nav-ul .list-item a {
@@ -33,8 +34,8 @@ header .logo{
     text-transform: uppercase;
 }
 header hr{
-    height: 4px;
-    background: grey;
+    height: 2px;
+    background: #888;
 }
 
 .header-top-info, .cart-profile-section{

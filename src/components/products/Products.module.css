@@ -1,0 +1,112 @@
+.productsSection{
+    display: flex;
+    gap: 25px;
+    padding: 16px;
+}
+
+.filters{
+    padding: 25px;
+    width: 25%;
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
+}
+
+.filters ul{
+    padding: 0;
+}
+
+.filters h3{
+    font-weight: 500;
+    margin:12px 0
+}
+
+.productsList{
+    width: 75%;
+}
+
+.searchBar form{
+    height: 45px;
+    border: 1px solid #DBDBDB;
+}
+
+.searchBar button{
+    outline: none;
+    border: none;
+    background-color: #e2e2e2;
+    width: 15%;
+    height: 100%;
+    color: #ff4e00;
+    cursor: pointer;
+    transition: 250ms ease-in-out;
+
+}
+.searchBar button:hover{
+    color: #fff;
+    background-color: black;
+}
+
+
+.searchBar input{
+    outline: none;
+    border: none;
+    padding: 8px 16px;
+    width: 85%;
+    color: #888;
+    letter-spacing: 2px;
+    font-size: 13px;
+}
+
+.priceRange{
+    padding: 10px;
+    margin-top: 12px;
+    border: 1px solid #DBDBDB;
+}
+
+
+.sliderWrapper{
+    padding: 10px 24px 10px 0px;
+}
+
+.priceRangeDisplay{
+    color: #888;
+    font-weight: 300;
+    letter-spacing: 2px;
+    font-size: 13px;
+}
+
+
+.option{
+    margin-bottom: 8px;
+    padding: 2px;
+}
+
+.optionLabel{
+    margin-left: 6px;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+
+.starOption .fullStar,
+.starOption .halfStar,
+.starOption .blankStar{
+    color: #ff4e00;
+    margin-right: 12px;
+    font-size: 10px;
+    font-weight: 300;
+}
+.starOption .numRating{
+    font-weight: 10px;
+    font-weight: 400;
+}
+
+/* --------------
+    Products List
+   -------------- 
+*/
+
+.productsList{
+    border: 1px solid #DBDBDB;
+    border-radius: 4px;
+}

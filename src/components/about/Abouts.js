@@ -3,8 +3,9 @@ import { BannerSmall } from "../banner/BannerSmall";
 export const About = () => {
     return (
         <>
-        <h1>About Page</h1>
-        <BannerSmall currPage={'About'}/>
+        {/* The banner must be outside the above the section */}
+            <BannerSmall currPage={'About'} />
+            <h1>About Page</h1>
         </>
     );
 }

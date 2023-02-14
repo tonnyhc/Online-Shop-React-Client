@@ -5,7 +5,7 @@ import './Header.css';
 export const Header = () => {
 
   const activeNavStyle = {
-    color: "orange",
+    color: "#FF4E00",
   };
 
 
@@ -60,12 +60,12 @@ export const Header = () => {
               </li>
               <li className="list-item">
                 <NavLink
-                  to='/shop'
+                  to='/products'
                   style={({ isActive }) =>
                     isActive ? activeNavStyle : undefined
                   }
                 >
-                  SHOP
+                  PRODUCTS
                 </NavLink>
               </li>
               <li className="list-item">

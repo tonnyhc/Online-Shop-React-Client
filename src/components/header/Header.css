@@ -9,6 +9,8 @@ header{
     justify-content: space-between;
     padding: 25px 17px 0 17px;
 }
+
+
 .nav-ul .list-item{
     display: inline-block;
     margin-right: 3.2em;
@@ -21,6 +23,22 @@ header{
 }
 .nav-ul .list-item a {
     color: rgb(164,164,164);
+}
+
+.navigation{
+    text-align: center;
+}
+
+.navigation .nav-bar-collapse{
+    border: 1px solid #DBDBDB;
+    color: rgb(164,164,164);
+    font-size: 1.8rem;
+    border-radius: 7px;
+    margin-top: 7px;
+    display: inline-block;
+    padding: 2px 24px;
+    display: none;
+
 }
 
 header .logo{
@@ -48,4 +66,41 @@ header hr{
     border-radius: 4px;
     padding: 5px;
     margin-left: 10px;
+}
+
+@media (max-width:1200px){
+    .nav-ul .list-item{
+        margin-right: 2.2em;
+    }
+}
+
+@media (max-width:940px){
+    .nav-ul .list-item{
+        margin-right: 1.2em;
+    }
+}
+
+
+@media (max-width:825px) {
+    .navigation .nav-bar-collapse{
+        display: inline-block;
+    }
+    .navigation nav{
+        display: none;
+    }
+
+    .navigation .nav-ul .list-item{
+        display: block;
+    }
+    .navigation .nav-ul .list-item:not(:last-child){
+        margin-bottom: 8px;
+    }
+}
+
+@media (max-width:700px){
+    header{
+        flex-direction: column;
+        text-align: center;
+        padding: 0 17px 0 17px;
+    }
 }

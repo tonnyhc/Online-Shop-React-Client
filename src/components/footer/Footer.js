@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './Footer.css';
 
 export const Footer = () => {
@@ -105,7 +106,7 @@ export const Footer = () => {
                         <p>Sofia, Bulgaria pl Vitosha</p>
 
                         <h4>Contact : </h4>
-                        <p>Phone : +359 899 932189</p>
+                        <p>Phone : <a href="tel:894601592">Call us at 894601592</a></p>
 
                         <p>Email :
                             <a href="mailto:tonipetrov121@gmail.com"> tonipetrov121@gmail.com</a>
@@ -118,16 +119,16 @@ export const Footer = () => {
 
                     <ul role="list">
                         <li>
-                            <a href="/">Home</a>
+                            <Link to="/">Home</Link>
                         </li>
                         <li>
-                            <a href="/about">About</a>
+                            <Link to="/about">About</Link>
                         </li>
                         <li>
-                            <a href="/shop">Shop</a>
+                            <Link to="/shop">Shop</Link>
                         </li>
                         <li>
-                            <a href="/contacts">Contact Us</a>
+                            <Link to="/contacts">Contact Us</Link>
                         </li>
                     </ul>
                 </div>

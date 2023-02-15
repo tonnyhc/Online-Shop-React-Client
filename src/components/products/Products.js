@@ -1,11 +1,24 @@
 import styles from './Products.module.css'
 import { RangeSlider } from './RangeSlider';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { style } from '@mui/system';
 import { BannerSmall } from '../banner/BannerSmall';
+import { ProductCard } from './productCard/ProductCard';
 
 
 export const Products = () => {
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        fetch('http://localhost:8000/api/products/')
+            .then(res => res.json())
+            .then(data => {
+                setProducts(data);
+                console.log(data)
+            })
+            .catch(error => console.log(error))
+    }, []);
+
 
     const [priceRange, setPriceRange] = useState([0, 1000]);
 
@@ -20,6 +33,9 @@ export const Products = () => {
         <>
             <BannerSmall currPage={'Products'} />
             <section className={styles.productsSection}>
+                <div className={styles.filtersToggleWrapper} onClick={toggleFiltersHandler}>
+                    <span className={styles.filtersDropdownToggle}>Filters <i className="fa-solid fa-bars"></i></span>
+                </div>
                 <aside className={styles.filters}>
                     <div className={styles.searchBar}>
                         <h3>Search here...</h3>
@@ -38,7 +54,7 @@ export const Products = () => {
                         </div>
                     </div>
 
-                    <div className={styles.category}>
+                    <div className={styles.filtersSection}>
                         <h3>Category</h3>
 
                         <ul className="options" role='list'>
@@ -65,7 +81,7 @@ export const Products = () => {
 
                     </div>
 
-                    <div className={styles.brands}>
+                    <div className={styles.filtersSection}>
                         <h3>Brands</h3>
                         <ul className='options' role='list'>
                             <li className={styles.option}>
@@ -90,8 +106,22 @@ export const Products = () => {
                         </ul>
                     </div>
 
-                    <div className="discount">
-
+                    <div className={styles.filtersSection}>
+                        <h3>Gender</h3>
+                        <ul className='options' role='list'>
+                            <li className={styles.option}>
+                                <input type="checkbox" name="Man" defaultValue={'Man'} />
+                                <label className={styles.optionLabel} htmlFor="Man">Man</label>
+                            </li>
+                            <li className={styles.option}>
+                                <input type="checkbox" name="Woman" defaultValue={'Woman'} />
+                                <label className={styles.optionLabel} htmlFor="Woman">Woman</label>
+                            </li>
+                            <li className={styles.option}>
+                                <input type="checkbox" name="Unisex" defaultValue={'Unisex'} />
+                                <label className={styles.optionLabel} htmlFor="Unisex">Unisex</label>
+                            </li>
+                        </ul>
                     </div>
 
                     <div className="customerReview">
@@ -100,54 +130,54 @@ export const Products = () => {
                         <ul className="options" role='list'>
                             <li className={`${styles.starOption} ${styles.option}`}>
                                 <a href="#">
-                                    <span className={styles.fullStar}><i class="fa-solid fa-star"></i></span>
-                                    <span className={styles.fullStar}><i class="fa-solid fa-star"></i></span>
-                                    <span className={styles.fullStar}><i class="fa-solid fa-star"></i></span>
-                                    <span className={styles.fullStar}><i class="fa-solid fa-star"></i></span>
-                                    <span className={styles.fullStar}><i class="fa-solid fa-star"></i></span>
+                                    <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
+                                    <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
+                                    <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
+                                    <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
+                                    <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
                                     <span className={styles.numRating}>5.0</span>
                                 </a>
                             </li>
                             <li className={`${styles.starOption} ${styles.option}`}>
                                 <a href="#">
-                                    <span className={styles.fullStar}><i class="fa-solid fa-star"></i></span>
-                                    <span className={styles.fullStar}><i class="fa-solid fa-star"></i></span>
-                                    <span className={styles.fullStar}><i class="fa-solid fa-star"></i></span>
-                                    <span className={styles.fullStar}><i class="fa-solid fa-star"></i></span>
-                                    <span className={styles.blankStar}><i class="fa-regular fa-star"></i></span>
+                                    <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
+                                    <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
+                                    <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
+                                    <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
+                                    <span className={styles.blankStar}><i className="fa-regular fa-star"></i></span>
                                     <span className={styles.numRating}>4.0</span>
                                 </a>
                             </li>
 
                             <li className={`${styles.starOption} ${styles.option}`}>
                                 <a href="#">
-                                    <span className={styles.fullStar}><i class="fa-solid fa-star"></i></span>
-                                    <span className={styles.fullStar}><i class="fa-solid fa-star"></i></span>
-                                    <span className={styles.fullStar}><i class="fa-solid fa-star"></i></span>
-                                    <span className={styles.halfStar}><i class="fa-solid fa-star-half-stroke"></i></span>
-                                    <span className={styles.blankStar}><i class="fa-regular fa-star"></i></span>
+                                    <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
+                                    <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
+                                    <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
+                                    <span className={styles.halfStar}><i className="fa-solid fa-star-half-stroke"></i></span>
+                                    <span className={styles.blankStar}><i className="fa-regular fa-star"></i></span>
                                     <span className={styles.numRating}>3.5</span>
                                 </a>
                             </li>
 
                             <li className={`${styles.starOption} ${styles.option}`}>
                                 <a href="#">
-                                    <span className={styles.fullStar}><i class="fa-solid fa-star"></i></span>
-                                    <span className={styles.fullStar}><i class="fa-solid fa-star"></i></span>
-                                    <span className={styles.fullStar}><i class="fa-solid fa-star"></i></span>
-                                    <span className={styles.blankStar}><i class="fa-regular fa-star"></i></span>
-                                    <span className={styles.blankStar}><i class="fa-regular fa-star"></i></span>
+                                    <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
+                                    <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
+                                    <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
+                                    <span className={styles.blankStar}><i className="fa-regular fa-star"></i></span>
+                                    <span className={styles.blankStar}><i className="fa-regular fa-star"></i></span>
                                     <span className={styles.numRating}>3.0</span>
                                 </a>
                             </li>
 
                             <li className={`${styles.starOption} ${styles.option}`}>
                                 <a href="#">
-                                    <span className={styles.fullStar}><i class="fa-solid fa-star"></i></span>
-                                    <span className={styles.fullStar}><i class="fa-solid fa-star"></i></span>
-                                    <span className={styles.halfStar}><i class="fa-solid fa-star-half-stroke"></i></span>
-                                    <span className={styles.blankStar}><i class="fa-regular fa-star"></i></span>
-                                    <span className={styles.blankStar}><i class="fa-regular fa-star"></i></span>
+                                    <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
+                                    <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
+                                    <span className={styles.halfStar}><i className="fa-solid fa-star-half-stroke"></i></span>
+                                    <span className={styles.blankStar}><i className="fa-regular fa-star"></i></span>
+                                    <span className={styles.blankStar}><i className="fa-regular fa-star"></i></span>
                                     <span className={styles.numRating}>2.5</span>
                                 </a>
                             </li>
@@ -155,8 +185,10 @@ export const Products = () => {
                     </div>
                 </aside>
 
-                <div className={styles.productsList}>
-                    
+                <div className={styles.productsListWrapper}>
+                    <div className={styles.productsList}>
+                        {products.map(product => <ProductCard key={product.product_id} {...product} />)}
+                    </div>
                 </div>
 
             </section>
@@ -179,3 +211,15 @@ export const PriceRange = ({ value, onChange }) => {
         </div>
     );
 };
+
+
+function toggleFiltersHandler(e) {
+    e.preventDefault();
+    const filtersSection = document.querySelector(`.${styles.filters}`);
+
+    if (filtersSection.style.display === 'none') {
+        filtersSection.style.display = 'block';
+    } else {
+        filtersSection.style.display = 'none';
+    }
+}

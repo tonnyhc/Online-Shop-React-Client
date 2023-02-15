@@ -21,11 +21,13 @@ export const Header = () => {
 
       <section className="logo-nav-section">
         <article className="logo">
-          {/* <!-- HOME URL --> */}
           <h1><NavLink to='/'>GOGGLES</NavLink></h1>
         </article>
         <hr />
         <article className="navigation">
+          <span className='nav-bar-collapse' onClick={openNav}>
+            <i className="fa-solid fa-bars"></i>
+          </span>
           <nav>
             <ul className="nav-ul" role="list">
 
@@ -95,4 +97,15 @@ export const Header = () => {
       </section>
     </header>
   );
+}
+
+
+function openNav(e){
+  e.preventDefault();
+  const nav = document.querySelector('.navigation nav');
+  if (nav.style.display === 'none'){
+    nav.style.display = 'block';
+  } else{
+    nav.style.display = 'none';
+  }
 }

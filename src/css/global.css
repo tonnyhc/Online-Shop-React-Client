@@ -1,3 +1,9 @@
+
+
+#root{
+  max-width: 1920px;
+}
+
 div.MuiBox-root{
   padding: 8px !important;
   max-width: 100% !important;

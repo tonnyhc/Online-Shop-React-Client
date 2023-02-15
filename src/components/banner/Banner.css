@@ -1,7 +1,7 @@
 .banner{
     position: relative;
     width: 100%;
-    height: 600px;
+    height: 450px;
 
 }
 
@@ -85,4 +85,66 @@
     color: #FF4E00;
     font-size: 20px;
 
+}
+
+@media (max-width:1215px){
+    .banner .slide-text{
+        font-size: 28px;
+        letter-spacing: 1px;
+    }
+
+}
+
+@media (max-width:1024px){
+ 
+    .banner .slide-text{
+        font-size: 24px;
+        letter-spacing: 1px;
+    }
+
+    .carousel-button.next{
+        right: 1.5rem;
+    }
+
+    .carousel-button.prev{
+        left: 1.5rem;
+    }
+    
+    .carousel-shop-button{
+        margin-top: 12px;
+    }
+    
+}
+
+@media (max-width:700px){
+    .banner{
+        height: 300px;
+    }
+    .banner .slide-text{
+        font-size: 18px;
+        letter-spacing: 1px;
+    }
+
+    .carousel-shop-button{
+        font-size: 14px;
+    }
+}
+
+@media (max-width:480px){
+    .banner .slide-text{
+        font-size: 13px;
+        letter-spacing: 1px;
+    }
+
+    .carousel-button.next{
+        right: 1rem;
+    }
+
+    .carousel-button.prev{
+        left: 1rem;
+    }
+
+    .carousel-shop-button{
+        font-size: 12px;
+    }
 }

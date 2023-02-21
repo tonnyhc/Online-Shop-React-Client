@@ -1,0 +1,156 @@
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 25px 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.mainSection {
+  max-height: 500px;
+  display: flex;
+  gap: 24px;
+}
+
+.images img {
+  height: 100%;
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+  box-shadow: 1px 3px 2px black;
+}
+
+.brand,
+.model,
+.price,
+.rating,
+.quantity {
+  margin: 0;
+  margin-bottom: 14px;
+}
+
+.brand {
+  color: #ff4e00;
+  letter-spacing: 2px;
+  font-weight: 400;
+  font-size: 32px;
+  margin-top: 0;
+}
+
+.model {
+  font-size: 22px;
+  color: #888;
+  font-weight: 300;
+}
+
+.price span {
+  font-weight: bold;
+  font-size: 22px;
+  margin-right: 12px;
+}
+.price del {
+  color: #888;
+  font-weight: 300;
+  font-size: 20px;
+}
+
+.quantity h5 {
+  margin: 0;
+  margin-bottom: 12px;
+  font-weight: 300;
+  font-size: 20px;
+}
+
+.quantity {
+  margin-top: 50px;
+}
+
+.quantity select {
+  padding: 6px 20px;
+  font-size: 18px;
+  border-radius: 4px;
+}
+
+.quantity select option:hover {
+  background-color: grey;
+}
+
+.favourites {
+  margin-top: 40px;
+}
+
+.btn {
+  width: 196px;
+  height: 50px;
+  padding: 10px 0;
+  border: 0;
+  background-color: black;
+  color: #fff;
+  font-size: 14px;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin: 12px 0;
+  transition: transform 200ms ease-in-out;
+}
+
+.btnFavourites {
+  background-color: #92bbff;
+  color: #fff;
+}
+.btnFavourites i {
+  color: red;
+}
+
+.btn i {
+  margin-right: 6px;
+  font-size: 20px;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+.social {
+  list-style: none;
+  padding: 0;
+  margin: 48px 0;
+  display: flex;
+  gap: 14px;
+}
+
+.logo a {
+  color: #888;
+}
+
+.logo a:hover {
+  color: #ff4e00;
+}
+
+.bottomSect .respTab {
+  display: inline-block;
+  margin: 0;
+  padding: 10px 33px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.bottomSect .respTab[data-active="true"] {
+  background-color: black;
+  color: #fff;
+  text-transform: uppercase;
+  border-bottom: 4px solid red;
+}
+
+.bottomSect .descSection {
+  border: 1px solid #dbdbdb;
+  padding: 0 15px;
+  font-size: 20px;
+  letter-spacing: 2px;
+  color: #888;
+}
+
+.bottomSect div h5 {
+  color: black;
+  font-size: 24px;
+  font-weight: bold;
+}

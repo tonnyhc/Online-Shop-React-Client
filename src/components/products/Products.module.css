@@ -163,8 +163,3 @@
   }
 }
 
-@media (max-width: 720px) {
-  .productsList {
-    grid-template-columns: 1fr;
-  }
-}

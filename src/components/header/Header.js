@@ -1,8 +1,12 @@
 import { openAuthWindow } from '../login-register/AuthForm';
 import { NavLink } from 'react-router-dom';
 import './Header.css';
+import { useContext } from 'react';
+import { AuthDataContext } from '../../contexts/AuthContext';
 
 export const Header = () => {
+
+  const { userData } = useContext(AuthDataContext)
 
   const activeNavStyle = {
     color: "#FF4E00",
@@ -12,6 +16,7 @@ export const Header = () => {
   return (
     <header>
       <section className="header-top-info">
+
         <p>Need Help?</p>
         <p>
           <i style={{ color: "orange" }} className="fa-solid fa-phone-flip"></i> Call
@@ -100,12 +105,12 @@ export const Header = () => {
 }
 
 
-function openNav(e){
+function openNav(e) {
   e.preventDefault();
   const nav = document.querySelector('.navigation nav');
-  if (nav.style.display === 'none'){
+  if (nav.style.display === 'none') {
     nav.style.display = 'block';
-  } else{
+  } else {
     nav.style.display = 'none';
   }
 }

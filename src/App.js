@@ -14,10 +14,11 @@ import { Logout } from './components/Logout';
 import { ProductDetails } from './components/products/productDetails/ProductDetails';
 import { Products } from './components/products/Products';
 import { Profile } from './components/profile/Profile';
+import { useLocalStorage } from './hooks/useLocalStorage';
 
 
 function App() {
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useLocalStorage('userData', {});
   
   const userLogin = (authData) => {
     setUserData(authData);

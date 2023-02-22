@@ -1,5 +1,5 @@
 import { openAuthWindow } from '../login-register/AuthForm';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import './Header.css';
 import { useContext } from 'react';
 import { AuthDataContext } from '../../contexts/AuthContext';
@@ -93,12 +93,20 @@ export const Header = () => {
       <section className="cart-profile-section">
         <span className="profile-link">
           {/* IF USER NOT LOGGED IN OPEN AUTH FORM OTHERWISE OPEN PROFILE WINDOW */}
-          <a href="#" onClick={openAuthWindow}><i className="fa-solid fa-user"></i></a>
+          {
+            userData.token
+              ?
+              <NavLink to="/profile"><i className="fa-solid fa-user"></i></NavLink>
+              :
+              <a href="#" onClick={openAuthWindow}><i className="fa-solid fa-user"></i></a>
+          }
         </span>
 
         <span className="cart">
           <NavLink to='/cart'>My Cart <i className="fa-solid fa-cart-shopping"></i></NavLink>
         </span>
+        {userData.token && <p><Link to='/logout'>Logout</Link></p>}
+        
       </section>
     </header>
   );

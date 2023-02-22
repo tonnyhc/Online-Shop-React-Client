@@ -1,20 +1,16 @@
-async function requester(method, url, body){
+async function requester(method, url, body, token){
     const host = 'http://localhost:8000/api';
     let options = {};
     options.method = method;
     options.headers = {};
-    const userData = JSON.parse(sessionStorage.getItem("userData"));
-    let token;
-    if (userData){
-        token = userData.token;
-    }
+    debugger;
     if (body){
         options.headers['Content-Type'] = 'application/json';
         options.body = JSON.stringify(body);
     }
 
     if (token){
-        options.headers['X-authorization'] = token;
+        options.headers['Authorization'] = `Token ${token}`;
     }
 
     try {
@@ -34,8 +30,8 @@ async function requester(method, url, body){
     }
 }
 
-export async function get(url) {
-    return await requester('GET', url);
+export async function get(url, token) {
+    return await requester('GET', url, null, token);
 }
 
 export async function post(url, body) {

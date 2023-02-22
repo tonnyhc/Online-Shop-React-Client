@@ -7,8 +7,7 @@ import * as authServices from '../../services/authService';
 import './AuthForm.css';
 
 export const AuthForm = () => {
-    const { userData, setUserData } = useContext(AuthDataContext)
-
+    const {userLogin} = useContext(AuthDataContext)    
 
     const [loginData, setLoginData] = useState({
         'username': '',
@@ -46,9 +45,9 @@ export const AuthForm = () => {
 
     const onLogin = async (e) => {
         e.preventDefault();
-        const result = await authServices.userLogin(loginData)
-        setUserData(result)
-        console.log(userData)
+        const response = await authServices.login(loginData)
+        const authData = userLogin(response);
+    
     }
 
     return (

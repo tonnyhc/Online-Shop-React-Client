@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom';
 
 import { AuthDataContext } from '../../contexts/AuthContext';
 import * as authServices from '../../services/authService';
+import {isValidEmail} from '../../utils/validators/emailValidator'
 
+import styles from './AuthForm.module.css';
 import './AuthForm.css';
 
 export const AuthForm = () => {
-    const {userLogin} = useContext(AuthDataContext)    
+    const { userLogin } = useContext(AuthDataContext)
 
     const [loginData, setLoginData] = useState({
         'username': '',
@@ -21,6 +23,77 @@ export const AuthForm = () => {
         'repass': '',
         'check': 'on',
     })
+
+    const [fieldErrors, setFieldErrors] = useState({
+        'username': null,
+        'password': null,
+        'repass': null,
+        'email': null,
+    })
+
+
+    const checkField = (e) => {
+        const field = e.target;
+
+        if (field.name == 'username') {
+            if (field.value.length <= 3) {
+                return setFieldErrors(oldErrors => ({
+                    ...oldErrors,
+                    username: "Username must be more than 3 characters long!"
+                }))
+            } else {
+                setFieldErrors(oldErrors => ({
+                    ...oldErrors,
+                    username: ''
+                }))
+            }
+        }
+
+        if (field.name == 'password') {
+            if (field.value.length <= 6) {
+                return setFieldErrors(oldErrors => ({
+                    ...oldErrors,
+                    password: "Password must be more than 6 characters long!"
+                }))
+            } else {
+                return setFieldErrors(oldErrors => ({
+                    ...oldErrors,
+                    password: ''
+                }))
+            }
+        }
+
+        if (field.name == 'repass') {
+            if (field.value !== registerData.password) {
+                setFieldErrors(oldErrors => ({
+                    ...oldErrors,
+                    repass: "Passwords do not match!"
+                }))
+            } else{
+                setFieldErrors(oldErrors => ({
+                    ...oldErrors,
+                    repass: ""
+                }))
+            }
+        }
+
+        if (field.name == 'email'){
+            const isValid = isValidEmail(registerData.email)
+            if (!isValid){
+                setFieldErrors(oldErrors => ({
+                    ...oldErrors,
+                    email: "Email is not valid!"
+                }))
+            } else{
+                setFieldErrors(oldErrors => ({
+                    ...oldErrors,
+                    email: ""
+                }))
+            }
+        }
+
+    }
+
 
 
     const onChangeLogin = (e) => {
@@ -47,7 +120,7 @@ export const AuthForm = () => {
         e.preventDefault();
         const response = await authServices.login(loginData)
         const authData = userLogin(response);
-    
+
     }
 
     return (
@@ -60,15 +133,17 @@ export const AuthForm = () => {
                 <h3>Login Now</h3>
                 <form onSubmit={onLogin}>
                     <div className="username">
+                        {fieldErrors.username ? <span className={styles.formError}>{fieldErrors.username}</span> : null}
                         <label htmlFor="username">
                             Username
                         </label>
-                        <input type="text" name="username" id="username" onChange={onChangeLogin} value={loginData.username} />
+                        <input type="text" name="username" id="username" onBlur={checkField} onChange={onChangeLogin} value={loginData.username} />
                     </div>
 
                     <div className="password">
+                        {fieldErrors.password ? <span className={styles.formError}>{fieldErrors.password}</span> : null}
                         <label htmlFor="password">Password</label>
-                        <input type="password" name="password" id="password" onChange={onChangeLogin} value={loginData.password} />
+                        <input type="password" name="password" id="password" onBlur={checkField} onChange={onChangeLogin} value={loginData.password} />
                     </div>
 
                     <div className="check">
@@ -91,29 +166,33 @@ export const AuthForm = () => {
                 <h3>Register Now</h3>
                 <form action="submit" method='POST'>
                     <div className="username">
+                    {fieldErrors.username ? <span className={styles.formError}>{fieldErrors.username}</span> : null}
                         <label htmlFor="username">
                             Username
                         </label>
-                        <input type="text" name="username" id="username" onChange={onChangeRegister} value={registerData.username} />
+                        <input type="text" name="username" id="username" onBlur={checkField} onChange={onChangeRegister} value={registerData.username} />
                     </div>
 
                     <div className="email">
+                    {fieldErrors.email ? <span className={styles.formError}>{fieldErrors.email}</span> : null}
                         <label htmlFor="email">
                             Email
                         </label>
-                        <input type="text" name="email" id="email" onChange={onChangeRegister} value={registerData.email} />
+                        <input type="text" name="email" id="email" onBlur={checkField} onChange={onChangeRegister} value={registerData.email} />
                     </div>
 
                     <div className="password">
+                    {fieldErrors.password ? <span className={styles.formError}>{fieldErrors.password}</span> : null}
                         <label htmlFor="password">Password</label>
-                        <input type="password" name="password" id="password" onChange={onChangeRegister} value={registerData.password} />
+                        <input type="password" name="password" id="password" onBlur={checkField} onChange={onChangeRegister} value={registerData.password} />
                     </div>
 
                     <div className="repassword">
+                    {fieldErrors.repass ? <span className={styles.formError}>{fieldErrors.repass}</span> : null}
                         <label htmlFor="repass">
                             Repeat Password
                         </label>
-                        <input type="password" name="repass" id="repass" onChange={onChangeRegister} value={registerData.repassword} />
+                        <input type="password" name="repass" id="repass" onBlur={checkField} onChange={onChangeRegister} value={registerData.repassword} />
                     </div>
 
                     <div className="check">

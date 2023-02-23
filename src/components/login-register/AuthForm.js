@@ -21,7 +21,7 @@ export const AuthForm = () => {
         'email': '',
         'password': '',
         'repass': '',
-        'check': 'on',
+        'check': 'off',
     })
 
     const [fieldErrors, setFieldErrors] = useState({
@@ -118,8 +118,48 @@ export const AuthForm = () => {
 
     const onLogin = async (e) => {
         e.preventDefault();
+        if (fieldErrors.username || fieldErrors.password){
+            return
+        }
+        
+        for (let [value] of Object.values(loginData)){
+            if (!value || value == ''){
+                return
+            }
+        }
+
         const response = await authServices.login(loginData)
         const authData = userLogin(response);
+        setLoginData({
+            'username': '',
+            'password': '',
+        })
+        return authData
+    }
+
+    const onRegister = async (e) => {
+        e.preventDefault();
+        if  (fieldErrors.username || fieldErrors.password || fieldErrors.repass || fieldErrors.email) {
+            return 
+        }
+
+        for (let [value] of Object.values(registerData)){
+            if (!value || value == ''){
+                return
+            }
+        }
+
+        const response = await authServices.register(registerData)
+        const authData = userLogin(response)
+        setRegisterData({
+            'username': '',
+            'email': '',
+            'password': '',
+            'repass': '',
+            'check': 'off',
+        })
+        return authData
+
 
     }
 
@@ -164,7 +204,7 @@ export const AuthForm = () => {
 
             <div className="form" id='register-form' style={{ display: 'none' }}>
                 <h3>Register Now</h3>
-                <form action="submit" method='POST'>
+                <form action="submit" onSubmit={onRegister} method='POST'>
                     <div className="username">
                     {fieldErrors.username ? <span className={styles.formError}>{fieldErrors.username}</span> : null}
                         <label htmlFor="username">

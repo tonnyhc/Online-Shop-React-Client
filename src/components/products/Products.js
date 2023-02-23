@@ -1,22 +1,31 @@
-import styles from './Products.module.css'
-import { RangeSlider } from './RangeSlider';
+
 import { useEffect, useState } from 'react';
-import { style } from '@mui/system';
+
+
+import { RangeSlider } from './RangeSlider';
+
 import { BannerSmall } from '../banner/BannerSmall';
 import { ProductCard } from './productCard/ProductCard';
 
+import * as productServices from '../../services/productService'
+
+import styles from './Products.module.css'
 
 export const Products = () => {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:8000/api/products/')
-            .then(res => res.json())
-            .then(data => {
-                setProducts(data);
-                console.log(data)
-            })
-            .catch(error => console.log(error))
+        const fetchProducts = async () => {
+            try {
+                const products = await productServices.getAll();
+                setProducts(products);
+            } catch (e) {
+                alert(e.msg);
+            }
+        };
+
+        fetchProducts();
+        
     }, []);
 
 

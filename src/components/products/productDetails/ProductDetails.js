@@ -1,14 +1,33 @@
-import styles from './ProductDetails.module.css';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+
+import * as productServices from '../../../services/productService'
+
 import { BannerSmall } from '../../banner/BannerSmall';
 import { getRatingStars } from '../helperFuncs/getRatingStars'
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 
+
+import styles from './ProductDetails.module.css';
 export const ProductDetails = () => {
     const [product, setProduct] = useState({});
     const params = useParams()
     const slug = params.productId
     console.log(slug)
+
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const data = await productServices.getBySlug(slug);
+                setProduct(data);
+            } catch (e) {
+                alert(e.msg);
+            }
+        }
+
+        fetchProduct();
+
+    }, [])
+
     useEffect(() => {
         fetch(`http://localhost:8000/api/products/${slug}`)
             .then(res => res.json())
@@ -32,7 +51,7 @@ export const ProductDetails = () => {
                                 <>
                                     <span>${product.discounted_price}</span>
                                     <del>${product.product_price}</del>
-                                </> 
+                                </>
                                 :
                                 <span>${product.product_price}</span>}
                         </p>

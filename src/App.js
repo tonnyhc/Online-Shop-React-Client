@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 import { AuthDataContext } from '../src/contexts/AuthContext';
 
@@ -19,6 +20,7 @@ import { useLocalStorage } from './hooks/useLocalStorage';
 
 function App() {
   const [userData, setUserData] = useLocalStorage('userData', {});
+  const [csrfToken, setCsrfToken] = useState(Cookies.get('csrftoken'))
   
   const userLogin = (authData) => {
     setUserData(authData);
@@ -31,7 +33,7 @@ function App() {
 
   return (
     <div>
-      <AuthDataContext.Provider value={{userData, userLogin, userLogout}}>
+      <AuthDataContext.Provider value={{userData, userLogin, userLogout, csrfToken}}>
         <AuthForm />
         <Header />
 

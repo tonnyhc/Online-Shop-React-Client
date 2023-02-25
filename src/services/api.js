@@ -1,15 +1,21 @@
-async function requester(method, url, body, token){
+async function requester(method, url, body, csrfToken) {
     const host = 'http://localhost:8000/api';
     let options = {};
     options.method = method;
     options.headers = {};
-    debugger;
-    if (body){
+
+    let token = JSON.parse(localStorage.getItem('userData')).token;
+
+    if (body) {
         options.headers['Content-Type'] = 'application/json';
         options.body = JSON.stringify(body);
     }
 
-    if (token){
+    if (csrfToken) {
+        options.headers['X-CSRFToken'] = csrfToken
+    }
+
+    if (token) {
         options.headers['Authorization'] = `Token ${token}`;
     }
 
@@ -18,30 +24,30 @@ async function requester(method, url, body, token){
         if (response.ok == false) {
             throw new Error();
         }
-        if (response.status == 204){
+        if (response.status == 204) {
             return;
         }
 
         const data = await response.json();
         return data;
-    } catch (error){
+    } catch (error) {
         alert(error.message);
         throw error
     }
 }
 
-export async function get(url, token) {
-    return await requester('GET', url, null, token);
+export async function get(url) {
+    return await requester('GET', url, null);
 }
 
-export async function post(url, body) {
-    return await requester('POST', url, body);
+export async function post(url, body, csrfToken) {
+    return await requester('POST', url, body, csrfToken);
 }
 
-export async function put(url, body) {
-    return await requester("PUT", url, body);
+export async function put(url, body, token, csrfToken) {
+    return await requester("PUT", url, body, csrfToken);
 }
 
-export async function del(url){
-    return await requester('DELETE', url);
+export async function del(url, csrfToken) {
+    return await requester('DELETE', url, csrfToken);
 }

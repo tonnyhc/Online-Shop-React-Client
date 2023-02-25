@@ -3,10 +3,16 @@ import { NavLink, Link } from 'react-router-dom';
 import './Header.css';
 import { useContext } from 'react';
 import { AuthDataContext } from '../../contexts/AuthContext';
+import { BasketContext } from '../../contexts/BasketContext';
 
 export const Header = () => {
 
-  const { userData } = useContext(AuthDataContext)
+  const { userData } = useContext(AuthDataContext);
+  const { userBasket } = useContext(BasketContext);
+  let basket_length = 0;
+  if (userBasket.basketitem_set){
+    basket_length = userBasket.basketitem_set.length
+  }
 
   const activeNavStyle = {
     color: "#FF4E00",
@@ -103,10 +109,14 @@ export const Header = () => {
         </span>
 
         <span className="cart">
-          <NavLink to='/cart'>My Cart <i className="fa-solid fa-cart-shopping"></i></NavLink>
+          <NavLink to='/cart'>
+            My Cart 
+            <i className="fa-solid fa-cart-shopping"></i>
+            {basket_length > 0 && <span>{basket_length}</span>}
+          </NavLink>
         </span>
         {userData.token && <p><Link to='/logout'>Logout</Link></p>}
-        
+
       </section>
     </header>
   );

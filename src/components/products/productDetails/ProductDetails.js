@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import * as productServices from '../../../services/productService'
 
@@ -8,16 +8,19 @@ import { getRatingStars } from '../helperFuncs/getRatingStars'
 
 
 import styles from './ProductDetails.module.css';
+import { AuthDataContext } from '../../../contexts/AuthContext';
 export const ProductDetails = () => {
     const [product, setProduct] = useState({});
     const params = useParams()
     const slug = params.productId
-    console.log(slug)
+
+    const {csrfToken, userData} = useContext(AuthDataContext);
+
 
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const data = await productServices.getBySlug(slug);
+                const data = await productServices.getBySlug(slug, userData.token, csrfToken);
                 setProduct(data);
             } catch (e) {
                 alert(e.msg);
@@ -28,11 +31,11 @@ export const ProductDetails = () => {
 
     }, [])
 
-    useEffect(() => {
-        fetch(`http://localhost:8000/api/products/${slug}`)
-            .then(res => res.json())
-            .then(data => setProduct(data))
-    }, []);
+    // useEffect(() => {
+    //     fetch(`http://localhost:8000/api/products/${slug}`)
+    //         .then(res => res.json())
+    //         .then(data => setProduct(data))
+    // }, []);
 
 
     return (

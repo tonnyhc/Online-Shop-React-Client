@@ -1,8 +1,10 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 import { AuthDataContext } from '../src/contexts/AuthContext';
+import { BasketContext } from './contexts/BasketContext';
+import * as basketServices from './services/basketService'
 
 import { About } from './components/about/Abouts';
 import { Banner } from './components/banner/Banner';
@@ -21,7 +23,18 @@ import { useLocalStorage } from './hooks/useLocalStorage';
 function App() {
   const [userData, setUserData] = useLocalStorage('userData', {});
   const [csrfToken, setCsrfToken] = useState(Cookies.get('csrftoken'))
-  
+  const [userBasket, setUserBasket] = useState({});
+
+  useEffect(() => {
+    const fetchBasket = async () => {
+      const username = userData.username
+      const basket = await basketServices.getBasket(username, csrfToken);
+      setUserBasket(basket)
+    };
+
+    fetchBasket();
+  }, [])
+
   const userLogin = (authData) => {
     setUserData(authData);
   }
@@ -33,23 +46,24 @@ function App() {
 
   return (
     <div>
-      <AuthDataContext.Provider value={{userData, userLogin, userLogout, csrfToken}}>
+      <AuthDataContext.Provider value={{ userData, userLogin, userLogout, csrfToken }}>
         <AuthForm />
-        <Header />
-
-        <main>
-          <Routes>
-            <Route path='/' element={<Banner />} />
-            <Route path='/profile' element={<Profile />} />
-            <Route path='/logout' element={<Logout />} />
-            <Route path='/products' element={<Products />} />
-            <Route path='/products/:productId' element={<ProductDetails />} />
-            <Route path='/about' element={<About />} />
-            <Route path='/features' element={<h1>Features page</h1>} />
-            <Route path='/contacts' element={<Contacts />} />
-            <Route path='/cart' element={<Cart />} />
-          </Routes>
-        </main>
+        <BasketContext.Provider value={{ userBasket }}>
+          <Header />
+          <main>
+            <Routes>
+              <Route path='/' element={<Banner />} />
+              <Route path='/profile' element={<Profile />} />
+              <Route path='/logout' element={<Logout />} />
+              <Route path='/products' element={<Products />} />
+              <Route path='/products/:productId' element={<ProductDetails />} />
+              <Route path='/about' element={<About />} />
+              <Route path='/features' element={<h1>Features page</h1>} />
+              <Route path='/contacts' element={<Contacts />} />
+              <Route path='/cart' element={<Cart />} />
+            </Routes>
+          </main>
+        </BasketContext.Provider>
 
 
         <Footer />

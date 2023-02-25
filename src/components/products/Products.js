@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 
 import { RangeSlider } from './RangeSlider';
@@ -10,9 +10,11 @@ import { ProductCard } from './productCard/ProductCard';
 import * as productServices from '../../services/productService'
 
 import styles from './Products.module.css'
+import { AuthDataContext } from '../../contexts/AuthContext';
 
 export const Products = () => {
     const [products, setProducts] = useState([]);
+    const {userData} = useContext(AuthDataContext);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -25,7 +27,7 @@ export const Products = () => {
         };
 
         fetchProducts();
-        
+
     }, []);
 
 

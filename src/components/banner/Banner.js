@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./Banner.css";
 
 export const Banner = () => {
@@ -17,7 +18,7 @@ export const Banner = () => {
                 <h1>Women's eyewear</h1>
                 <span>Want to Look Your Best?</span>
               </div>
-              <a className='carousel-shop-button' href="#">SHOP NOW</a>
+              <Link className='carousel-shop-button' to="/products">SHOP NOW</Link>
             </div>
             <img
               src="/images/Carousel-Images/young-stylish-sexy-hipster-woman-vacation-aviator-sunglasses-happy-smiling-enjoying-sun-tropical-island-blue-lagoon-landscape_285396-5977.jpg"
@@ -29,7 +30,7 @@ export const Banner = () => {
             <div className="slide-text">
               <h3>Men's eyewear</h3>
               <span>Want to Look Your Best?</span>
-              <a className='carousel-shop-button' href="#">SHOP NOW</a>
+              <Link className='carousel-shop-button' to="/products">SHOP NOW</Link>
             </div>
             <img
               src="/images/Carousel-Images/alexey-turenkov-X9ymCFUP6Kc-unsplash.jpg"
@@ -41,7 +42,7 @@ export const Banner = () => {
             <div className="slide-text">
               <h1>Women's eyewear</h1>
               <span>Want to Look Your Best?</span>
-              <a className='carousel-shop-button' href="#">SHOP NOW</a>
+              <Link className='carousel-shop-button' to="/products">SHOP NOW</Link>
             </div>
             <img
               src="/images/Carousel-Images/ethan-robertson-SYx3UCHZJlo-unsplash.jpg"
@@ -53,7 +54,7 @@ export const Banner = () => {
             <div className="slide-text">
               <h1>Men's eyewear</h1>
               <span>Want to Look Your Best?</span>
-              <a className='carousel-shop-button' href="#">SHOP NOW</a>
+              <Link className='carousel-shop-button' to="/products">SHOP NOW</Link>
             </div>
             <img
               src="/images/Carousel-Images/bud-helisson-kqguzgvYrtM-unsplash.jpg"

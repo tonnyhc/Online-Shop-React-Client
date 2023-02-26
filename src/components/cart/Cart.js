@@ -35,7 +35,7 @@ export const Cart = () => {
             <section className={styles.cartSection}>
                 <h3 className={styles.title}>Cart</h3>
 
-                <h4 className={styles.itemsCount}>Your shopping cart contains: <span>3 Products</span></h4>
+                <h4 className={styles.itemsCount}>Your shopping cart contains: <span>{basketItems.length} Products</span></h4>
 
                 <table className={styles.table}>
 
@@ -52,7 +52,7 @@ export const Cart = () => {
                     </thead>
 
                     <tbody>
-                        {basketItems.map((item, index) => <CartProduct key={item.id} props={{item, index}} />)}  
+                        {basketItems.map((item, index) => <CartProduct key={item.id} props={{item, index, setBasketItems}} />)}  
                          
                     </tbody>
 

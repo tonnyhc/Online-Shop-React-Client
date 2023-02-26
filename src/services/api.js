@@ -31,8 +31,7 @@ async function requester(method, url, body, csrfToken) {
         const data = await response.json();
         return data;
     } catch (error) {
-        alert(error.message);
-        throw error
+        throw new Error(error.message)
     }
 }
 
@@ -48,6 +47,6 @@ export async function put(url, body, token, csrfToken) {
     return await requester("PUT", url, body, csrfToken);
 }
 
-export async function del(url, csrfToken) {
-    return await requester('DELETE', url, csrfToken);
+export async function del(url, body, csrfToken) {
+    return await requester('DELETE', url, body, csrfToken);
 }

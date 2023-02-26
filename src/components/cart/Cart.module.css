@@ -95,6 +95,13 @@ table thead th{
     margin-right: 3px;
 }
 
+.removeBtn button{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
 /* CHECKOUT SECTION */
 
 .checkoutSection{
@@ -193,3 +200,4 @@ table thead th{
     text-transform: uppercase;
     cursor: pointer;
 }
+

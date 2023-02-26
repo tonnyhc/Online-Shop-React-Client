@@ -6,15 +6,17 @@ import * as productServices from '../../../services/productService'
 import { BannerSmall } from '../../banner/BannerSmall';
 import { getRatingStars } from '../helperFuncs/getRatingStars'
 
+import { addToCart } from '../addToCart';
+import { AuthDataContext } from '../../../contexts/AuthContext';
+
 
 import styles from './ProductDetails.module.css';
-import { AuthDataContext } from '../../../contexts/AuthContext';
 export const ProductDetails = () => {
     const [product, setProduct] = useState({});
     const params = useParams()
     const slug = params.productId
 
-    const {csrfToken, userData} = useContext(AuthDataContext);
+    const { csrfToken, userData } = useContext(AuthDataContext);
 
 
     useEffect(() => {
@@ -30,13 +32,6 @@ export const ProductDetails = () => {
         fetchProduct();
 
     }, [])
-
-    // useEffect(() => {
-    //     fetch(`http://localhost:8000/api/products/${slug}`)
-    //         .then(res => res.json())
-    //         .then(data => setProduct(data))
-    // }, []);
-
 
     return (
         <>
@@ -67,9 +62,15 @@ export const ProductDetails = () => {
                             <button className={`${styles.btn} ${styles.btnFavourites}`}><i className="fa-solid fa-heart"></i> <span>Add to favourites</span></button>
                         </div>
 
-                        <form action="" method='post'>
-                            {/* When start working on functionality ...*/}
-                            <button className={styles.btn}><i className="fa-solid fa-cart-shopping"></i> <span>Add to cart</span></button>
+                        <form action="" method='post' onSubmit={(e) => {
+                            addToCart(e, product.slug, csrfToken);
+                        }}>
+                            <input type="hidden" name='product' value={product.slug} />
+                            <input type="hidden" name='quantity' value='1' />
+                            <button className={styles.btn}>
+                                <i className="fa-solid fa-cart-shopping"></i>
+                                <span>Add to cart</span>
+                            </button>
                         </form>
 
                         <ul className={styles.social} role='list'>

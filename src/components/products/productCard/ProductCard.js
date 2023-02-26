@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { getRatingStars } from '../helperFuncs/getRatingStars';
 import { useContext } from 'react';
 import { AuthDataContext } from '../../../contexts/AuthContext';
-import { addToBasket } from '../../../services/basketService';
+import { addToCart } from '../addToCart';
 
 
 export const ProductCard = ({
@@ -18,17 +18,7 @@ export const ProductCard = ({
 
     const { csrfToken } = useContext(AuthDataContext);
 
-    const addToCart = async(e) => {
-        e.preventDefault();
-        const {product, quantity} = Object.fromEntries(new FormData(e.target));
-        const body = {
-            product,
-            "quantity": Number(quantity)
-        }
-        const data = await addToBasket(slug, body, csrfToken);
-        return data;
 
-    }
 
     return (
         <article className={styles.product_card}>
@@ -60,7 +50,8 @@ export const ProductCard = ({
                 {getRatingStars(average_rating)}
             </div>
             <div className={styles.add_to_cart}>
-                <form method='post' onSubmit={addToCart}>
+                <form method='post' onSubmit={(e) => {
+                    addToCart(e, slug, csrfToken); }}>
                     <input type="hidden" name='product' value={slug} />
                     <input type="hidden" name='quantity' value='1' />
                     <button><i className="fa-solid fa-cart-shopping" /></button>

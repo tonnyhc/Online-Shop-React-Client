@@ -60,6 +60,7 @@
 
 .add_to_cart:hover button{
     color: #FF4E00;
+    cursor: pointer;
 }
 
 .product_card .product_img{

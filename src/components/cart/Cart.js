@@ -1,9 +1,33 @@
+import { useContext, useEffect, useState } from "react";
+import { getBasket } from "../../services/basketService";
+
+import { AuthDataContext } from '../../contexts/AuthContext';
+
 import { BannerSmall } from "../banner/BannerSmall";
 
 
 import styles from './Cart.module.css';
+import { CartProduct } from "./CartProduct";
 
 export const Cart = () => {
+    const [basket, setBasket] = useState([]);
+    const [basketItems, setBasketItems] = useState([]);
+    const { userData } = useContext(AuthDataContext);
+
+    useEffect(() => {
+        const fetchBasket = async () => {
+            try {
+                const username = userData.username;
+                const data = await getBasket(username);
+                setBasketItems(data.basketitem_set);
+                return setBasket(data);
+            } catch(e) {
+                alert(e);
+            }
+        }
+        fetchBasket();
+    }, []);
+
     return (
         <>
             <BannerSmall currPage={'Checkout'} />
@@ -24,55 +48,12 @@ export const Cart = () => {
                             <th>Price per one</th>
                             <th>Total Price</th>
                             <th>Remove</th>
-                            {/* <th><a href="#"><i class="fa-solid fa-xmark"></i></a></th> */}
                         </tr>
                     </thead>
 
                     <tbody>
-                        <tr>
-                            <td>1</td>
-
-                            <td>
-                                <div className={styles.productImage}>
-                                    <img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="" />
-                                </div>
-                            </td>
-
-                            <td>
-                                <div className={styles.quantityWrapper}>
-                                    <div >
-                                        <button className={styles.quantityChanger}>
-                                            <i class="fa-sharp fa-solid fa-minus"></i>
-                                        </button>
-                                    </div>
-                                    <div className={styles.quantity}><span>3</span></div>
-                                    <div >
-                                        <button className={styles.quantityChanger}>
-                                            <i class="fa-sharp fa-regular fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-
-                            <td className={styles.tdGray}>
-                                <span>RayBan Sunglasses</span>
-                            </td>
-
-                            <td className={styles.tdGray}>
-                                <span>$ 105</span>
-                            </td>
-
-                            <td className={styles.tdGray}>
-                                <span>$ 415</span>
-                            </td>
-
-                            <td>
-                                <a href="#">
-                                    <i class="fa-solid fa-xmark"></i>
-                                </a>
-                            </td>
-
-                        </tr>
+                        {basketItems.map((item, index) => <CartProduct key={item.id} props={{item, index}} />)}  
+                         
                     </tbody>
 
                 </table>
@@ -105,7 +86,7 @@ export const Cart = () => {
                 <div className={styles.checkoutWrapper}>
                     <h4>Order details</h4>
 
-                    <form method='post' class={styles.checkoutForm}>
+                    <form method='post' className={styles.checkoutForm}>
 
                         <div>
                             <label htmlFor="fullName">Full name :</label>

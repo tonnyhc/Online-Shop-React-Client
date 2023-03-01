@@ -14,29 +14,77 @@ import { AuthDataContext } from '../../contexts/AuthContext';
 
 export const Products = () => {
     const [products, setProducts] = useState([]);
-    const [priceRange, setPriceRange] = useState([0, 1000]);
-   
+    const [priceRange, setPriceRange] = useState([1, 1000]);
+    const [filters, setFilters] = useState({
+        'min-price': null,
+        'max-price': null,
+        'brands': null,
+        'model': null,
+        'category': [],
+        'average-rating': null, 
+    })
+
     const {userData} = useContext(AuthDataContext);
 
     useEffect(() => {
-        const fetchProducts = async () => {
+        const fetchProducts = async (filters) => {
             try {
-                const products = await productServices.getAll();
+                let query = {}
+                for (let [filter, value] of Object.entries(filters)){
+                    if (value && value.length >= 1){
+                        query[filter] = value;
+                    }
+                }
+                const products = await productServices.getAll(query);
                 setProducts(products);
             } catch (e) {
                 alert(e.msg);
             }
         };
 
-        fetchProducts();
+        fetchProducts(filters);
 
-    }, []);
+    }, [filters]);
 
 
 
     const handlePriceRangeChange = (newValue) => {
         setPriceRange(newValue);
+        setFilters(oldFilters => {
+            return {
+                ...oldFilters,
+                'min-price': newValue[0],
+                'max-price': newValue[1],
+            }
+        })
     };
+
+    const handleCategoryFilterChange = (e) => {
+        let field;
+        if (e.target.tagName == 'LABEL'){
+            field = e.target.parentElement.querySelector('input');
+        } else if (e.target.tagName == 'INPUT'){
+            field = e.target;
+        }
+
+        setFilters(oldFilters => {
+            const {category} = oldFilters;
+            const newCategory = [...category]
+            const newValue = field.value
+
+            if (newCategory.includes(newValue)){
+                const index = newCategory.indexOf(newValue);
+                newCategory.splice(index, 1);
+            } else{
+                newCategory.push(newValue)
+            }
+            return {
+                ...oldFilters,
+                category: newCategory
+            }
+        })
+
+    }
 
     const formatPrice = (price) => `$${price}`;
 
@@ -71,23 +119,23 @@ export const Products = () => {
 
                         <ul className="options" role='list'>
                             <li className={styles.option}>
-                                <input type="checkbox" name="Sunglasses" defaultValue={'Sunglasses'} />
-                                <label className={styles.optionLabel} htmlFor="Sunglasses">Sunglasses</label>
+                                <input type="checkbox" name="Sunglasses" onClick={handleCategoryFilterChange} id='sunglasses' defaultValue={'Sunglasses'} />
+                                <label className={styles.optionLabel} htmlFor="sunglasses">Sunglasses</label>
                             </li>
 
                             <li className={styles.option}>
-                                <input type="checkbox" name="Prism" defaultValue={'Prism'} />
-                                <label className={styles.optionLabel} htmlFor="Prism">Prism</label>
+                                <input type="checkbox" name="Prism" onClick={handleCategoryFilterChange} id='prism' defaultValue={'Prism'} />
+                                <label className={styles.optionLabel} htmlFor="prism">Prism</label>
                             </li>
 
                             <li className={styles.option}>
-                                <input type="checkbox" name="Lens" defaultValue={'Lens'} />
-                                <label className={styles.optionLabel} htmlFor="Lens">Lens</label>
+                                <input type="checkbox" name="Lens" onClick={handleCategoryFilterChange} id="lens" defaultValue={'Lens'} />
+                                <label className={styles.optionLabel} htmlFor="lens">Lens</label>
                             </li>
 
                             <li className={styles.option}>
-                                <input type="checkbox" name="Cases" defaultValue={'Cases'} />
-                                <label className={styles.optionLabel} htmlFor="Cases">Cases</label>
+                                <input type="checkbox" name="Cases" onClick={handleCategoryFilterChange} id='cases' defaultValue={'Cases'} />
+                                <label className={styles.optionLabel} htmlFor="cases">Cases</label>
                             </li>
                         </ul>
 
@@ -97,23 +145,23 @@ export const Products = () => {
                         <h3>Brands</h3>
                         <ul className='options' role='list'>
                             <li className={styles.option}>
-                                <input type="checkbox" name="RayBan" defaultValue={'RayBan'} />
-                                <label className={styles.optionLabel} htmlFor="RayBan">RayBan</label>
+                                <input type="checkbox" name="RayBan" defaultValue={'Ray-Ban'} />
+                                <label className={styles.optionLabel} htmlFor="RayBan">Ray-Ban</label>
                             </li>
 
                             <li className={styles.option}>
-                                <input type="checkbox" name="RayBan" defaultValue={'RayBan'} />
-                                <label className={styles.optionLabel} htmlFor="RayBan">RayBan</label>
+                                <input type="checkbox" name="RayBan" defaultValue={'Ray-Ban'} />
+                                <label className={styles.optionLabel} htmlFor="RayBan">Ray-Ban</label>
                             </li>
 
                             <li className={styles.option}>
-                                <input type="checkbox" name="RayBan" defaultValue={'RayBan'} />
-                                <label className={styles.optionLabel} htmlFor="RayBan">RayBan</label>
+                                <input type="checkbox" name="RayBan" defaultValue={'Ray-Ban'} />
+                                <label className={styles.optionLabel} htmlFor="RayBan">Ray-Ban</label>
                             </li>
 
                             <li className={styles.option}>
-                                <input type="checkbox" name="RayBan" defaultValue={'RayBan'} />
-                                <label className={styles.optionLabel} htmlFor="RayBan">RayBan</label>
+                                <input type="checkbox" name="RayBan" defaultValue={'Ray-Ban'} />
+                                <label className={styles.optionLabel} htmlFor="RayBan">Ray-Ban</label>
                             </li>
                         </ul>
                     </div>

@@ -2,9 +2,9 @@ import {get, post} from './api';
 
 const url = '/products/';
 
-export const getAll = async () => {
+export const getAll = async (params) => {
     try{
-        const data = await get(url);
+        const data = await get(url, params);
         return data;
     } catch (e){
         throw new Error(e.msg)

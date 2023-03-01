@@ -35,8 +35,10 @@ async function requester(method, url, body, csrfToken) {
     }
 }
 
-export async function get(url) {
-    return await requester('GET', url, null);
+export async function get(url, query) {
+    const queryString = new URLSearchParams(query).toString();
+    const requestUrl = queryString ? `${url}?${queryString}` : url;
+    return await requester('GET', requestUrl, null);
 }
 
 export async function post(url, body, csrfToken) {

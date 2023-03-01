@@ -1,4 +1,4 @@
-import {get} from './api';
+import {get, post} from './api';
 
 const url = '/products/';
 
@@ -17,5 +17,15 @@ export const getBySlug = async (slug) => {
         return data
     } catch (e){
         throw new Error(e.msg)
+    }
+}
+
+export const rateProduct = async (slug, score) => {
+    try {
+        const body = {score};
+        const data = await post(url + slug + '/rate/', body);
+        return data;
+    } catch(e) {
+        throw new Error(e);
     }
 }

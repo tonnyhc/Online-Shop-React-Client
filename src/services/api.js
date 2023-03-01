@@ -43,7 +43,7 @@ export async function post(url, body, csrfToken) {
     return await requester('POST', url, body, csrfToken);
 }
 
-export async function put(url, body, token, csrfToken) {
+export async function put(url, body, csrfToken) {
     return await requester("PUT", url, body, csrfToken);
 }
 

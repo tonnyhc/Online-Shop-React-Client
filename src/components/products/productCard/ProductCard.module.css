@@ -84,7 +84,12 @@
     font-size: 13px;
     margin-right: 3px;
     color: grey;
-}
+    outline: none;
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    cursor: pointer;
+}   
 
 .product_rating_stars .star:hover {
     color: #FF4E00;

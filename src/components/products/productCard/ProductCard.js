@@ -1,10 +1,16 @@
-import styles from './ProductCard.module.css';
-import { Link } from 'react-router-dom';
-import { getRatingStars } from '../helperFuncs/getRatingStars';
 import { useContext } from 'react';
-import { AuthDataContext } from '../../../contexts/AuthContext';
+import { Link } from 'react-router-dom';
+
 import { addToCart } from '../addToCart';
 
+import { AuthDataContext } from '../../../contexts/AuthContext';
+import { BasketContext } from '../../../contexts/BasketContext';
+
+
+import { getRatingStars } from '../helperFuncs/getRatingStars';
+
+import styles from './ProductCard.module.css';
+import { onRate } from '../helperFuncs/rateProduct';
 
 export const ProductCard = ({
     product_price,
@@ -17,7 +23,7 @@ export const ProductCard = ({
 }) => {
 
     const { csrfToken } = useContext(AuthDataContext);
-
+    const {addItemToBasket} = useContext(BasketContext);
 
 
     return (
@@ -47,11 +53,11 @@ export const ProductCard = ({
                     <span>${product_price}</span>
                 }
                 </p>
-                {getRatingStars(average_rating)}
+                {getRatingStars(average_rating, onRate, slug)}
             </div>
             <div className={styles.add_to_cart}>
                 <form method='post' onSubmit={(e) => {
-                    addToCart(e, slug, csrfToken); }}>
+                    addToCart(e, slug, csrfToken, addItemToBasket)}}>
                     <input type="hidden" name='product' value={slug} />
                     <input type="hidden" name='quantity' value='1' />
                     <button><i className="fa-solid fa-cart-shopping" /></button>

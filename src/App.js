@@ -43,12 +43,34 @@ function App() {
     setUserData({})
   }
 
+  const clearUserBasket = () => {
+    setUserBasket({});
+  }
+
+  const addItemToBasket = (newItem) => {
+    setUserBasket(oldBasket => {
+      return {
+        ...oldBasket,
+        basketitem_set: [...oldBasket.basketitem_set, newItem]
+      };
+    });
+  }
+
+  const removeItemFromBasket = (item) => {
+    setUserBasket(oldBasket => {
+      return {
+        ...oldBasket,
+        basketitem_set: oldBasket.basketitem_set.filter(oldItem => oldItem.slug !== item.slug)
+      }
+    })
+  }
+
 
   return (
     <div>
       <AuthDataContext.Provider value={{ userData, userLogin, userLogout, csrfToken }}>
         <AuthForm />
-        <BasketContext.Provider value={{ userBasket }}>
+        <BasketContext.Provider value={{ userBasket, addItemToBasket, removeItemFromBasket, clearUserBasket }}>
           <Header />
           <main>
             <Routes>

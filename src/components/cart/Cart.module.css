@@ -175,6 +175,7 @@ table thead th{
     border: 1px solid #e7e7e7;
     margin-bottom: 25px;
     outline: none;
+    cursor: text;
 }
 .checkoutForm label{
     font-size: 1.3rem;

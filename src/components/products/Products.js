@@ -14,6 +14,8 @@ import { AuthDataContext } from '../../contexts/AuthContext';
 
 export const Products = () => {
     const [products, setProducts] = useState([]);
+    const [priceRange, setPriceRange] = useState([0, 1000]);
+   
     const {userData} = useContext(AuthDataContext);
 
     useEffect(() => {
@@ -31,7 +33,6 @@ export const Products = () => {
     }, []);
 
 
-    const [priceRange, setPriceRange] = useState([0, 1000]);
 
     const handlePriceRangeChange = (newValue) => {
         setPriceRange(newValue);
@@ -198,7 +199,7 @@ export const Products = () => {
 
                 <div className={styles.productsListWrapper}>
                     <div className={styles.productsList}>
-                        {products.map(product => <ProductCard key={product.product_id} {...product} />)}
+                        {products.map(product => <ProductCard key={product.product_id} {...product}/>)}
                     </div>
                 </div>
 

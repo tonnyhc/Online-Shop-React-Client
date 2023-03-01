@@ -1,7 +1,8 @@
-import {del, get, post} from './api';
+import {del, get, post, put} from './api';
 
 
 const url = '/basket/'
+const orderUrl = '/orders/'
 
 export const getBasket = async (username) => {
     try {
@@ -29,4 +30,22 @@ export const removeFromBasket = async (slug, body, csrfToken) => {
         throw new Error(e);
     }
 
+}
+
+export const createOrder = async (body, csrfToken) => {
+    try{
+        const data = await post(`${orderUrl}create/`, body, csrfToken);
+        return data;
+    } catch(e) {
+        throw new Error(e)
+    }
+}
+
+export const updateBasketItemQuantity = async (slug, body, csrfToken) => {
+    try{
+        const data = await post(`${url}update-quantity/${slug}/`, body, csrfToken);
+        return data;
+    } catch (e) {
+        throw new Error(e);
+    }
 }

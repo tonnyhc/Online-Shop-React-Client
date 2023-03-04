@@ -96,12 +96,12 @@ export const CartProduct = (props) => {
             <td className={styles.tdGray}>
                 
                 <span>$ 
-                    {discounted_price? discounted_price : product_price}
+                    {(discounted_price? discounted_price : product_price).toFixed(2)}
                 </span>
             </td>
 
             <td className={styles.tdGray}>
-                <span>$ {subtotal}</span>
+                <span>$ {subtotal.toFixed(2)}</span>
             </td>
 
             <td className={styles.removeBtn}>

@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 import { AuthDataContext } from '../src/contexts/AuthContext';
-import { BasketContext } from './contexts/BasketContext';
-import * as basketServices from './services/basketService'
+import { BasketProvider } from './contexts/BasketContext';
+
 
 import { About } from './components/about/Abouts';
 import { Banner } from './components/banner/Banner';
@@ -23,17 +23,7 @@ import { useLocalStorage } from './hooks/useLocalStorage';
 function App() {
   const [userData, setUserData] = useLocalStorage('userData', {});
   const [csrfToken, setCsrfToken] = useState(Cookies.get('csrftoken'))
-  const [userBasket, setUserBasket] = useState({});
 
-  useEffect(() => {
-    const fetchBasket = async () => {
-      const username = userData.username
-      const basket = await basketServices.getBasket(username, csrfToken);
-      setUserBasket(basket)
-    };
-
-    fetchBasket();
-  }, [])
 
   const userLogin = (authData) => {
     setUserData(authData);
@@ -43,34 +33,12 @@ function App() {
     setUserData({})
   }
 
-  const clearUserBasket = () => {
-    setUserBasket({});
-  }
-
-  const addItemToBasket = (newItem) => {
-    setUserBasket(oldBasket => {
-      return {
-        ...oldBasket,
-        basketitem_set: [...oldBasket.basketitem_set, newItem]
-      };
-    });
-  }
-
-  const removeItemFromBasket = (item) => {
-    setUserBasket(oldBasket => {
-      return {
-        ...oldBasket,
-        basketitem_set: oldBasket.basketitem_set.filter(oldItem => oldItem.slug !== item.slug)
-      }
-    })
-  }
-
-
   return (
     <div>
+      {/* TODO: remove this context and set it in a component */}
       <AuthDataContext.Provider value={{ userData, userLogin, userLogout, csrfToken }}>
         <AuthForm />
-        <BasketContext.Provider value={{ userBasket, addItemToBasket, removeItemFromBasket, clearUserBasket }}>
+        <BasketProvider>
           <Header />
           <main>
             <Routes>
@@ -85,7 +53,7 @@ function App() {
               <Route path='/cart' element={<Cart />} />
             </Routes>
           </main>
-        </BasketContext.Provider>
+        </BasketProvider>
 
 
         <Footer />

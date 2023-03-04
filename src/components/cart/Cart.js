@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { createOrder, getBasket } from "../../services/basketService";
 
 import { AuthDataContext } from '../../contexts/AuthContext';
+import { BasketContext } from "../../contexts/BasketContext";
 
 import { BannerSmall } from "../banner/BannerSmall";
 
@@ -9,15 +10,39 @@ import { BannerSmall } from "../banner/BannerSmall";
 import styles from './Cart.module.css';
 import { CartProduct } from "./CartProduct";
 import { Link } from "react-router-dom";
-import { BasketContext } from "../../contexts/BasketContext";
 
 export const Cart = () => {
     const { userData, csrfToken } = useContext(AuthDataContext);
     const { clearUserBasket } = useContext(BasketContext);
 
     const [basket, setBasket] = useState([]);
+    const [totalCost, setTotalCost] = useState(0);
     const [basketItems, setBasketItems] = useState([]);
     const [isOrdered, setIsOrdered] = useState(false);
+
+    useEffect(() => {
+        const fetchBasket = async () => {
+            try {
+                const username = userData.username;
+                const data = await getBasket(username);
+                setBasketItems(data.basketitem_set);
+                return setBasket(data);
+            } catch (e) {
+                alert(e);
+            }
+        }
+        fetchBasket();
+    }, []);
+
+    let totalBasketCost = 0;
+    for (const item of basketItems) {
+        if (item.discounted_price) {
+            totalBasketCost += item.discounted_price * item.quantity;
+        } else {
+            totalBasketCost += item.product_price * item.quantity;
+        }
+    }
+
 
     // TODO: Create validations and UX
     const [formData, setFormData] = useState({
@@ -85,28 +110,8 @@ export const Cart = () => {
         })
     }
 
-    let totalBasketCost = 0;
-    for (const item of basketItems) {
-        if (item.discounted_price) {
-            totalBasketCost += item.discounted_price * item.quantity;
-        } else {
-            totalBasketCost += item.product_price * item.quantity;
-        }
-    }
 
-    useEffect(() => {
-        const fetchBasket = async () => {
-            try {
-                const username = userData.username;
-                const data = await getBasket(username);
-                setBasketItems(data.basketitem_set);
-                return setBasket(data);
-            } catch (e) {
-                alert(e);
-            }
-        }
-        fetchBasket();
-    }, []);
+
 
     return (
         <>
@@ -155,12 +160,12 @@ export const Cart = () => {
                                 {basketItems.map(item =>
                                     <li className={styles.product}>{item.product} -
                                         <span>
-                                            $ {(item.discounted_price ? item.discounted_price : item.product_price) * item.quantity}
+                                            $ {((item.discounted_price ? item.discounted_price : item.product_price) * item.quantity).toFixed(2)}
                                         </span>
                                     </li>)
                                 }
                                 <li className={styles.product}>
-                                    Total - <span>${totalBasketCost}</span>
+                                    Total - <span>${totalBasketCost.toFixed(2)}</span>
                                 </li>
                             </ul>
                         </div>

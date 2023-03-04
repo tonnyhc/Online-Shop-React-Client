@@ -1,8 +1,6 @@
-import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Cookies from 'js-cookie';
 
-import { AuthDataContext } from '../src/contexts/AuthContext';
+import { AuthProvider } from '../src/contexts/AuthContext';
 import { BasketProvider } from './contexts/BasketContext';
 
 
@@ -17,26 +15,14 @@ import { Logout } from './components/Logout';
 import { ProductDetails } from './components/products/productDetails/ProductDetails';
 import { Products } from './components/products/Products';
 import { Profile } from './components/profile/Profile';
-import { useLocalStorage } from './hooks/useLocalStorage';
 
 
 function App() {
-  const [userData, setUserData] = useLocalStorage('userData', {});
-  const [csrfToken, setCsrfToken] = useState(Cookies.get('csrftoken'))
 
-
-  const userLogin = (authData) => {
-    setUserData(authData);
-  }
-
-  const userLogout = () => {
-    setUserData({})
-  }
 
   return (
     <div>
-      {/* TODO: remove this context and set it in a component */}
-      <AuthDataContext.Provider value={{ userData, userLogin, userLogout, csrfToken }}>
+      <AuthProvider>
         <AuthForm />
         <BasketProvider>
           <Header />
@@ -57,7 +43,7 @@ function App() {
 
 
         <Footer />
-      </AuthDataContext.Provider>
+      </AuthProvider>
     </div>
 
   );

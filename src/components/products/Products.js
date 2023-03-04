@@ -13,6 +13,7 @@ import styles from './Products.module.css'
 import { AuthDataContext } from '../../contexts/AuthContext';
 
 export const Products = () => {
+    // TODO: Make it with reducer
     const [products, setProducts] = useState([]);
     const [priceRange, setPriceRange] = useState([1, 1000]);
     const [filters, setFilters] = useState({

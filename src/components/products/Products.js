@@ -1,5 +1,7 @@
 
-import { useContext, useEffect, useState } from 'react';
+import React from "react";
+
+import { useContext, useEffect, useReducer, useState } from 'react';
 
 
 import { RangeSlider } from './RangeSlider';
@@ -15,31 +17,70 @@ import { AuthDataContext } from '../../contexts/AuthContext';
 export const Products = () => {
     // TODO: Make it with reducer
     const [products, setProducts] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [brands, setBrands] = useState([]);
     const [priceRange, setPriceRange] = useState([1, 1000]);
-    const [filters, setFilters] = useState({
+
+    const updateArrayFields = (state, action, field) => {
+        const value = action.payload;
+        const oldValues = state[field];
+        const newValues = oldValues.includes(value)
+            ? oldValues.filter((item) => item !== value)
+            : [...oldValues, value];
+        return { ...state, [field]: newValues };
+    }
+
+    const filtersReducer = (state, action) => {
+        switch (action.type) {
+            case "UPDATE_SEARCH":
+                return { ...state, search: action.payload };
+            case "UPDATE_PRICE":
+                return { ...state, 'min-price': action.payload[0], 'max-price': action.payload[1] }
+            case "UPDATE_GENDER":
+                return updateArrayFields(state, action, 'gender');
+            case "UPDATE_CATEGORIES":
+                return updateArrayFields(state, action, 'category');
+            case "UPDATE_BRANDS":
+                return updateArrayFields(state, action, 'brands');
+            case "UPDATE_RATING":
+                return {...state, 'average-rating': action.payload}
+            default:
+                return state
+        }
+
+    }
+
+    const [filters, filtersDispatch] = useReducer(filtersReducer, {
+        'search': null,
         'min-price': null,
         'max-price': null,
-        'brands': null,
+        'brands': [],
         'model': null,
         'category': [],
-        'average-rating': null, 
-    })
+        'average-rating': null,
+        'gender': [],
+    });
 
-    const {userData} = useContext(AuthDataContext);
+    const { userData } = useContext(AuthDataContext);
 
     useEffect(() => {
         const fetchProducts = async (filters) => {
             try {
                 let query = {}
-                for (let [filter, value] of Object.entries(filters)){
-                    if (value && value.length >= 1){
+                for (let [filter, value] of Object.entries(filters)) {
+                    if (value && value.length >= 1 || (typeof value) == 'number') {
                         query[filter] = value;
                     }
                 }
-                const products = await productServices.getAll(query);
+                const data = await productServices.getAll(query);
+                const { products, query_filters } = data;
+
                 setProducts(products);
+                setCategories(query_filters['categories']);
+                setBrands(query_filters['brands'])
             } catch (e) {
-                alert(e.msg);
+                alert(e);
+
             }
         };
 
@@ -51,44 +92,77 @@ export const Products = () => {
 
     const handlePriceRangeChange = (newValue) => {
         setPriceRange(newValue);
-        setFilters(oldFilters => {
-            return {
-                ...oldFilters,
-                'min-price': newValue[0],
-                'max-price': newValue[1],
-            }
+        filtersDispatch({
+            type: "UPDATE_PRICE",
+            payload: priceRange
         })
     };
 
-    const handleCategoryFilterChange = (e) => {
+    const handleFiltersChange = (e) => {
         let field;
-        if (e.target.tagName == 'LABEL'){
+        const filterType = e.target.parentElement.parentElement.id;
+
+        if (e.target.tagName == 'LABEL') {
             field = e.target.parentElement.querySelector('input');
-        } else if (e.target.tagName == 'INPUT'){
+        } else if (e.target.tagName == 'INPUT') {
             field = e.target;
         }
 
-        setFilters(oldFilters => {
-            const {category} = oldFilters;
-            const newCategory = [...category]
-            const newValue = field.value
+        let actionType = '';
+        if (filterType == 'category') {
+            actionType = 'UPDATE_CATEGORIES';
+        } else if (filterType == 'brands') {
+            actionType = 'UPDATE_BRANDS';
+        } else if (filterType == 'gender') {
+            actionType = "UPDATE_GENDER"
+        } else if (filterType == 'rating') {
+            actionType = "UPDATE_RATING"
+        }
 
-            if (newCategory.includes(newValue)){
-                const index = newCategory.indexOf(newValue);
-                newCategory.splice(index, 1);
-            } else{
-                newCategory.push(newValue)
-            }
-            return {
-                ...oldFilters,
-                category: newCategory
-            }
+        filtersDispatch({
+            type: actionType,
+            payload: field.value
         })
 
     }
 
-    const formatPrice = (price) => `$${price}`;
+    const onSubmitSearch = (e) => {
+        e.preventDefault();
 
+        const { search } = Object.fromEntries(new FormData(e.target));
+
+        if (!search || search == '') {
+            return
+        }
+
+        filtersDispatch({
+            type: 'UPDATE_SEARCH',
+            payload: search
+        })
+    }
+
+    const onRatingFilter = (e) => {
+        e.preventDefault();
+
+        let field;
+        if (e.target.tagName == "BUTTON"){
+            field = e.target;
+        } else if (e.target.tagName == 'SPAN'){
+            field = e.target.parentElement;
+        } else {
+            field = e.target.parentElement.parentElement;
+        }
+
+        const value = Number(field.id);
+
+        filtersDispatch({
+            type: "UPDATE_RATING",
+            payload: value
+        })
+    }
+
+
+    const formatPrice = (price) => `$${price}`;
 
     return (
         <>
@@ -100,8 +174,8 @@ export const Products = () => {
                 <aside className={styles.filters}>
                     <div className={styles.searchBar}>
                         <h3>Search here...</h3>
-                        <form action="" method='post'>
-                            <input type="text" placeholder='Search ...' />
+                        <form action="" method='post' onSubmit={onSubmitSearch}>
+                            <input type="text" placeholder='Search ...' name='search' />
                             <button className='btnMagnifier'><i className="fa-solid fa-magnifying-glass"></i></button>
 
                         </form>
@@ -118,68 +192,47 @@ export const Products = () => {
                     <div className={styles.filtersSection}>
                         <h3>Category</h3>
 
-                        <ul className="options" role='list'>
-                            <li className={styles.option}>
-                                <input type="checkbox" name="Sunglasses" onClick={handleCategoryFilterChange} id='sunglasses' defaultValue={'Sunglasses'} />
-                                <label className={styles.optionLabel} htmlFor="sunglasses">Sunglasses</label>
-                            </li>
-
-                            <li className={styles.option}>
-                                <input type="checkbox" name="Prism" onClick={handleCategoryFilterChange} id='prism' defaultValue={'Prism'} />
-                                <label className={styles.optionLabel} htmlFor="prism">Prism</label>
-                            </li>
-
-                            <li className={styles.option}>
-                                <input type="checkbox" name="Lens" onClick={handleCategoryFilterChange} id="lens" defaultValue={'Lens'} />
-                                <label className={styles.optionLabel} htmlFor="lens">Lens</label>
-                            </li>
-
-                            <li className={styles.option}>
-                                <input type="checkbox" name="Cases" onClick={handleCategoryFilterChange} id='cases' defaultValue={'Cases'} />
-                                <label className={styles.optionLabel} htmlFor="cases">Cases</label>
-                            </li>
+                        <ul className="options" id='category' role='list'>
+                            {categories.map(category => {
+                                return (
+                                    <li key={category.category} className={styles.option}>
+                                        <input type="checkbox" name={category.category} onClick={handleFiltersChange} id={category.category} defaultValue={category.category} />
+                                        <label className={styles.optionLabel} htmlFor={category.category}>{category.category}</label>
+                                    </li>
+                                );
+                            })}
                         </ul>
 
                     </div>
 
                     <div className={styles.filtersSection}>
                         <h3>Brands</h3>
-                        <ul className='options' role='list'>
-                            <li className={styles.option}>
-                                <input type="checkbox" name="RayBan" defaultValue={'Ray-Ban'} />
-                                <label className={styles.optionLabel} htmlFor="RayBan">Ray-Ban</label>
-                            </li>
+                        <ul className='options' id='brands' role='list'>
+                            {brands.map(brand => {
+                                return (
+                                    <li className={styles.option}>
+                                        <input type="checkbox" onClick={handleFiltersChange} name={brand} defaultValue={brand} />
+                                        <label className={styles.optionLabel} htmlFor={brand}>{brand}</label>
+                                    </li>
+                                );
+                            })}
 
-                            <li className={styles.option}>
-                                <input type="checkbox" name="RayBan" defaultValue={'Ray-Ban'} />
-                                <label className={styles.optionLabel} htmlFor="RayBan">Ray-Ban</label>
-                            </li>
-
-                            <li className={styles.option}>
-                                <input type="checkbox" name="RayBan" defaultValue={'Ray-Ban'} />
-                                <label className={styles.optionLabel} htmlFor="RayBan">Ray-Ban</label>
-                            </li>
-
-                            <li className={styles.option}>
-                                <input type="checkbox" name="RayBan" defaultValue={'Ray-Ban'} />
-                                <label className={styles.optionLabel} htmlFor="RayBan">Ray-Ban</label>
-                            </li>
                         </ul>
                     </div>
 
                     <div className={styles.filtersSection}>
                         <h3>Gender</h3>
-                        <ul className='options' role='list'>
+                        <ul className='options' id='gender' role='list'>
                             <li className={styles.option}>
-                                <input type="checkbox" name="Man" defaultValue={'Man'} />
+                                <input type="checkbox" onClick={handleFiltersChange} name="Man" defaultValue={'Man'} />
                                 <label className={styles.optionLabel} htmlFor="Man">Man</label>
                             </li>
                             <li className={styles.option}>
-                                <input type="checkbox" name="Woman" defaultValue={'Woman'} />
+                                <input type="checkbox" onClick={handleFiltersChange} name="Woman" defaultValue={'Woman'} />
                                 <label className={styles.optionLabel} htmlFor="Woman">Woman</label>
                             </li>
                             <li className={styles.option}>
-                                <input type="checkbox" name="Unisex" defaultValue={'Unisex'} />
+                                <input type="checkbox" onClick={handleFiltersChange} name="Unisex" defaultValue={'Unisex'} />
                                 <label className={styles.optionLabel} htmlFor="Unisex">Unisex</label>
                             </li>
                         </ul>
@@ -188,59 +241,59 @@ export const Products = () => {
                     <div className="customerReview">
                         <h3>Products rating</h3>
 
-                        <ul className="options" role='list'>
+                        <ul className="options" id='rating' role='list'>
                             <li className={`${styles.starOption} ${styles.option}`}>
-                                <a href="#">
+                                <button onClick={onRatingFilter} id='5' className={styles.starBtn}>
                                     <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
                                     <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
                                     <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
                                     <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
                                     <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
                                     <span className={styles.numRating}>5.0</span>
-                                </a>
+                                </button>
                             </li>
                             <li className={`${styles.starOption} ${styles.option}`}>
-                                <a href="#">
+                                <button onClick={onRatingFilter} id='4' className={styles.starBtn}>
                                     <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
                                     <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
                                     <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
                                     <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
                                     <span className={styles.blankStar}><i className="fa-regular fa-star"></i></span>
                                     <span className={styles.numRating}>4.0</span>
-                                </a>
+                                </button>
                             </li>
 
                             <li className={`${styles.starOption} ${styles.option}`}>
-                                <a href="#">
+                                <button onClick={onRatingFilter} id='3.5' className={styles.starBtn}>
                                     <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
                                     <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
                                     <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
                                     <span className={styles.halfStar}><i className="fa-solid fa-star-half-stroke"></i></span>
                                     <span className={styles.blankStar}><i className="fa-regular fa-star"></i></span>
                                     <span className={styles.numRating}>3.5</span>
-                                </a>
+                                </button>
                             </li>
 
                             <li className={`${styles.starOption} ${styles.option}`}>
-                                <a href="#">
+                                <button onClick={onRatingFilter} id='3' className={styles.starBtn}>
                                     <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
                                     <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
                                     <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
                                     <span className={styles.blankStar}><i className="fa-regular fa-star"></i></span>
                                     <span className={styles.blankStar}><i className="fa-regular fa-star"></i></span>
                                     <span className={styles.numRating}>3.0</span>
-                                </a>
+                                </button>
                             </li>
 
                             <li className={`${styles.starOption} ${styles.option}`}>
-                                <a href="#">
+                                <button onClick={onRatingFilter} id='2.5' className={styles.starBtn}>
                                     <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
                                     <span className={styles.fullStar}><i className="fa-solid fa-star"></i></span>
                                     <span className={styles.halfStar}><i className="fa-solid fa-star-half-stroke"></i></span>
                                     <span className={styles.blankStar}><i className="fa-regular fa-star"></i></span>
                                     <span className={styles.blankStar}><i className="fa-regular fa-star"></i></span>
                                     <span className={styles.numRating}>2.5</span>
-                                </a>
+                                </button>
                             </li>
                         </ul>
                     </div>
@@ -248,7 +301,7 @@ export const Products = () => {
 
                 <div className={styles.productsListWrapper}>
                     <div className={styles.productsList}>
-                        {products.map(product => <ProductCard key={product.product_id} {...product}/>)}
+                        {products.map(product => <ProductCard key={product.product_id} {...product} />)}
                     </div>
                 </div>
 

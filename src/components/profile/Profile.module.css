@@ -1,0 +1,152 @@
+.btn{
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    color: #0082e6;
+    font-weight: 600;
+    font-size: 22px;
+    padding: 10px 0;
+    border-top: 1px solid #DBDBDB;
+}
+.btn:hover{
+    background-color: #F2F9FF;
+}
+
+.heading{
+    font-size: 22px;
+    font-weight: normal;
+    padding: 10px 24px;
+}
+
+.cardIcon.cardIcon{
+    text-align: center;
+    font-size: 100px ;
+    color: #A0DDFF;
+}
+
+.profileSection{
+    width: 70%;
+    margin: 0 auto;
+}
+
+.section {
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
+    padding: 12px;
+    margin-bottom: 40px;
+    box-shadow: 1px 1px 5px #DBDBDB;
+}
+
+.accountWrapper{
+    display: flex;
+    align-items: center;
+    padding: 12px 50px;
+    gap: 60px;
+}
+.accountData{
+    width: 70%;
+}
+
+
+.accountData p {
+    color: gray;
+    margin: 10px 0;
+}
+.accountData p span{
+    color: black;
+}
+.accountData i {
+    font-size: 100px;
+    color: gray;
+}
+.accountData .btn{
+    margin-top: 37px;
+}
+
+.accountAddressWrapper{
+    display: flex;
+    gap: 24px;
+}
+
+.addressInfo{
+    padding: 10px 24px;
+}
+.addressInfo .heading{
+    padding: 0;
+}
+.addressInfo p {
+    font-size: 22px;
+}
+.addressInfo span {
+    font-size: 15px;
+    color: grey;
+}
+
+.activity{
+    display: flex;
+    gap: 24px;
+    padding: 20px 24px;
+
+}
+
+.activityWindow{
+    display: flex;
+    gap: 20px;
+}
+.activityWindow p {
+    margin-bottom: 12px;
+}
+
+.activityWindow i {
+   font-size: 35px;
+}
+
+.ordersIcon{
+    color: #0082e6;
+}
+.favoritesIcon{
+    color: #EF2809;
+}
+
+
+
+
+.activityWindow{
+    width: 100%;
+}
+
+
+
+
+@media (max-width:1060px) {
+    .accountWrapper {
+        gap: 30px;
+    }
+}
+
+@media (max-width:1000px) {
+    .accountAddressWrapper {
+        flex-direction: column;
+    }
+
+    .accountData{
+        width: 100%;
+    }
+}
+
+@media (max-width:800px){
+    .activity{
+        flex-direction: column;
+    }
+}
+
+@media (max-width:570px){
+    .accountWrapper {
+        padding: 12px 0;
+    }
+    .btn{
+        font-size: 18px;
+    }
+}

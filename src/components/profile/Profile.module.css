@@ -111,7 +111,10 @@
 }
 
 
-
+.modalForm > .gender{
+    display: flex;
+    gap: 50px;
+}
 
 .activityWindow{
     width: 100%;

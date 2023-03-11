@@ -1,0 +1,68 @@
+
+
+.modalForm input[type='radio'] {
+    margin-right: 5px;
+    transition: 250ms ease-in-out;
+    width: 25px;
+}
+
+.btn {
+    min-width: 240px;
+    height: 35px;
+    font-size: 16px;
+    display: block;
+    margin: 0 auto;
+    background-color: #0082e6;
+    color: #fff;
+    border-radius: 30px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+.btn:hover{
+    color: #fff;
+    background-color: #0065b3;
+    border-color: #005fa9;
+}
+
+
+.formRow{
+    display: flex;
+    gap: 50px;
+    margin: 25px;
+    padding: 0 10px;
+    align-items: center;
+}
+
+.gender div {
+    display: flex;
+}
+.gender > div {
+    gap: 25px;
+}
+
+
+.formLabel{
+    font-size: 14px;
+    font-weight: bold;
+    color: #888888;
+    width: 100px;
+}
+
+.formInput{
+    font-size: 18px;
+    width: 250px;
+    height: 35px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    padding: 10px 6px;
+    color: #666;
+    outline: none;
+    transition: border-color ease-in-out 0.15s,box-shadow ease-in-out 0.15s;
+}
+
+.formInput:focus{
+    border: 1px solid #0082e6;
+    box-shadow: 0px 0px 5px #DBDBDB;
+}
+

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 import { getAccountDetails } from "../../services/accountServices";
 import { BannerSmall } from "../banner/BannerSmall";
+import EditProfileModal from "./EditProfileModal";
 
 import styles from './Profile.module.css';
 
@@ -11,7 +12,6 @@ export const Profile = () => {
     const [profile, setProfile] = useState({
         userinfo: {}
     });
-
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -36,17 +36,16 @@ export const Profile = () => {
         setOpenModal(false);
     }
 
+
     return (
         <>
-            <BannerSmall />
+            <BannerSmall currPage="Profile" />
 
-            {/* <Modal open={open} onClose={handleCloseModal}>
-                <Box position='absolute' top='25%' left='50%'>
-                    <Typography>
-                        This is a modal
-                    </Typography>
-                </Box>
-            </Modal> */}
+            {openModal &&
+                <EditProfileModal {...profile} handleCloseModal={handleCloseModal}/>
+            }
+
+
 
             <section className={styles.profileSection}>
 

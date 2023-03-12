@@ -9,6 +9,8 @@
     font-size: 22px;
     padding: 10px 0;
     border-top: 1px solid #DBDBDB;
+    padding: 6px 12px;
+    border-radius: 3px;
 }
 .btn:hover{
     background-color: #F2F9FF;

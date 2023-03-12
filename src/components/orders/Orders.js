@@ -26,6 +26,12 @@ const Orders = () => {
 
     }, [])
 
+    const removeOrder = (id) => {
+        setOrders(oldOrders => {
+            return oldOrders.filter(order => id != order.id)
+        })
+    }
+
 
     return (
         <>
@@ -36,7 +42,7 @@ const Orders = () => {
 
                 <div className={styles.ordersList}>
                     {orders.length >0 ? (
-                        orders.map(order => <OrderCard {...order} key={order.id} />)
+                        orders.map(order => <OrderCard removeOrder={removeOrder} {...order} key={order.id} />)
                     ) : (
                         <h3>You don't have any orders yet.</h3>
                     )}

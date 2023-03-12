@@ -16,7 +16,7 @@ export const Banner = () => {
             <div className="slide-text">
               <div>
                 <h1>Women's eyewear</h1>
-                <span>Want to Look Your Best?</span>
+                <p>Want to Look Your Best?</p>
               </div>
               <Link className='carousel-shop-button' to="/products">SHOP NOW</Link>
             </div>
@@ -29,7 +29,7 @@ export const Banner = () => {
           <li className="slide">
             <div className="slide-text">
               <h3>Men's eyewear</h3>
-              <span>Want to Look Your Best?</span>
+              <p>Want to Look Your Best?</p>
               <Link className='carousel-shop-button' to="/products">SHOP NOW</Link>
             </div>
             <img
@@ -41,7 +41,7 @@ export const Banner = () => {
           <li className="slide">
             <div className="slide-text">
               <h1>Women's eyewear</h1>
-              <span>Want to Look Your Best?</span>
+              <p>Want to Look Your Best?</p>
               <Link className='carousel-shop-button' to="/products">SHOP NOW</Link>
             </div>
             <img
@@ -53,7 +53,7 @@ export const Banner = () => {
           <li className="slide">
             <div className="slide-text">
               <h1>Men's eyewear</h1>
-              <span>Want to Look Your Best?</span>
+              <p>Want to Look Your Best?</p>
               <Link className='carousel-shop-button' to="/products">SHOP NOW</Link>
             </div>
             <img

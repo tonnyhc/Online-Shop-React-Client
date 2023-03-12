@@ -23,15 +23,31 @@
     align-self: center;
 
 }
-.orderDetailsLink a {
+.orderDetailsLink a,
+.btn {
     padding: 8px 16px;
     border: 1px solid #0082e6;
     border-radius: 3px;
     color: #0082e6;
     font-weight: 500;   
+    background-color: transparent;
+    cursor: pointer;
 }
-.orderDetailsLink a:hover{
+.orderDetailsLink a:hover,
+.btn:hover{
     background-color: #f4f8ff;
+}
+
+.deleteBtn{
+    margin-left: 25px;
+    background-color: #EF2809;
+    color: #fff;
+    border: 1px solid #EF2809;
+}
+
+.deleteBtn:hover{
+    background-color: #EF2809;
+    color: #fff;
 }
 
 .orderNumber{
@@ -43,4 +59,19 @@
 .orderDetails{
     font-size: 17px;
     font-weight: 400;
+}
+
+.cardBody{
+    padding: 12px 0;
+    display: flex;
+    justify-content: space-between;
+}
+p.orderPrice{
+    color: #888;
+}
+
+.orderStatus{
+    color: #10B2F8;
+    font-weight: 600;
+    font-size: 19px;
 }

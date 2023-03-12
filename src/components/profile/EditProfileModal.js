@@ -111,7 +111,7 @@ const EditProfileModal = ({
                     <button onClick={handleCloseModal} className="close-modal">&times;</button>
                 </div>
                 <div className="modal-content">
-                    <form className={styles.modalForm} onSubmit={onSubmit}>
+                    <form method='post' className={styles.modalForm} onSubmit={onSubmit}>
 
                         <div className={`${styles.formRow} ${styles.gender}`}>
                             <label className={styles.formLabel} htmlFor="gender">Gender: </label>

@@ -33,10 +33,10 @@
 
 
 .login-register-backdrop .form{
-    /* margin-top: 100px; */
     position: relative;
     top: 50%;
-    transform: translateY(-50%)
+    transform: translateY(-50%);
+
 
 }
 .login-register-backdrop .form h3{
@@ -46,6 +46,10 @@
 .login-register-backdrop form{
     background-color: #343A40;
     padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .login-register-backdrop .form form label {
     display: block;
@@ -57,7 +61,13 @@
     border-radius: 4px;
     padding: 4px 8px;
     font-weight: bold;
+    width: 230px;
 }
+
+.login-register-backdrop .form form input[type='checkbox']{
+    width: unset;
+}
+
 .login-register-backdrop .form div{
     margin-bottom: 15px;
 }

@@ -18,9 +18,11 @@ export const AuthForm = () => {
 
     const [registerData, setRegisterData] = useState({
         'username': '',
+        'full_name': '',
         'email': '',
         'password': '',
         'repass': '',
+        'birth_year': '',
         'check': 'off',
     })
 
@@ -180,6 +182,7 @@ export const AuthForm = () => {
                         <input type="text" name="username" id="username" onBlur={checkField} onChange={onChangeLogin} value={loginData.username} />
                     </div>
 
+
                     <div className="password">
                         {fieldErrors.password ? <span className={styles.formError}>{fieldErrors.password}</span> : null}
                         <label htmlFor="password">Password</label>
@@ -213,6 +216,17 @@ export const AuthForm = () => {
                         <input type="text" name="username" id="username" onBlur={checkField} onChange={onChangeRegister} value={registerData.username} />
                     </div>
 
+                    <div className='fullName'>
+                        <label htmlFor="fullName">Full name:</label>
+                        <input type="text" 
+                        name='full_name'
+                        id='fullName'
+                        onBlur={checkField}
+                        onChange={onChangeRegister}
+                        value={registerData.full_name}
+                        />
+                    </div>
+
                     <div className="email">
                     {fieldErrors.email ? <span className={styles.formError}>{fieldErrors.email}</span> : null}
                         <label htmlFor="email">
@@ -233,6 +247,18 @@ export const AuthForm = () => {
                             Repeat Password
                         </label>
                         <input type="password" name="repass" id="repass" onBlur={checkField} onChange={onChangeRegister} value={registerData.repassword} />
+                    </div>
+
+                    
+                    <div className='birth_year'>
+                        <label htmlFor="birth_year">Birth year:</label>
+                        <input type="date" 
+                        name='birth_year'
+                        id='birth_year'
+                        onBlur={checkField}
+                        onChange={onChangeRegister}
+                        value={registerData.birth_year}
+                        />
                     </div>
 
                     <div className="check">

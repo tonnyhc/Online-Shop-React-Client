@@ -28,6 +28,18 @@ export const Profile = () => {
     }, []);
 
 
+    const changeProfileData = (data) => {
+        setProfile(oldProfile => {
+            return {
+                ...oldProfile,
+                full_name: data['full_name'],
+                gender: data['gender'],
+                birth_year: data['birth_year'],
+
+            }
+        })
+    }
+
     const handleOpenModal = () => {
         setOpenModal(true);
     }
@@ -37,12 +49,16 @@ export const Profile = () => {
     }
 
 
+
+
     return (
         <>
             <BannerSmall currPage="Profile" />
 
             {openModal &&
-                <EditProfileModal {...profile} handleCloseModal={handleCloseModal}/>
+                <EditProfileModal {...profile}
+                    changeProfileData={changeProfileData}
+                    handleCloseModal={handleCloseModal} />
             }
 
 
@@ -58,9 +74,8 @@ export const Profile = () => {
                             </div>
                             <div>
                                 <p>Username: <span>{profile.username}</span></p>
-                                <p>Name: <span>{profile.userinfo['full_name']}</span></p>
+                                <p>Name: <span>{profile['full_name']}</span></p>
                                 <p>Email: <span>{profile.email}</span></p>
-                                <p>Phone: <span>{profile.userinfo.phone_number}</span></p>
                             </div>
                         </div>
                         <button onClick={handleOpenModal} className={styles.btn}>

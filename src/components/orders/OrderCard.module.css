@@ -1,0 +1,46 @@
+
+
+.card {
+    background-color: #fff;
+    border-radius: 3px;
+    padding: 18px 24px;
+    box-shadow: 0px 0px 5px #DBDBDB;
+    letter-spacing: 1px ;
+}
+
+.card p {
+    margin: 5px;
+}
+
+.cardHeader{
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.orderDetailsLink{
+    align-self: center;
+
+}
+.orderDetailsLink a {
+    padding: 8px 16px;
+    border: 1px solid #0082e6;
+    border-radius: 3px;
+    color: #0082e6;
+    font-weight: 500;   
+}
+.orderDetailsLink a:hover{
+    background-color: #f4f8ff;
+}
+
+.orderNumber{
+    color: #005596;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.orderDetails{
+    font-size: 17px;
+    font-weight: 400;
+}

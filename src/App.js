@@ -15,6 +15,7 @@ import { Logout } from './components/Logout';
 import { ProductDetails } from './components/products/productDetails/ProductDetails';
 import { Products } from './components/products/Products';
 import { Profile } from './components/profile/Profile';
+import Orders from './components/orders/Orders';
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
             <Routes>
               <Route path='/' element={<Banner />} />
               <Route path='/profile' element={<Profile />} />
+              <Route path='/profile/orders' element={<Orders />} />
               <Route path='/logout' element={<Logout />} />
               <Route path='/products' element={<Products />} />
               <Route path='/products/:productId' element={<ProductDetails />} />

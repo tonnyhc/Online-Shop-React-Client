@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 
 import { getAccountDetails } from "../../services/accountServices";
@@ -107,7 +108,7 @@ export const Profile = () => {
 
                             <div>
                                 <p><span>{profile.orders_count}</span> registered orders</p>
-                                <button className={styles.btn}>See your order history</button>
+                                <Link to='orders' className={styles.btn}>See your order history</Link>
                             </div>
                         </div>
 

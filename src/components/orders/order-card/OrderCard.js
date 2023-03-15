@@ -1,10 +1,10 @@
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { deleteOrder, editOrder } from '../../services/orderServices';
+import { deleteOrder, editOrder } from '../../../services/orderServices';
 
-import EditOrderModal from './modals/EditOrderModal';
-import DeleteOrderModal from './modals/DeleteOrderModal';
+import EditOrderModal from '../modals/EditOrderModal';
+import DeleteOrderModal from '../modals/DeleteOrderModal';
 import styles from './OrderCard.module.css';
 
 const OrderCard = ({
@@ -79,7 +79,7 @@ const OrderCard = ({
                         </p>
                     </div>
                     <div className={styles.orderDetailsLink}>
-                        <Link to={`order/${id}`}>Order details</Link>
+                        <Link to={`/orders/order/${id}`}>Order details</Link>
                     </div>
                 </div>
 

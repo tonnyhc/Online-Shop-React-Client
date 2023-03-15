@@ -16,6 +16,7 @@ import { ProductDetails } from './components/products/productDetails/ProductDeta
 import { Products } from './components/products/Products';
 import { Profile } from './components/profile/Profile';
 import Orders from './components/orders/Orders';
+import OrderDetails from './components/orders/order-details/OrderDetails';
 
 
 function App() {
@@ -32,13 +33,15 @@ function App() {
               <Route path='/' element={<Banner />} />
               <Route path='/profile' element={<Profile />} />
               <Route path='/profile/orders' element={<Orders />} />
-              <Route path='/logout' element={<Logout />} />
+              <Route path='/orders/order/:orderId' element={<OrderDetails />} />
+              <Route path='logout' element={<Logout />} />
               <Route path='/products' element={<Products />} />
-              <Route path='/products/:productId' element={<ProductDetails />} />
-              <Route path='/about' element={<About />} />
-              <Route path='/features' element={<h1>Features page</h1>} />
-              <Route path='/contacts' element={<Contacts />} />
-              <Route path='/cart' element={<Cart />} />
+              <Route path='products/:productId' element={<ProductDetails />} />
+              <Route path='about' element={<About />} />
+              <Route path='features' element={<h1>Features page</h1>} />
+              <Route path='contacts' element={<Contacts />} />
+              <Route path='cart' element={<Cart />} />
+              <Route path='*' element={<h2>404 Not found!</h2>} />
             </Routes>
           </main>
         </BasketProvider>

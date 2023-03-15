@@ -1,0 +1,156 @@
+.orderDetailsSection{
+    background-color: #E4F1F9;
+    box-shadow: 1px 1px 3px rgba(0,0,0,.15);
+    border-radius: 3px;
+    padding: 16px 32px;
+    max-width: 70%;
+    margin: 0 auto;
+}
+
+.detailsWhiteBox{
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    padding: 18px;
+    margin: 15px 0 25px;
+    box-shadow: 0 2px 2px 0 rgba(27,27,27,.2);
+}
+
+.simple_label{
+    display: inline-block;
+    width: 130px;
+    line-height: 1.5;
+}
+
+.orderItemsDetails{
+    padding: 24px 40px;
+}
+
+.iconWrapper{
+    width: 10%;
+    text-align: center;
+    display: inline-block;
+    margin-right: 50px;
+}
+.iconWrapper i {
+    font-size: 57px;
+    color: #1eb0f6;
+}
+
+.orderStatus{
+    display: inline-block;
+}
+
+.statusP{
+    margin-bottom: 20px;
+    font-weight: 700;
+    color: #1eb0f6;
+    font-size: 23px;
+    line-height: 1;
+}
+
+.statusDate{
+    font-size: 18px;
+}
+.infoCardsSection{
+    margin: 20px 0;
+    border-spacing: 12px;
+}
+
+.infoCard{
+    border: 1px solid #cecece;
+    border-radius: 4px;
+    display: table-cell;
+    padding: 20px;
+    max-width: 333px;
+}
+
+.infoCard .deliveryTitle{
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.infoCard .deliverySubtitle{
+    color: #ccc;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.orderItems{
+    border-bottom: 1px solid #cecece;
+}
+
+.orderItemsList{
+    padding: 0;
+}
+
+.itemCard{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.itemDetails{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.itemDetails .imgWrapper{
+    display: inline-block;
+    max-width: 100px;
+    max-height: 100px;
+    margin-right: 20px;
+}
+
+.itemDetails .imgWrapper img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.itemPrice{
+    font-size: 18px;
+}
+
+.itemPrice .itemTotal{
+    font-weight: bold;
+}
+
+.orderItemsSummary{
+    margin-top: 20px;
+}
+
+.orderItemsSummaryWrapper{
+    width: 28%;
+    margin-left: auto;
+}
+.orderItemsProductPrice .priceType,
+.orderItemsTotalPrice .priceType{
+    width: 210px;
+    display: inline-block;
+}
+.orderItemsTotalPrice{
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.asideActionBtns{
+    width: 20%;
+    display: inline-block;
+    text-align: right;
+    vertical-align: top;
+}
+
+.topInfoWrapper{
+    display: inline-block;
+    width: 80%;
+}
+
+.orderActions{
+    outline: none;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    color: #1eb0f6;
+}

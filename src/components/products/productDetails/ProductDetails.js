@@ -14,6 +14,7 @@ import styles from './ProductDetails.module.css';
 export const ProductDetails = () => {
     const [product, setProduct] = useState({});
     const params = useParams()
+    console.log(params);
     const slug = params.productId
 
     const { csrfToken, userData } = useContext(AuthDataContext);

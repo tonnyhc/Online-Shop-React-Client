@@ -74,3 +74,52 @@ p.orderPrice{
     font-weight: 600;
     font-size: 19px;
 }
+
+
+@media (max-width:1000px){
+    .card{
+        padding: 0px 12px;
+    }
+
+    .orderDetailsLink a,
+    .btn{
+        padding: 4px 6px;
+        font-size: 14px;
+    }
+
+
+    .orderNumber,
+    .orderDetails,
+    .orderPrice,
+    .orderStatus{
+        font-size: 14px;
+    }
+}
+
+@media (max-width:750px){
+    .orderInfo{
+        max-width: 320px;
+    }
+}
+@media (max-width:560px){
+    .orderInfo{
+        max-width: 240px;
+    }
+    .cardBody{
+        flex-direction: column;
+        gap: 12px;
+    }
+    .orderButtons{
+        align-self: center;
+    }
+}
+
+@media (max-width:450px) {
+    .cardHeader{
+        flex-direction: column;
+        gap: 6px;
+    }
+    .orderDetailsLink{
+        align-self: start;
+    }
+}

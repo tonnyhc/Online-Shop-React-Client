@@ -122,7 +122,7 @@
 }
 
 .orderItemsSummaryWrapper{
-    width: 28%;
+    width: 336px;
     margin-left: auto;
 }
 .orderItemsProductPrice .priceType,
@@ -181,4 +181,49 @@
 
 .secondaryBtn{
     color: #EF2809;
+}
+
+
+@media (max-width:1000px){
+    .orderDetailsSection{
+        max-width: 80%;
+    }
+}
+
+@media (max-width:800px){
+    .orderDetailsSection{
+        max-width: 95%;
+    }
+}
+@media (max-width:700px){
+    .orderDetailsSection{
+        max-width: 100%;
+        padding: 8px 12px;
+    }
+    .orderItemsDetails{
+        padding: 15px 12px;
+    }
+    .itemCard{
+        font-size: 16px;
+        gap: 24px;
+    }
+    .itemPrice{
+        font-size: 16px;
+    }
+
+    .iconWrapper{
+        display: none;
+    }
+    .orderStatus{
+        display: block;
+        text-align: center;
+        font-size: 26px;
+    }
+
+}
+
+@media (max-width:500px){
+    .orderItemsSummaryWrapper{
+        width: 100%;
+    }
 }

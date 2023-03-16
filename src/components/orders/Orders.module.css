@@ -17,4 +17,26 @@
     display: flex;
     flex-direction: column;
     gap: 25px;
+    margin-top:12px;
+}
+
+@media (max-width:1250px) {
+    .ordersSection{
+        width: 85%;
+    }   
+}
+@media (max-width:1000px){
+    .ordersSection{
+        width: 90%;
+        padding: 8px 10px;
+    }
+    .ordersSection h3{
+        font-size: 23px;
+    }
+}
+
+@media (max-width:750px){
+    .ordersSection{
+        width: 100%;
+    }
 }

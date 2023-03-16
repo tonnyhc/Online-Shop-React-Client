@@ -68,7 +68,7 @@ const OrderCard = ({
             <article className={styles.card}>
 
                 <div className={styles.cardHeader}>
-                    <div>
+                    <div className={styles.orderInfo}>
                         <p className={styles.orderNumber}>Order <i>№</i> <span>{id}</span></p>
                         <p className={styles.orderDetails}>Registered on:
                             <span className={styles.orderDate}> {date_of_order}</span>
@@ -94,7 +94,7 @@ const OrderCard = ({
                     </div>
                     {order_status == "InPreparation" ?
 
-                        <div>
+                        <div className={styles.orderButtons}>
                             <button onClick={onEdit} className={styles.btn}>Edit order data</button>
                             <button onClick={onDelete} className={`${styles.btn} ${styles.deleteBtn}`}>Cancel order</button>
                         </div>

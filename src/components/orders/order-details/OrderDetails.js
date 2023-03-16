@@ -1,16 +1,27 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { getOrderDetails } from '../../../services/orderServices';
+import { useParams, useNavigate } from 'react-router-dom';
+
+import { getOrderDetails, editOrder, deleteOrder } from '../../../services/orderServices';
+
 import { BannerSmall } from '../../banner/BannerSmall';
+import EditOrderModal from '../modals/EditOrderModal';
+import DeleteOrderModal from '../modals/DeleteOrderModal';
 import ItemCard from './ItemCard';
+
+
 import styles from './OrderDetails.module.css';
 
 const OrderDetails = () => {
     const [order, setOrder] = useState([]);
     const { orderId } = useParams();
+    const [actionBtns, setActionBtns] = useState(false);
+    const [editModal, setEditModal] = useState(false);
+    const [cancelModal, setCancelModal] = useState(false);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
-        async function fetchOrderDetails(orderId) {
+        async function fetchOrderDetails() {
 
             try {
                 const data = await getOrderDetails(orderId);
@@ -20,14 +31,61 @@ const OrderDetails = () => {
             }
         };
 
-        fetchOrderDetails(orderId);
+        fetchOrderDetails();
 
     }, []);
+
+    const handleActionBtnsDropDown = () => {
+        setActionBtns(actionBtns => !actionBtns)
+    };
+
+    const showEditModal = () => {
+        setEditModal(true);
+    };
+    const closeEditModal = () => {
+        setEditModal(false);
+    };
+    const showCancelModal = () => {
+        setCancelModal(true);
+    };
+    const closeCancelModal = () => {
+        setCancelModal(false);
+    }
+
+    const onSubmitEdit = async (e, orderData) => {
+        e.preventDefault();
+        const data = await editOrder(orderId, orderData);
+        closeEditModal();
+        return setOrder(oldOrder => {
+            return {
+                ...oldOrder,
+                full_name: data.full_name,
+                phone_number: data.phone_number,
+                town: data.town,
+                address: data.address,
+                post_code: data.post_code
+            }
+        });
+    }
+
+    const onSubmitDelete = async (e) => {
+        e.preventDefault();
+        const {id } = Object.fromEntries(new FormData(e.target));
+        const data = await deleteOrder(id);
+        navigate('/profile/orders')
+        console.log(data);
+    }
 
 
     return (
         <>
             <BannerSmall currPage={`Order ${order.id}`} />
+            {editModal &&
+                <EditOrderModal id={order.id} closeModal={closeEditModal} onSubmit={onSubmitEdit} />
+            }
+            {cancelModal &&
+                <DeleteOrderModal id={order.id} closeModal={closeCancelModal} onSubmit={onSubmitDelete} />
+            }
 
             <section className={styles.orderDetailsSection}>
 
@@ -57,12 +115,27 @@ const OrderDetails = () => {
                         </div>
 
                     </div>
+                    {order.order_status === 'InPreparation' &&
 
-                    <div className={styles.asideActionBtns}>
-                        <button className={styles.orderActions}>
-                            <i className="fa-solid fa-ellipsis"></i>
-                        </button>
-                    </div>
+                        <div className={styles.asideActionBtns}>
+                            <button onClick={handleActionBtnsDropDown} className={styles.orderActions}>
+                                <i className="fa-solid fa-ellipsis"></i>
+                            </button>
+
+                            {actionBtns &&
+                                <div className={styles.actionDropDown}>
+                                    <button onClick={showEditModal} className={`${styles.dropDownBtn} ${styles.primaryBtn}`}>
+                                        Edit shipping data
+                                    </button>
+
+                                    <button onClick={showCancelModal} className={`${styles.dropDownBtn} ${styles.secondaryBtn}`}>
+                                        Cancel order
+                                    </button>
+                                </div>
+                            }
+
+                        </div>
+                    }
 
                 </div>
 
@@ -78,7 +151,7 @@ const OrderDetails = () => {
                         <div className={styles.orderStatus}>
                             <p className={styles.statusP}>{order.order_status}</p>
                             {/* TODO: Check this later */}
-                            {order.shipping_date && order.order_status == 'Shipped' &&
+                            {order.shipping_date && order.order_status === 'Shipped' &&
                                 <p className={styles.statusDate}>Shipping date : <strong>28 март 2022</strong></p>
                             }
                         </div>
@@ -103,7 +176,7 @@ const OrderDetails = () => {
 
                         <ul className={styles.orderItemsList} role='list'>
                             {order.items && order.items.map(item => {
-                                return <ItemCard key={item.product.slug} {...item}/>
+                                return <ItemCard key={item.product.slug} {...item} />
                             })}
                         </ul>
 

@@ -7,6 +7,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+
 #root {
   max-width: 1920px;
   margin: 0 auto;
@@ -21,6 +22,13 @@ div.MuiBox-root {
   color: black;
   max-width: 100%;
   padding: 8px;
+}
+
+button{
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
 }
 
 /* MODAL CSS */

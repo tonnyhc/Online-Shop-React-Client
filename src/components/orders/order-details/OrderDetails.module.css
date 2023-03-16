@@ -140,6 +140,8 @@
     display: inline-block;
     text-align: right;
     vertical-align: top;
+
+    position: relative;
 }
 
 .topInfoWrapper{
@@ -148,9 +150,35 @@
 }
 
 .orderActions{
-    outline: none;
-    border: none;
-    cursor: pointer;
-    background-color: transparent;
     color: #1eb0f6;
+}
+
+.actionDropDown{
+    border: 1px solid #cecece;
+    border-radius: 5px;
+    text-align: center;
+    padding: 8px 0;
+    max-width: 150px;
+    position: absolute;
+    top: 22px;
+    background: #fff;
+    left: 50px;
+
+    transition: 250ms ease-in-out;
+}
+
+.dropDownBtn:not(:last-child){
+    border-bottom: 1px solid #cecece;
+}
+.dropDownBtn{
+    padding: 6px 0;
+}
+
+.primaryBtn{
+    color: #0082e6;
+    font-weight: 500;
+}
+
+.secondaryBtn{
+    color: #EF2809;
 }

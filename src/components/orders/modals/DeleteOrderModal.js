@@ -14,8 +14,8 @@ const DeleteOrderModal = ({
 
                         <input type="hidden" name='id' value={id} />
 
-                        <button className={`${styles.btn} ${styles.deleteBtn}`}>Delete</button>
-                        <button onClick={closeModal} className={styles.btn}>Cancel</button>
+                        <button type='submit' className={`${styles.btn} ${styles.deleteBtn}`}>Cancel order</button>
+                        <button type='button' onClick={closeModal} className={styles.btn}>Go back</button>
                     </form>
                 </div>
             </div>

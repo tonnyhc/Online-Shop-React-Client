@@ -8,6 +8,7 @@ const EditOrderModal = ({
     id,
     closeModal,
     onSubmit
+
 }) => {
 
     const [orderData, setOrderData] = useState({});

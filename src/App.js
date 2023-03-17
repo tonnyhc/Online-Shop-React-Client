@@ -23,7 +23,7 @@ function App() {
 
 
   return (
-    <div>
+    <>
       <AuthProvider>
         <AuthForm />
         <BasketProvider>
@@ -49,7 +49,8 @@ function App() {
 
         <Footer />
       </AuthProvider>
-    </div>
+    </>
+
 
   );
 }

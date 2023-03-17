@@ -1,7 +1,7 @@
 
 import React from "react";
 
-import { useContext, useEffect, useReducer, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 
 
 import { RangeSlider } from './RangeSlider';
@@ -12,10 +12,8 @@ import { ProductCard } from './productCard/ProductCard';
 import * as productServices from '../../services/productService'
 
 import styles from './Products.module.css'
-import { AuthDataContext } from '../../contexts/AuthContext';
 
 export const Products = () => {
-    // TODO: Make it with reducer
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [brands, setBrands] = useState([]);
@@ -43,7 +41,7 @@ export const Products = () => {
             case "UPDATE_BRANDS":
                 return updateArrayFields(state, action, 'brands');
             case "UPDATE_RATING":
-                return {...state, 'average-rating': action.payload}
+                return { ...state, 'average-rating': action.payload }
             default:
                 return state
         }
@@ -60,8 +58,6 @@ export const Products = () => {
         'average-rating': null,
         'gender': [],
     });
-
-    const { userData } = useContext(AuthDataContext);
 
     useEffect(() => {
         const fetchProducts = async (filters) => {
@@ -145,9 +141,9 @@ export const Products = () => {
         e.preventDefault();
 
         let field;
-        if (e.target.tagName == "BUTTON"){
+        if (e.target.tagName == "BUTTON") {
             field = e.target;
-        } else if (e.target.tagName == 'SPAN'){
+        } else if (e.target.tagName == 'SPAN') {
             field = e.target.parentElement;
         } else {
             field = e.target.parentElement.parentElement;
@@ -306,6 +302,7 @@ export const Products = () => {
                 </div>
 
             </section>
+
         </>
     );
 }

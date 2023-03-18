@@ -15,7 +15,16 @@ const cartReducer = (state, action) => {
                 discounted_price: null,
                 discount: null
             }
-
+        case "UPDATE_QUANTITY":
+            return {
+                ...state,
+                discounted_price: action.payload
+            }
+        case "REMOVE_FROM_BASKET":
+            return {
+                ...state,
+                discounted_price: action.payload
+            }
         default:
             return state
     }

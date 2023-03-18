@@ -55,8 +55,6 @@ export const Cart = () => {
     }
 
 
-
-
     const setBasketItemsOnQuantityChange = (changedItemSlug, value) => {
         setBasketItems(oldState => {
             return oldState.map(item => {
@@ -70,6 +68,13 @@ export const Cart = () => {
                 return item;
             });
         });
+    }
+
+    const handleDiscountedPriceOnQuantityChange = (price) => {
+        basketDispatch({
+            type: "UPDATE_QUANTITY",
+            payload: price
+        })
     }
 
 
@@ -128,7 +133,7 @@ export const Cart = () => {
             basketDispatch({
                 type: "ON_REMOVE_DISCOUNT",
             })
-        } catch(e){
+        } catch (e) {
             alert(e);
         }
     }
@@ -173,7 +178,10 @@ export const Cart = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {basketItems.map((item, index) => <CartProduct key={item.id} props={{ item, index, setBasketItems, setBasketItemsOnQuantityChange }} />)}
+                                {basketItems.map((item, index) => <CartProduct
+                                    key={item.id}
+                                    props={{ item, index, setBasketItems, setBasketItemsOnQuantityChange, handleDiscountedPriceOnQuantityChange }}
+                                />)}
                             </tbody>
                         </table>
 

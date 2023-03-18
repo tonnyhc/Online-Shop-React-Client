@@ -49,3 +49,21 @@ export const updateBasketItemQuantity = async (slug, body, csrfToken) => {
         throw new Error(e);
     }
 }
+
+export const applyDiscount = async(body) => {
+    try{
+        const data = await post(`${url}apply-discount/`, body);
+        return data;
+    } catch(e) {
+        throw new Error(e);
+    }
+}
+
+export const removeDiscount = async () => {
+    try{ 
+        const data = await post(`${url}remove-discount/`);
+        return data;
+    } catch(e){
+        throw new Error(e);
+    }
+}

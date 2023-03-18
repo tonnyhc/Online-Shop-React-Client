@@ -165,7 +165,8 @@ table thead th{
     color: #888;
 }
 
-.checkoutForm input{
+.checkoutForm input,
+.discountCode input{
     display: block;
     width: 95.5%;
     padding: 15px 10px;
@@ -202,3 +203,52 @@ table thead th{
     cursor: pointer;
 }
 
+
+.discountCode{
+    margin-top: 24px;
+}
+.discountCode form{
+    position: relative;
+}
+.discountCode input{
+    margin: 0;
+}
+.discountCode button{
+    position: absolute;
+    top: 50%;
+    right: 25px;
+    transform: translateY(-50%);
+    background-color: black;
+    color: #fff;
+    font-weight: bold;
+    padding: 5px 9px;
+
+
+}
+.discountCode p{
+    font-weight: 500;
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+.total p:not(:last-child){
+    margin-bottom: 12px;
+}
+
+
+.discountCode .discountCodeCard{
+    width: 95.5%;
+    padding: 15px 10px;
+    font-size: 14px;
+    color: #212121;
+    background: #fff;
+    border: 1px solid #e7e7e7;
+    outline: none;
+    margin-bottom: 12px;
+    position: relative;
+}
+.discountCodeCard button{
+    position: absolute; 
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+}

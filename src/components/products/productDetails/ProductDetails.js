@@ -1,6 +1,8 @@
 import { useParams } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 
+import Skeleton from 'react-loading-skeleton';
+
 import * as productServices from '../../../services/productService'
 
 import { BannerSmall } from '../../banner/BannerSmall';
@@ -40,23 +42,23 @@ export const ProductDetails = () => {
             <div className={styles.container}>
                 <div className={styles.mainSection}>
                     <div className={styles.images}>
-                        <img src={product.image} alt="" />
+                        <img src={product.image || <Skeleton />} alt="" />
                     </div>
                     <div>
-                        <h3 className={styles.brand}>{product.brand}</h3>
-                        <h4 className={styles.model}>{product.model}</h4>
+                        <h3 className={styles.brand}>{product.brand || <Skeleton />}</h3>
+                        <h4 className={styles.model}>{product.model || <Skeleton />}</h4>
                         <p className={styles.price}>
                             {product.discounted_price ?
                                 <>
-                                    <span>${product.discounted_price}</span>
-                                    <del>${product.product_price}</del>
+                                    <span>${product.discounted_price || <Skeleton />}</span>
+                                    <del>${product.product_price || <Skeleton />} </del>
                                 </>
                                 :
-                                <span>${product.product_price}</span>}
+                                <span>${product.product_price || <Skeleton />}</span>}
                         </p>
 
                         <div className={styles.rating}>
-                            {getRatingStars(product.average_rating)}
+                            {getRatingStars(product.average_rating) || <Skeleton />}
                         </div>
 
                         <div className={styles.favourites}>

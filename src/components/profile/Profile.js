@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+import Skeleton from "react-loading-skeleton";
 
 import { getAccountDetails } from "../../services/accountServices";
 import { BannerSmall } from "../banner/BannerSmall";
@@ -74,9 +75,9 @@ export const Profile = () => {
                                 <i className="fa-solid fa-circle-user"></i>
                             </div>
                             <div>
-                                <p>Username: <span>{profile.username}</span></p>
-                                <p>Name: <span>{profile['full_name']}</span></p>
-                                <p>Email: <span>{profile.email}</span></p>
+                                <p>Username: <span>{profile.username || <Skeleton />}</span></p>
+                                <p>Name: <span>{profile['full_name'] || <Skeleton />}</span></p>
+                                <p>Email: <span>{profile.email || <Skeleton />}</span></p>
                             </div>
                         </div>
                         <button onClick={handleOpenModal} className={styles.btn}>
@@ -107,7 +108,7 @@ export const Profile = () => {
                             </div>
 
                             <div>
-                                <p><span>{profile.orders_count}</span> registered orders</p>
+                                <p><span>{profile.orders_count || <Skeleton />}</span> registered orders</p>
                                 <Link to='orders' className={styles.btn}>See your order history</Link>
                             </div>
                         </div>

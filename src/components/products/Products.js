@@ -1,8 +1,9 @@
 
 import React from "react";
-
 import { useEffect, useReducer, useState } from 'react';
 
+
+import 'react-loading-skeleton/dist/skeleton.css'
 
 import { RangeSlider } from './RangeSlider';
 
@@ -12,12 +13,14 @@ import { ProductCard } from './productCard/ProductCard';
 import * as productServices from '../../services/productService'
 
 import styles from './Products.module.css'
+import ProductCardSkeleton from "./productCard/ProductCardSkeleton";
 
 export const Products = () => {
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [brands, setBrands] = useState([]);
     const [priceRange, setPriceRange] = useState([1, 1000]);
+    const [isLoading, setIsLoading] = useState(true);
 
     const updateArrayFields = (state, action, field) => {
         const value = action.payload;
@@ -74,6 +77,7 @@ export const Products = () => {
                 setProducts(products);
                 setCategories(query_filters['categories']);
                 setBrands(query_filters['brands'])
+                setIsLoading(false);
             } catch (e) {
                 alert(e);
 
@@ -83,7 +87,6 @@ export const Products = () => {
         fetchProducts(filters);
 
     }, [filters]);
-
 
 
     const handlePriceRangeChange = (newValue) => {
@@ -158,11 +161,14 @@ export const Products = () => {
     }
 
 
+
+
     const formatPrice = (price) => `$${price}`;
 
     return (
         <>
             <BannerSmall currPage={'Products'} />
+
             <section className={styles.productsSection}>
                 <div className={styles.filtersToggleWrapper} onClick={toggleFiltersHandler}>
                     <span className={styles.filtersDropdownToggle}>Filters <i className="fa-solid fa-bars"></i></span>
@@ -297,6 +303,8 @@ export const Products = () => {
 
                 <div className={styles.productsListWrapper}>
                     <div className={styles.productsList}>
+                        {isLoading && <ProductCardSkeleton cards={8} />}
+                        
                         {products.map(product => <ProductCard key={product.product_id} {...product} />)}
                     </div>
                 </div>

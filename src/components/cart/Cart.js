@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import { createOrder, getBasket } from "../../services/basketService";
+import { useContext, useEffect, useReducer, useState } from "react";
+import { applyDiscount, createOrder, getBasket, removeDiscount } from "../../services/basketService";
 
 import { AuthDataContext } from '../../contexts/AuthContext';
 import { BasketContext } from "../../contexts/BasketContext";
@@ -10,28 +10,39 @@ import { BannerSmall } from "../banner/BannerSmall";
 import styles from './Cart.module.css';
 import { CartProduct } from "./CartProduct";
 import { Link } from "react-router-dom";
+import cartReducer from "./utils/cartReducer";
+
 
 export const Cart = () => {
     const { userData, csrfToken } = useContext(AuthDataContext);
     const { clearUserBasket } = useContext(BasketContext);
 
-    const [basket, setBasket] = useState([]);
-    const [totalCost, setTotalCost] = useState(0);
+    const [basket, basketDispatch] = useReducer(cartReducer, []);
     const [basketItems, setBasketItems] = useState([]);
-    const [isOrdered, setIsOrdered] = useState(false);
+
+    // TODO: Create validations and UX
+    const [formData, setFormData] = useState({
+        'fullName': '',
+        'phoneNumber': '',
+        'town': '',
+        'address': '',
+        'postCode': ''
+    })
 
     useEffect(() => {
-        const fetchBasket = async () => {
+        (async () => {
             try {
                 const username = userData.username;
                 const data = await getBasket(username);
                 setBasketItems(data.basketitem_set);
-                return setBasket(data);
+                return basketDispatch({
+                    type: 'FETCH_BASKET',
+                    payload: data
+                })
             } catch (e) {
                 alert(e);
             }
-        }
-        fetchBasket();
+        })()
     }, []);
 
     let totalBasketCost = 0;
@@ -44,14 +55,7 @@ export const Cart = () => {
     }
 
 
-    // TODO: Create validations and UX
-    const [formData, setFormData] = useState({
-        'fullName': '',
-        'phoneNumber': '',
-        'town': '',
-        'address': '',
-        'postCode': ''
-    })
+
 
     const setBasketItemsOnQuantityChange = (changedItemSlug, value) => {
         setBasketItems(oldState => {
@@ -90,11 +94,41 @@ export const Cart = () => {
         try {
             const data = await createOrder(body, csrfToken);
             clearUserBasket();
-            setBasket([]);
+            basketDispatch({
+                type: "ON_ORDER",
+                payload: []
+            });
             setBasketItems([]);
-            setIsOrdered(true);
             return data;
         } catch (e) {
+            alert(e);
+        }
+    }
+
+    const onSubmitDiscount = async (e) => {
+        e.preventDefault();
+        const { code } = Object.fromEntries(new FormData(e.target));
+        const body = {
+            code
+        }
+        try {
+            const data = await applyDiscount(body);
+            basketDispatch({
+                type: "ON_DISCOUNT",
+                payload: data
+            })
+        } catch (e) {
+            alert(e);
+        }
+    }
+
+    const onSubmitRemoveDiscount = async (e) => {
+        try {
+            const data = await removeDiscount();
+            basketDispatch({
+                type: "ON_REMOVE_DISCOUNT",
+            })
+        } catch(e){
             alert(e);
         }
     }
@@ -158,16 +192,42 @@ export const Cart = () => {
                             <h4>SUMMARY</h4>
                             <ul className={styles.productsList} role='list'>
                                 {basketItems.map(item =>
-                                    <li className={styles.product}>{item.product} -
+                                    <li key={item.id} className={styles.product}>{item.product} -
                                         <span>
                                             $ {((item.discounted_price ? item.discounted_price : item.product_price) * item.quantity).toFixed(2)}
                                         </span>
                                     </li>)
                                 }
-                                <li className={styles.product}>
-                                    Total - <span>${totalBasketCost.toFixed(2)}</span>
+                                <li key='totalBasketCost' className={`${styles.product} ${styles.total}`}>
+                                    <div className={styles.basketTotal}>
+                                        <p>Products total - <span>$ {totalBasketCost.toFixed(2)}</span></p>
+                                        {basket.discounted_price &&
+                                            <>
+                                                <p key='basketDiscountCode'>Discount {basket.discount.code} - <span> - {basket.discount.discount} %</span></p>
+                                                <p key='basketDiscount'>
+                                                    Total - <span>$ {basket.discounted_price.toFixed(2)}</span>
+                                                </p>
+                                            </>
+                                        }
+                                    </div>
                                 </li>
+
                             </ul>
+
+                            <div className={styles.discountCode}>
+                                <p>You have a discount code or voucher ?</p>
+                                {basket.discounted_price ?
+                                    <div className={styles.discountCodeCard}>
+                                        <span>{basket.discount.code}</span>
+                                        <button onClick={onSubmitRemoveDiscount}>X</button>
+                                    </div>
+                                    :
+                                    <form onSubmit={onSubmitDiscount}>
+                                        <input type="text" name='code' placeholder="Coupon code..." />
+                                        <button><i className="fa-solid fa-chevron-right"></i></button>
+                                    </form>
+                                }
+                            </div>
                         </div>
 
                         <div className={styles.checkoutWrapper}>

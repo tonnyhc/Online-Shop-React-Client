@@ -31,7 +31,12 @@ button{
   cursor: pointer;
 }
 
-/* SPINNER CSS */
+/* SKELETON PRODUCT CARD */
+.product-card__skeleton{
+  border: 1px solid #cecece;
+  border-radius: 3px;
+  padding: 12px;
+}
 
 /* MODAL CSS */
 

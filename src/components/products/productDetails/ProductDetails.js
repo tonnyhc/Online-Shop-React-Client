@@ -8,33 +8,41 @@ import * as productServices from '../../../services/productService'
 import { BannerSmall } from '../../banner/BannerSmall';
 import { getRatingStars } from '../helperFuncs/getRatingStars'
 
-import { addToCart } from '../addToCart';
 import { AuthDataContext } from '../../../contexts/AuthContext';
 
 
 import styles from './ProductDetails.module.css';
+import { addToBasket } from '../../../services/basketService';
+import { BasketContext } from '../../../contexts/BasketContext';
 export const ProductDetails = () => {
     const [product, setProduct] = useState({});
     const params = useParams()
-    console.log(params);
     const slug = params.productId
 
     const { csrfToken, userData } = useContext(AuthDataContext);
-
+    const { addItemToBasket } = useContext(BasketContext);
 
     useEffect(() => {
-        const fetchProduct = async () => {
+        (async () => {
             try {
                 const data = await productServices.getBySlug(slug, userData.token, csrfToken);
                 setProduct(data);
             } catch (e) {
                 alert(e.msg);
             }
+        })();
+    }, []);
+
+    const onAddToBasket = async (e) => {
+        e.preventDefault();
+        try {
+            const data = await addToBasket(slug, product);
+            addItemToBasket(data);
+            return data;
+        } catch(e){
+            alert(e);
         }
-
-        fetchProduct();
-
-    }, [])
+    }
 
     return (
         <>
@@ -65,9 +73,7 @@ export const ProductDetails = () => {
                             <button className={`${styles.btn} ${styles.btnFavourites}`}><i className="fa-solid fa-heart"></i> <span>Add to favourites</span></button>
                         </div>
 
-                        <form action="" method='post' onSubmit={(e) => {
-                            addToCart(e, product.slug, csrfToken);
-                        }}>
+                        <form action="" method='post' onSubmit={onAddToBasket}>
                             <input type="hidden" name='product' value={product.slug} />
                             <input type="hidden" name='quantity' value='1' />
                             <button className={styles.btn}>

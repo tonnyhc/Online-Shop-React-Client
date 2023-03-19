@@ -21,14 +21,16 @@ async function requester(method, url, body, csrfToken) {
 
     try {
         const response = await fetch(host + url, options);
+        const data = await response.json()
         if (response.ok == false) {
-            throw new Error();
+            const error = new Error(data.message || "An error ocurred");
+            error.status = response.status
+            throw error;
         }
         if (response.status == 204) {
             return;
         }
 
-        const data = await response.json();
         return data;
     } catch (error) {
         throw new Error(error.message)

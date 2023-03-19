@@ -33,6 +33,10 @@ export const Cart = () => {
         postCode: "",
     })
 
+    const [discountCodeErrors, setDiscountCodeErrors] = useState({
+        message: ""
+    })
+
     // TODO: Create validations and UX
     const [formData, setFormData] = useState({
         'fullName': '',
@@ -100,9 +104,14 @@ export const Cart = () => {
         try {
             const data = await applyDiscountRequest(body);
             applyDiscount(data);
+            setDiscountCodeErrors({
+                message: ""
+            })
             return data;
         } catch (e) {
-            alert(e);
+            setDiscountCodeErrors({
+                message: e.message
+            })
         }
     }
 
@@ -128,6 +137,82 @@ export const Cart = () => {
     }
 
     const inputValidations = (e) => {
+        const field = e.target;
+        const fieldName = field.name;
+        const fieldValue = field.value
+        if (!fieldValue || fieldValue == "") {
+            return setOrderFormErrors(oldErrors => ({
+                ...oldErrors,
+                [fieldName]: "This field is required"
+            })
+            );
+        };
+
+        if (fieldName == 'fullName') {
+            if (fieldValue.length < 3) {
+                return setOrderFormErrors(oldErrors => ({
+                    ...oldErrors,
+                    fullName: "Full name must be more than 3 characters long!"
+                }));
+            };
+            if (fieldValue.length > 50) {
+                return setOrderFormErrors(oldErrors => ({
+                    ...oldErrors,
+                    fullName: "Full name must be no more than 50 characters long!"
+                }));
+            };
+            const regex = new RegExp('^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.\'-]+$');
+            if (!regex.test(fieldValue)) {
+                return setOrderFormErrors((oldErrors) => ({
+                    ...oldErrors,
+                    [fieldName]: "Full name can only contain letters and spaces",
+                }));
+            }
+
+            return setOrderFormErrors(oldErrors => ({
+                ...oldErrors,
+                fullName: ""
+            }))
+        }
+        if (fieldName == 'phoneNumber') {
+            if (fieldValue.length > 10 || fieldValue.length < 10) {
+                setOrderFormErrors(oldErrors => ({
+                    ...oldErrors,
+                    phoneNumber: "Phone number must be exactly 10 characters"
+                }))
+            }
+
+            const regex = new RegExp("08[789]\\d{7}");
+            if (!regex.test(fieldValue)) {
+                return setOrderFormErrors(oldErrors => ({
+                    ...oldErrors,
+                    phoneNumber: "Please enter a valid phone number"
+                }))
+            }
+            return setOrderFormErrors(oldErrors => ({
+                ...oldErrors,
+                phoneNumber: ""
+            }))
+        }
+        if (fieldName == 'postCode') {
+            if (fieldValue.length < 4 || fieldValue.length > 4) {
+                return setOrderFormErrors(oldErrors => ({
+                    ...oldErrors,
+                    postCode: "Post code must be exactly 4 characters"
+                }));
+            };
+            const regex = new RegExp('^\\d{4}$');
+            if (!regex.test(fieldValue)) {
+                return setOrderFormErrors(oldErrors => ({
+                    ...oldErrors,
+                    postCode: "Please enter valid post code"
+                }));
+            }
+            return setOrderFormErrors(oldErrors => ({
+                ...oldErrors,
+                postCode: ""
+            }));
+        }
 
     }
 
@@ -212,10 +297,14 @@ export const Cart = () => {
                                         <button onClick={onSubmitRemoveDiscount}>X</button>
                                     </div>
                                     :
-                                    <form onSubmit={onSubmitDiscount}>
-                                        <input type="text" name='code' placeholder="Coupon code..." />
-                                        <button><i className="fa-solid fa-chevron-right"></i></button>
-                                    </form>
+                                    <>
+                                        {discountCodeErrors.message && <p className={styles.orderFormError}>{discountCodeErrors.message}</p>}
+                                        <form onSubmit={onSubmitDiscount}>
+                                            <input type="text" name='code' placeholder="Coupon code..." />
+                                            <button><i className="fa-solid fa-chevron-right"></i></button>
+                                        </form>
+                                    </>
+
                                 }
                             </div>
                         </div>
@@ -226,8 +315,11 @@ export const Cart = () => {
                             <form method='post' onSubmit={onSubmitOrder} className={styles.checkoutForm}>
 
                                 <div>
+                                    {orderFormErrors.fullName && <p className={styles.orderFormError}>{orderFormErrors.fullName}</p>}
                                     <label htmlFor="fullName">Full name :</label>
                                     <input type="text" name="fullName" id="fullName"
+                                        className={orderFormErrors.fullName && `${styles.orderFormInputError}`}
+                                        maxLength={50}
                                         onChange={formChangeHandler}
                                         value={formData['full_name']}
                                         onBlur={inputValidations}
@@ -237,8 +329,10 @@ export const Cart = () => {
 
 
                                 <div>
+                                    {orderFormErrors.phoneNumber && <p className={styles.orderFormError}>{orderFormErrors.phoneNumber}</p>}
                                     <label htmlFor="phoneNumber">Phone number :</label>
                                     <input type="text" name="phoneNumber" id="phoneNumber"
+                                        className={orderFormErrors.phoneNumber && `${styles.orderFormInputError}`}
                                         onChange={formChangeHandler}
                                         value={formData['phone_number']}
                                         onBlur={inputValidations}
@@ -247,8 +341,11 @@ export const Cart = () => {
                                 </div>
 
                                 <div>
+                                    {orderFormErrors.town && <p className={styles.orderFormError}>{orderFormErrors.town}</p>}
+
                                     <label htmlFor="town">Town/City :</label>
                                     <input type="text" name="town" id="town"
+                                        className={orderFormErrors.town && `${styles.orderFormInputError}`}
                                         onChange={formChangeHandler}
                                         value={formData['town']}
                                         onBlur={inputValidations}
@@ -257,8 +354,11 @@ export const Cart = () => {
                                 </div>
 
                                 <div>
+                                    {orderFormErrors.address && <p className={styles.orderFormError}>{orderFormErrors.address}</p>}
+
                                     <label htmlFor="address">Address :</label>
                                     <input type="text" name="address" id="address"
+                                        className={orderFormErrors.address && `${styles.orderFormInputError}`}
                                         onChange={formChangeHandler}
                                         value={formData['address']}
                                         onBlur={inputValidations}
@@ -267,8 +367,11 @@ export const Cart = () => {
                                 </div>
 
                                 <div>
+                                    {orderFormErrors.postCode && <p className={styles.orderFormError}>{orderFormErrors.postCode}</p>}
+
                                     <label htmlFor="postCode">Post code :</label>
                                     <input type="text" name="postCode" id="postCode"
+                                        className={orderFormErrors.postCode && `${styles.orderFormInputError}`}
                                         onChange={formChangeHandler}
                                         value={formData['post_code']}
                                         onBlur={inputValidations}

@@ -53,7 +53,6 @@ export const CartProduct = (props) => {
             }
             const data = await updateBasketItemQuantity(slug, body, csrfToken);
             const {discounted_price} = {...data};
-            // handleDiscountedPriceOnQuantityChange(discounted_price);
             setBasketItemsOnQuantityChange(slug, discounted_price, value);
             return data;
         } catch(e) {

@@ -7,11 +7,23 @@ const cartReducer = (state, action) => {
             return {};
 
         case "ADD_TO_BASKET":
+            const existingItemIndex = state.basketitem_set.findIndex(item => item.slug === action.payload.slug);
+            if (existingItemIndex !== -1){
+                const newBasketItemSet = [...state.basketitem_set];
+                newBasketItemSet[existingItemIndex] ={
+                    ...newBasketItemSet[existingItemIndex],
+                    quantity: newBasketItemSet[existingItemIndex].quantity += 1
+                };
+
+                return {
+                    ...state,
+                    basketitem_set: [...newBasketItemSet]
+                };
+            }
             return {
                 ...state,
                 basketitem_set: [...state.basketitem_set, action.payload]
-            };
-
+            }
 
         case "REMOVE_FROM_BASKET":
             return {

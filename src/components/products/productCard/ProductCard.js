@@ -26,8 +26,6 @@ export const ProductCard = ({
     const { addItemToBasket } = useContext(BasketContext);
 
 
-
-
     const addToCart = async (e) => {
         e.preventDefault();
         try {

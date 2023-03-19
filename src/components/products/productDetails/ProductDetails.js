@@ -35,9 +35,13 @@ export const ProductDetails = () => {
 
     const onAddToBasket = async (e) => {
         e.preventDefault();
+        const body = {
+            product: slug,
+            quantity: 1
+        }
         try {
-            const data = await addToBasket(slug, product);
-            addItemToBasket(data);
+            const data = await addToBasket(slug, body);
+            addItemToBasket(data.item);
             return data;
         } catch(e){
             alert(e);

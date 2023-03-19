@@ -8,9 +8,9 @@ const cartReducer = (state, action) => {
 
         case "ADD_TO_BASKET":
             const existingItemIndex = state.basketitem_set.findIndex(item => item.slug === action.payload.slug);
-            if (existingItemIndex !== -1){
+            if (existingItemIndex !== -1) {
                 const newBasketItemSet = [...state.basketitem_set];
-                newBasketItemSet[existingItemIndex] ={
+                newBasketItemSet[existingItemIndex] = {
                     ...newBasketItemSet[existingItemIndex],
                     quantity: newBasketItemSet[existingItemIndex].quantity += 1
                 };
@@ -53,9 +53,17 @@ const cartReducer = (state, action) => {
             const newSet = state.basketitem_set.map(item => {
                 if (item.slug == changedItemSlug) {
                     if (value === '+') {
-                        return { ...item, quantity: item.quantity + 1 }
+                        return {
+                            ...item,
+                            quantity: item.quantity + 1,
+                            subtotal: item.subtotal + (item.discounted_price ? item.discounted_price : item.product_price)
+                        }
                     } else if (value === "-" && item.quantity > 1) {
-                        return { ...item, quantity: item.quantity - 1 }
+                        return { 
+                            ...item, 
+                            quantity: item.quantity - 1,
+                            subtotal: item.subtotal - (item.discounted_price ? item.discounted_price : item.product_price) 
+                        }
 
                     }
                 }

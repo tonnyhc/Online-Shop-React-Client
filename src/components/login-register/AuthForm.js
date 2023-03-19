@@ -3,18 +3,23 @@ import { Link } from 'react-router-dom';
 
 import { AuthDataContext } from '../../contexts/AuthContext';
 import * as authServices from '../../services/authService';
-import {isValidEmail} from '../../utils/validators/emailValidator'
+import { isValidEmail } from '../../utils/validators/emailValidator'
 
 import styles from './AuthForm.module.css';
 import './AuthForm.css';
 
 export const AuthForm = () => {
-    const { userLogin } = useContext(AuthDataContext)
+    const { userLogin } = useContext(AuthDataContext);
+
+    const [authErrors, setAuthErrors] = useState({
+        login: "",
+        register: ""
+    })
 
     const [loginData, setLoginData] = useState({
         'username': '',
         'password': '',
-    })
+    });
 
     const [registerData, setRegisterData] = useState({
         'username': '',
@@ -24,14 +29,14 @@ export const AuthForm = () => {
         'repass': '',
         'birth_year': '',
         'check': 'off',
-    })
+    });
 
     const [fieldErrors, setFieldErrors] = useState({
         'username': null,
         'password': null,
         'repass': null,
         'email': null,
-    })
+    });
 
 
     const checkField = (e) => {
@@ -71,7 +76,7 @@ export const AuthForm = () => {
                     ...oldErrors,
                     repass: "Passwords do not match!"
                 }))
-            } else{
+            } else {
                 setFieldErrors(oldErrors => ({
                     ...oldErrors,
                     repass: ""
@@ -79,14 +84,14 @@ export const AuthForm = () => {
             }
         }
 
-        if (field.name == 'email'){
+        if (field.name == 'email') {
             const isValid = isValidEmail(registerData.email)
-            if (!isValid){
+            if (!isValid) {
                 setFieldErrors(oldErrors => ({
                     ...oldErrors,
                     email: "Email is not valid!"
                 }))
-            } else{
+            } else {
                 setFieldErrors(oldErrors => ({
                     ...oldErrors,
                     email: ""
@@ -120,48 +125,61 @@ export const AuthForm = () => {
 
     const onLogin = async (e) => {
         e.preventDefault();
-        if (fieldErrors.username || fieldErrors.password){
+        if (fieldErrors.username || fieldErrors.password) {
             return
         }
-        
-        for (let [value] of Object.values(loginData)){
-            if (!value || value == ''){
+
+        for (let [value] of Object.values(loginData)) {
+            if (!value || value == '') {
                 return
             }
         }
+        try {
+            const response = await authServices.login(loginData)
+            const authData = userLogin(response);
+            setLoginData({
+                'username': '',
+                'password': '',
+            });
+            closeAuthWindow();
+            return authData
+        } catch (e) {
+            setAuthErrors(oldErrors => ({
+                ...oldErrors,
+                login: "Incorrect username or password"
+            }))
+        }
 
-        const response = await authServices.login(loginData)
-        const authData = userLogin(response);
-        setLoginData({
-            'username': '',
-            'password': '',
-        })
-        return authData
     }
 
     const onRegister = async (e) => {
         e.preventDefault();
-        if  (fieldErrors.username || fieldErrors.password || fieldErrors.repass || fieldErrors.email) {
-            return 
+        if (fieldErrors.username || fieldErrors.password || fieldErrors.repass || fieldErrors.email) {
+            return
         }
 
-        for (let [value] of Object.values(registerData)){
-            if (!value || value == ''){
+        for (let [value] of Object.values(registerData)) {
+            if (!value || value == '') {
                 return
             }
         }
+        try{
 
-        const response = await authServices.register(registerData)
-        const authData = userLogin(response)
-        setRegisterData({
-            'username': '',
-            'email': '',
-            'password': '',
-            'repass': '',
-            'check': 'off',
-        })
-        return authData
-
+            const response = await authServices.register(registerData)
+            const authData = userLogin(response)
+            setRegisterData({
+                'username': '',
+                'email': '',
+                'password': '',
+                'repass': '',
+                'check': 'off',
+            })
+            closeAuthWindow();
+            return authData
+        } catch(e){
+            alert(e);
+        }
+            
 
     }
 
@@ -174,6 +192,7 @@ export const AuthForm = () => {
             <div className="form" id='login-form' style={{ display: 'block' }}>
                 <h3>Login Now</h3>
                 <form onSubmit={onLogin}>
+                    {authErrors.login && <p className={styles.formError}>{authErrors.login}</p>}
                     <div className="username">
                         {fieldErrors.username ? <span className={styles.formError}>{fieldErrors.username}</span> : null}
                         <label htmlFor="username">
@@ -209,7 +228,7 @@ export const AuthForm = () => {
                 <h3>Register Now</h3>
                 <form action="submit" onSubmit={onRegister} method='POST'>
                     <div className="username">
-                    {fieldErrors.username ? <span className={styles.formError}>{fieldErrors.username}</span> : null}
+                        {fieldErrors.username ? <span className={styles.formError}>{fieldErrors.username}</span> : null}
                         <label htmlFor="username">
                             Username
                         </label>
@@ -218,17 +237,17 @@ export const AuthForm = () => {
 
                     <div className='fullName'>
                         <label htmlFor="fullName">Full name:</label>
-                        <input type="text" 
-                        name='full_name'
-                        id='fullName'
-                        onBlur={checkField}
-                        onChange={onChangeRegister}
-                        value={registerData.full_name}
+                        <input type="text"
+                            name='full_name'
+                            id='fullName'
+                            onBlur={checkField}
+                            onChange={onChangeRegister}
+                            value={registerData.full_name}
                         />
                     </div>
 
                     <div className="email">
-                    {fieldErrors.email ? <span className={styles.formError}>{fieldErrors.email}</span> : null}
+                        {fieldErrors.email ? <span className={styles.formError}>{fieldErrors.email}</span> : null}
                         <label htmlFor="email">
                             Email
                         </label>
@@ -236,28 +255,28 @@ export const AuthForm = () => {
                     </div>
 
                     <div className="password">
-                    {fieldErrors.password ? <span className={styles.formError}>{fieldErrors.password}</span> : null}
+                        {fieldErrors.password ? <span className={styles.formError}>{fieldErrors.password}</span> : null}
                         <label htmlFor="password">Password</label>
                         <input type="password" name="password" id="password" onBlur={checkField} onChange={onChangeRegister} value={registerData.password} />
                     </div>
 
                     <div className="repassword">
-                    {fieldErrors.repass ? <span className={styles.formError}>{fieldErrors.repass}</span> : null}
+                        {fieldErrors.repass ? <span className={styles.formError}>{fieldErrors.repass}</span> : null}
                         <label htmlFor="repass">
                             Repeat Password
                         </label>
                         <input type="password" name="repass" id="repass" onBlur={checkField} onChange={onChangeRegister} value={registerData.repassword} />
                     </div>
 
-                    
+
                     <div className='birth_year'>
                         <label htmlFor="birth_year">Birth year:</label>
-                        <input type="date" 
-                        name='birth_year'
-                        id='birth_year'
-                        onBlur={checkField}
-                        onChange={onChangeRegister}
-                        value={registerData.birth_year}
+                        <input type="date"
+                            name='birth_year'
+                            id='birth_year'
+                            onBlur={checkField}
+                            onChange={onChangeRegister}
+                            value={registerData.birth_year}
                         />
                     </div>
 
@@ -300,13 +319,11 @@ function changeFormView(e) {
 }
 
 function closeAuthWindow(e) {
-    e.preventDefault();
     const authWindow = document.querySelector('.login-register-backdrop');
     authWindow.style.display = 'none';
 }
 
 export function openAuthWindow(e) {
-    e.preventDefault();
     const authWindow = document.querySelector('.login-register-backdrop');
     authWindow.style.display = 'block';
 }

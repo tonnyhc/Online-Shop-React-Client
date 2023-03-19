@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-import { addToCart } from '../addToCart';
+import { addToBasket } from "../../../services/basketService";
 
 import { AuthDataContext } from '../../../contexts/AuthContext';
 import { BasketContext } from '../../../contexts/BasketContext';
@@ -23,8 +23,28 @@ export const ProductCard = ({
 }) => {
 
     const { csrfToken } = useContext(AuthDataContext);
-    const {addItemToBasket} = useContext(BasketContext);
+    const { addItemToBasket } = useContext(BasketContext);
 
+
+
+
+    const addToCart = async (e) => {
+        e.preventDefault();
+        try {
+            const { product, quantity } = Object.fromEntries(new FormData(e.target));
+            const body = {
+                product,
+                "quantity": Number(quantity)
+            }
+            const data = await addToBasket(slug, body, csrfToken);
+            addItemToBasket(data.item);
+            alert("Product successfully added to cart");
+            return data;
+        } catch (e) {
+            alert(e);
+        }
+
+    }
 
     return (
         <article className={styles.product_card}>
@@ -56,8 +76,7 @@ export const ProductCard = ({
                 {getRatingStars(average_rating, onRate, slug)}
             </div>
             <div className={styles.add_to_cart}>
-                <form method='post' onSubmit={(e) => {
-                    addToCart(e, slug, csrfToken, addItemToBasket)}}>
+                <form method='post' onSubmit={addToCart}>
                     <input type="hidden" name='product' value={slug} />
                     <input type="hidden" name='quantity' value='1' />
                     <button><i className="fa-solid fa-cart-shopping" /></button>

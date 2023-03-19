@@ -9,7 +9,7 @@ export const CartProduct = (props) => {
     const { removeItemFromBasket } = useContext(BasketContext);
 
     const { image, quantity, product, discounted_price, product_price, subtotal, slug } = props.props.item;
-    const {setBasketItems, setBasketItemsOnQuantityChange, handleDiscountedPriceOnQuantityChange} = {...props.props};
+    const { setBasketItemsOnQuantityChange} = {...props.props};
     const index = props.props.index + 1;
 
     const onRemoveItem = async (e) => {
@@ -21,14 +21,7 @@ export const CartProduct = (props) => {
                 product
             }
             const data = await removeFromBasket(slug, body, csrfToken);
-            setBasketItems(oldItems => {
-                return oldItems.filter(item => item.slug !== product);
-            });
             removeItemFromBasket(product);
-            handleDiscountedPriceOnQuantityChange({
-                type: 'REMOVE_FROM_BASKET',
-                payload: data.discounted_price
-            })
             return data;
         } catch (e) {
             alert(e);
@@ -60,8 +53,8 @@ export const CartProduct = (props) => {
             }
             const data = await updateBasketItemQuantity(slug, body, csrfToken);
             const {discounted_price} = {...data};
-            handleDiscountedPriceOnQuantityChange(discounted_price);
-            setBasketItemsOnQuantityChange(slug, value);
+            // handleDiscountedPriceOnQuantityChange(discounted_price);
+            setBasketItemsOnQuantityChange(slug, discounted_price, value);
             return data;
         } catch(e) {
             alert(e);

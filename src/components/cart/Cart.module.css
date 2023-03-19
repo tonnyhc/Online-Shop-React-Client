@@ -252,3 +252,14 @@ table thead th{
     right: 10px;
     transform: translateY(-50%);
 }
+
+.orderFormError{
+    color: #ff4e00;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+}
+.orderFormInputError{
+    border-color: red;
+    box-shadow: 0px 0px 3px red;
+}

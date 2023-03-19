@@ -50,7 +50,7 @@ export const updateBasketItemQuantity = async (slug, body, csrfToken) => {
     }
 }
 
-export const applyDiscount = async(body) => {
+export const applyDiscountRequest = async(body) => {
     try{
         const data = await post(`${url}apply-discount/`, body);
         return data;
@@ -59,7 +59,7 @@ export const applyDiscount = async(body) => {
     }
 }
 
-export const removeDiscount = async () => {
+export const removeDiscountRequest = async () => {
     try{ 
         const data = await post(`${url}remove-discount/`);
         return data;

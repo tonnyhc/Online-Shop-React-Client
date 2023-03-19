@@ -8,10 +8,10 @@ import { BasketContext } from '../../contexts/BasketContext';
 export const Header = () => {
 
   const { userData } = useContext(AuthDataContext);
-  const { userBasket } = useContext(BasketContext);
+  const { basket } = useContext(BasketContext);
   let basket_length = 0;
-  if (userBasket.basketitem_set){
-    basket_length = userBasket.basketitem_set.length
+  if (basket.basketitem_set){
+    basket_length = basket.basketitem_set.length
   }
 
   const activeNavStyle = {

@@ -29,12 +29,8 @@ export const ProductCard = ({
     const addToCart = async (e) => {
         e.preventDefault();
         try {
-            const { product, quantity } = Object.fromEntries(new FormData(e.target));
-            const body = {
-                product,
-                "quantity": Number(quantity)
-            }
-            const data = await addToBasket(slug, body, csrfToken);
+            const { product } = Object.fromEntries(new FormData(e.target));
+            const data = await addToBasket(product, csrfToken);
             addItemToBasket(data.item);
             alert("Product successfully added to cart");
             return data;
@@ -65,10 +61,10 @@ export const ProductCard = ({
                 <p className={styles.model}>{model}</p>
                 <p className={styles.product__price}>{discounted_price ?
                     <>
-                        <span>${discounted_price}</span> <del>${product_price}</del>
+                        <span>${discounted_price.toFixed(2)}</span> <del>${product_price.toFixed(2)}</del>
                     </>
                     :
-                    <span>${product_price}</span>
+                    <span>${product_price.toFixed(2)}</span>
                 }
                 </p>
                 {getRatingStars(average_rating, onRate, slug)}
@@ -76,7 +72,6 @@ export const ProductCard = ({
             <div className={styles.add_to_cart}>
                 <form method='post' onSubmit={addToCart}>
                     <input type="hidden" name='product' value={slug} />
-                    <input type="hidden" name='quantity' value='1' />
                     <button><i className="fa-solid fa-cart-shopping" /></button>
                 </form>
             </div>

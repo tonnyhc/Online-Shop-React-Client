@@ -17,6 +17,7 @@ import { Products } from './components/products/Products';
 import { Profile } from './components/profile/Profile';
 import Orders from './components/orders/Orders';
 import OrderDetails from './components/orders/order-details/OrderDetails';
+import FavoriteProducts from './components/favorite-products/FavoriteProducts';
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
               <Route path='/' element={<Banner />} />
               <Route path='/profile' element={<Profile />} />
               <Route path='/profile/orders' element={<Orders />} />
+              <Route path='/profile/favorites' element={<FavoriteProducts />} />
               <Route path='/orders/order/:orderId' element={<OrderDetails />} />
               <Route path='logout' element={<Logout />} />
               <Route path='/products' element={<Products />} />

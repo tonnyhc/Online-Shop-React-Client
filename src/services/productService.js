@@ -1,4 +1,4 @@
-import {get, post} from './api';
+import {del, get, post} from './api';
 
 const url = '/products/';
 
@@ -20,6 +20,11 @@ export const getBySlug = async (slug) => {
     }
 }
 
+export const getFavorites = async () => {
+    const data = await get(url + 'favorites/');
+    return data;
+}
+
 export const rateProduct = async (slug, score) => {
     try {
         const body = {score};
@@ -28,4 +33,14 @@ export const rateProduct = async (slug, score) => {
     } catch(e) {
         throw new Error(e);
     }
+}
+
+export const addToFavorites = async (slug) => {
+    const data = await post(url + `favorites/${slug}/add/`);
+    return data
+}
+
+export const removeFromFavorites = async (slug) => {
+    const data = await del(url + `favorites/${slug}/remove/`);
+    return data;
 }

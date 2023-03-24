@@ -118,8 +118,8 @@ export const Profile = () => {
                                 <i className="fa-solid fa-heart"></i>
                             </div>
                             <div>
-                                <p>0 favorite products</p>
-                                <button className={styles.btn}>See your favorite products</button>
+                                <p>{profile.favorites_count} favorite products</p>
+                                <Link to='favorites' className={styles.btn}>See your favorite products</Link>
                             </div>
                         </div>
                     </div>

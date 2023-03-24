@@ -13,9 +13,9 @@ export const getBasket = async (username) => {
     }
 }
 
-export const addToBasket = async (slug, body, csrfToken) => {
+export const addToBasket = async (slug, csrfToken) => {
     try{
-        const data = await post(`${url}add-to-basket/${slug}/`, body, csrfToken);
+        const data = await post(`${url}add-to-basket/${slug}/`, csrfToken);
         return data;
     } catch (e) {
         throw new Error(e);

@@ -12,8 +12,8 @@ import { AuthDataContext } from '../../../contexts/AuthContext';
 
 
 import styles from './ProductDetails.module.css';
-import { addToBasket } from '../../../services/basketService';
 import { BasketContext } from '../../../contexts/BasketContext';
+import { addToBasket } from '../../../services/basketService';
 export const ProductDetails = () => {
     const [product, setProduct] = useState({});
     const params = useParams()
@@ -35,13 +35,20 @@ export const ProductDetails = () => {
 
     const onAddToBasket = async (e) => {
         e.preventDefault();
-        const body = {
-            product: slug,
-            quantity: 1
-        }
         try {
-            const data = await addToBasket(slug, body);
+            const data = await addToBasket(slug);
             addItemToBasket(data.item);
+            return data;
+        } catch (e) {
+            alert(e);
+        }
+    }
+
+    const onAddToFavorites = async (e) => {
+        e.preventDefault();
+        const {slug} = Object.fromEntries(new FormData(e.target));
+        try{
+            const data = await productServices.addToFavorites(slug);
             return data;
         } catch(e){
             alert(e);
@@ -74,12 +81,14 @@ export const ProductDetails = () => {
                         </div>
 
                         <div className={styles.favourites}>
-                            <button className={`${styles.btn} ${styles.btnFavourites}`}><i className="fa-solid fa-heart"></i> <span>Add to favourites</span></button>
+                            <form method="post" onSubmit={onAddToFavorites}>
+                                <input type="hidden" name='slug' value={product.slug} />
+                                <button className={`${styles.btn} ${styles.btnFavourites}`}><i className="fa-solid fa-heart"></i> <span>Add to favourites</span></button>
+                            </form>
                         </div>
 
                         <form action="" method='post' onSubmit={onAddToBasket}>
                             <input type="hidden" name='product' value={product.slug} />
-                            <input type="hidden" name='quantity' value='1' />
                             <button className={styles.btn}>
                                 <i className="fa-solid fa-cart-shopping"></i>
                                 <span>Add to cart</span>

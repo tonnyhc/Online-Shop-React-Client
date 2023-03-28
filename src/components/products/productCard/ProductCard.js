@@ -19,7 +19,7 @@ export const ProductCard = ({
     model,
     slug,
     average_rating,
-    image,
+    images,
 }) => {
 
     const { csrfToken } = useContext(AuthDataContext);
@@ -50,7 +50,7 @@ export const ProductCard = ({
                 </div>
                 <img
                     className={styles.product_img}
-                    src={image}
+                    src={images[0].image_url}
                     alt="Product Image"
                 />
             </div>

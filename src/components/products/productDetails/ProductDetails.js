@@ -16,6 +16,9 @@ import { BasketContext } from '../../../contexts/BasketContext';
 import { addToBasket } from '../../../services/basketService';
 export const ProductDetails = () => {
     const [product, setProduct] = useState({});
+    const [titleImage, setTitleImage] = useState({
+        'image_url': ''
+    });
     const params = useParams()
     const slug = params.productId
 
@@ -27,6 +30,7 @@ export const ProductDetails = () => {
             try {
                 const data = await productServices.getBySlug(slug, userData.token, csrfToken);
                 setProduct(data);
+                setTitleImage(data.images[0]);
             } catch (e) {
                 alert(e.msg);
             }
@@ -46,13 +50,19 @@ export const ProductDetails = () => {
 
     const onAddToFavorites = async (e) => {
         e.preventDefault();
-        const {slug} = Object.fromEntries(new FormData(e.target));
-        try{
+        const { slug } = Object.fromEntries(new FormData(e.target));
+        try {
             const data = await productServices.addToFavorites(slug);
             return data;
-        } catch(e){
+        } catch (e) {
             alert(e);
         }
+    };
+
+    const onChangeTitleImage = (e) => {
+        return setTitleImage({
+            'image_url': e.target.src
+        });
     }
 
     return (
@@ -61,7 +71,9 @@ export const ProductDetails = () => {
             <div className={styles.container}>
                 <div className={styles.mainSection}>
                     <div className={styles.images}>
-                        <img src={product.image || <Skeleton />} alt="" />
+                        <img src={
+                            titleImage ? titleImage.image_url : "" || <Skeleton />
+                        } alt="Product image" />
                     </div>
                     <div>
                         <h3 className={styles.brand}>{product.brand || <Skeleton />}</h3>
@@ -119,6 +131,15 @@ export const ProductDetails = () => {
                             </li>
                         </ul>
                     </div>
+                </div>
+
+                <div className={styles.imagesSection}>
+                    {product.images?.map(image => {
+                        return (
+                            <div onClick={onChangeTitleImage} className={styles.imageSmall}>
+                                <img src={image.image_url} alt="" />
+                            </div>
+                        )})}
                 </div>
 
                 <div className={styles.bottomSect}>

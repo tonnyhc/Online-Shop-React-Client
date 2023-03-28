@@ -20,6 +20,23 @@
   box-shadow: 1px 3px 2px black;
 }
 
+.imagesSection {
+  display: flex;
+  gap: 15px;
+}
+.imageSmall {
+  max-width: 120px;
+  max-height: 120px;
+}
+.imageSmall:hover {
+  filter: brightness(0.8);
+}
+.imageSmall img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 .brand,
 .model,
 .price,

@@ -67,7 +67,7 @@ export const CartProduct = (props) => {
 
             <td>
                 <div className={styles.productImage}>
-                    <img src={image} alt="Product Image" />
+                    <img src={image?.image_url} alt="Product Image" />
                 </div>
             </td>
 

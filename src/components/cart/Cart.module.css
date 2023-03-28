@@ -259,6 +259,6 @@ table thead th{
     font-weight: 600;
 }
 .orderFormInputError{
-    border-color: red;
+    border: 1px solid red ; 
     box-shadow: 0px 0px 3px red;
 }

@@ -18,6 +18,7 @@ import { Profile } from './components/profile/Profile';
 import Orders from './components/orders/Orders';
 import OrderDetails from './components/orders/order-details/OrderDetails';
 import FavoriteProducts from './components/favorite-products/FavoriteProducts';
+import AdminPanel from './components/admin/AdminPanel';
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
           <Header />
           <main>
             <Routes>
+              <Route path='/admin/*' element={<AdminPanel />} />
               <Route path='/' element={<Banner />} />
               <Route path='/profile' element={<Profile />} />
               <Route path='/profile/orders' element={<Orders />} />
@@ -39,11 +41,11 @@ function App() {
               <Route path='logout' element={<Logout />} />
               <Route path='/products' element={<Products />} />
               <Route path='products/:productId' element={<ProductDetails />} />
-              <Route path='about' element={<About />} />
-              <Route path='features' element={<h1>Features page</h1>} />
-              <Route path='contacts' element={<Contacts />} />
-              <Route path='cart' element={<Cart />} />
-              <Route path='*' element={<h2>404 Not found!</h2>} />
+              <Route path='/about' element={<About />} />
+              <Route path='/features' element={<h1>Features page</h1>} />
+              <Route path='/contacts' element={<Contacts />} />
+              <Route path='/cart' element={<Cart />} />
+              <Route path='/*' element={<h2>404 Not found!</h2>} />
             </Routes>
           </main>
         </BasketProvider>

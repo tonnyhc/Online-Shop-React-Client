@@ -12,7 +12,7 @@ const ItemCard = ({
             <div className={styles.itemDetails}>
                 <div className={styles.imgWrapper}>
                     <Link to={`/products/${product.slug}`}>
-                        <img src={product.image} alt="Product Image" />
+                        <img src={product.image.image_url} alt="Product Image" />
                     </Link>
                 </div>
                 <span>{product.brand} {product.model}</span>

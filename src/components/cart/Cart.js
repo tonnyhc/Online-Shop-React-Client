@@ -226,10 +226,10 @@ export const Cart = () => {
             <section className={styles.cartSection}>
                 <h3 className={styles.title}>Cart</h3>
 
-                <h4 className={styles.itemsCount}>Your shopping cart contains: <span>{basket.basketitem_set.length} Products</span></h4>
+                <h4 className={styles.itemsCount}>Your shopping cart contains: <span>{basket.basketitem_set?.length} Products</span></h4>
 
                 {
-                    basket.basketitem_set.length > 0 ?
+                    basket.basketitem_set?.length > 0 ?
 
                         <table className={styles.table}>
 
@@ -259,7 +259,7 @@ export const Cart = () => {
             </section>
 
             {
-                basket.basketitem_set.length > 0 ?
+                basket.basketitem_set?.length > 0 ?
 
                     <section className={styles.checkoutSection}>
 

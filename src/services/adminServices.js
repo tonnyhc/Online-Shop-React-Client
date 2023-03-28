@@ -19,3 +19,12 @@ export const addProduct = async (body) => {
         throw e
     }
 }
+
+export const fetchProductList = async () => {
+    try{
+        const data = await get(url + '/products/');
+        return data;
+    } catch(e){
+        throw e;
+    }
+}

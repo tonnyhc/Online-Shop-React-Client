@@ -4,7 +4,9 @@ const cartReducer = (state, action) => {
             return action.payload;
 
         case "CLEAR_BASKET":
-            return {};
+            return {
+                basketitem_set: []
+            };
 
         case "ADD_TO_BASKET":
             const existingItemIndex = state.basketitem_set.findIndex(item => item.slug === action.payload.slug);

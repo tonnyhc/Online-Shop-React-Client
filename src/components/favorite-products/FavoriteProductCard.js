@@ -35,7 +35,7 @@ const FavoriteProductCard = ({
         <li className={styles.productCard}>
                             <div className={styles.productInfo}>
                                 <div className={styles.imageWrapper}>
-                                    <img src={product.image} alt="" />
+                                    <img src={product.images[0].image_url} alt="" />
                                 </div>
                                 <div className={styles.productInfoWrapper}>
                                     <p className={styles.productTitle}>

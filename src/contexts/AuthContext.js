@@ -22,8 +22,17 @@ export const AuthProvider = ({
       setUserData({})
     }
 
+    const contextValues = {
+      userData, 
+      userLogin, 
+      userLogout, 
+      csrfToken, 
+      isStaff: userData.isStaff,
+      isAuth: userData.token? true : false
+    }
+
     return (
-        <AuthDataContext.Provider value={{ userData, userLogin, userLogout, csrfToken }}>
+        <AuthDataContext.Provider value={contextValues}>
             {children}
         </AuthDataContext.Provider>
     );

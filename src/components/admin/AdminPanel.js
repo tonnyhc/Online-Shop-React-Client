@@ -2,6 +2,7 @@
 import { useCallback, useState } from 'react';
 import { NavLink, Route, Routes } from 'react-router-dom';
 import AddProduct from './add-product/AddProduct';
+import ProductsList from './products-list/ProductsList';
 
 import styles from './AdminPanel.module.css';
 import Dashboard from './dashboard/Dashboard';
@@ -87,7 +88,7 @@ const AdminPanel = () => {
                 <Routes>
                     <Route path='/' element={<Dashboard />} />
                     <Route path='/add-product' element={<AddProduct />} />
-                    <Route path='/products-list' element={<h1>Products list</h1>} />
+                    <Route path='/products-list' element={<ProductsList /> } />
                     <Route path='/categories' element={<h1>Categories</h1>} />
                 </Routes>
 

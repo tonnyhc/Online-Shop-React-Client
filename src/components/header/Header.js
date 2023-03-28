@@ -7,7 +7,7 @@ import { BasketContext } from '../../contexts/BasketContext';
 
 export const Header = () => {
 
-  const { userData } = useContext(AuthDataContext);
+  const { userData, isAuth, isStaff } = useContext(AuthDataContext);
   const { basket } = useContext(BasketContext);
   let basket_length = 0;
   if (basket.basketitem_set){
@@ -100,7 +100,7 @@ export const Header = () => {
         <span className="profile-link">
           {/* IF USER NOT LOGGED IN OPEN AUTH FORM OTHERWISE OPEN PROFILE WINDOW */}
           {
-            userData.token
+            isAuth
               ?
               <NavLink to="/profile"><i className="fa-solid fa-user"></i></NavLink>
               :
@@ -115,7 +115,8 @@ export const Header = () => {
             {basket_length > 0 && <span>{basket_length}</span>}
           </NavLink>
         </span>
-        {userData.token && <p><Link to='/logout'>Logout</Link></p>}
+        {isAuth && <p><Link to='/logout'>Logout</Link></p>}
+        {isStaff && isAuth && <p><Link to='/admin'>Admin</Link></p>}
 
       </section>
     </header>

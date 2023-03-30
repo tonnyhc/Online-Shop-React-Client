@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useRef } from 'react';
 import { addProduct } from '../../../services/adminServices';
+import { AuthDataContext } from '../../../contexts/AuthContext'
 import styles from './AddProduct.module.css'
 
 const AddProduct = () => {
+    const {userData} = useContext(AuthDataContext);
+
     const [selectedImages, setSelectedImages] = useState([]);
     const [formData, setFormData] = useState({
         'brand': "",
@@ -78,6 +81,7 @@ const AddProduct = () => {
     }
 
     const onSubmit = async (e) => {
+        
         e.preventDefault();
         const body = new FormData();
         const { brand, model, price, productId, category, gender, images } = { ...formData };
@@ -102,13 +106,8 @@ const AddProduct = () => {
         }
 
         try {
-            const data = await fetch('http://localhost:8000/api/admin-panel/add-product/', {
-                method: 'POST',
-                headers: {
-                    Authorization: "Token 519ad8d797aaa8bae758ccbacf59eedd0f971e84",
-                },
-                body
-            });
+            const data = await addProduct(body, userData.token);
+
             setFormData({
                 'brand': "",
                 'model': "",
@@ -119,7 +118,7 @@ const AddProduct = () => {
                 'images': [],
                 'publish': "",
             })
-            const a = 5
+            const a = 5;
         } catch (e) {
             alert(e);
         }
@@ -131,7 +130,7 @@ const AddProduct = () => {
             <h2>Add Product</h2>
 
             <div className={styles.addForm}>
-                <form enctype='multipart/form-data' onSubmit={onSubmit} method='post'>
+                <form encType='multipart/form-data' onSubmit={onSubmit} method='post'>
                     {formErrors.global && <p className={styles.error}>{formErrors.global}</p>}
                     <div className={styles.addFormItem}>
                         <label htmlFor="brand">Product brand</label>

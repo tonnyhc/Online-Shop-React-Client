@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 
 import { getAccountDetails } from "../../services/accountServices";
-import { BannerSmall } from "../banner/BannerSmall";
+import  BannerSmall  from "../banner/BannerSmall";
 import EditProfileModal from "./EditProfileModal";
 
 import styles from './Profile.module.css';

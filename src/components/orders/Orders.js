@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { getOrders } from '../../services/orderServices';
 
 import OrderCard from './order-card/OrderCard';
-import { BannerSmall } from "../banner/BannerSmall"
+import BannerSmall from "../banner/BannerSmall"
 
 import styles from './Orders.module.css';
 

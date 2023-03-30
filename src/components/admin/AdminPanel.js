@@ -1,11 +1,12 @@
 
 import { useCallback, useState } from 'react';
 import { NavLink, Route, Routes } from 'react-router-dom';
+
+import Dashboard from './dashboard/Dashboard';
 import AddProduct from './add-product/AddProduct';
 import ProductsList from './products-list/ProductsList';
 
 import styles from './AdminPanel.module.css';
-import Dashboard from './dashboard/Dashboard';
 
 const AdminPanel = () => {
     const [productsDropDown, setProductsDropDown] = useState(false);

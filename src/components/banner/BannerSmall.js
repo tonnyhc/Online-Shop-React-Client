@@ -1,7 +1,7 @@
-import styles from './BannerSmall.module.css'
 import { Link } from 'react-router-dom';
-
-export const BannerSmall = (
+import { memo } from 'react';
+import styles from './BannerSmall.module.css'
+const BannerSmall = (
     {currPage}
 ) => {
     return (
@@ -23,4 +23,6 @@ export const BannerSmall = (
             </div>
         </div>
     );
-}
+};
+
+export default memo(BannerSmall);

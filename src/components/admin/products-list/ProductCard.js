@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 
+import {deleteProduct} from '../../../services/adminServices';
+
 import styles from './ProductCard.module.css'
 
 const ProductCard = ({
@@ -9,7 +11,26 @@ const ProductCard = ({
     discounted_price,
     slug,
     images,
+
+    updateProductsOnDelete
 }) => {
+
+    const onDelete = async (e) => {
+        e.preventDefault();
+        const confirmation = window.confirm('Are you sure you want to delete this product? Changes cannot be revert!');
+        if (!confirmation){
+            return;
+        }
+        try{
+            const data = await deleteProduct(slug);
+            updateProductsOnDelete(slug);
+            return data;
+        } catch(e){
+            alert(e);
+        }
+    }
+
+
     return (
         <article className={styles.productCard}>
             <div className={styles.imgWrapper}>
@@ -20,11 +41,11 @@ const ProductCard = ({
                 <p className={styles.productPrice}>$ {product_price.toFixed(2)}</p>
                 <div className={styles.cardBtns}>
                     <Link className={styles.editBtn} to={`/admin/product/${slug}/edit`}>
-                        <i class="fa-solid fa-pencil"></i>
+                        <i className="fa-solid fa-pencil"></i>
                         Edit
                     </Link>
-                    <button className={styles.deleteBtn}>
-                        <i class="fa-solid fa-trash"></i>
+                    <button onClick={onDelete} className={styles.deleteBtn}>
+                        <i className="fa-solid fa-trash"></i>
                         Delete
                     </button>
                 </div>

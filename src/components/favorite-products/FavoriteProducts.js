@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { getFavorites } from '../../services/productService';
-import { BannerSmall } from '../banner/BannerSmall';
+import BannerSmall from '../banner/BannerSmall';
 import FavoriteProductCard from './FavoriteProductCard';
 
 

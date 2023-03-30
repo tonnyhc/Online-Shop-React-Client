@@ -7,7 +7,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 
 import { RangeSlider } from './RangeSlider';
 
-import { BannerSmall } from '../banner/BannerSmall';
+import BannerSmall  from '../banner/BannerSmall';
 import { ProductCard } from './productCard/ProductCard';
 
 import * as productServices from '../../services/productService'

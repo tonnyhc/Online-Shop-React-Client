@@ -1,4 +1,4 @@
-import { BannerSmall } from "../banner/BannerSmall";
+import BannerSmall from "../banner/BannerSmall";
 
 export const Contacts = () => {
     return (

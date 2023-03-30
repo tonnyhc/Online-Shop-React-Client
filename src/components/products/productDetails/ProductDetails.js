@@ -5,7 +5,7 @@ import Skeleton from 'react-loading-skeleton';
 
 import * as productServices from '../../../services/productService'
 
-import { BannerSmall } from '../../banner/BannerSmall';
+import  BannerSmall  from '../../banner/BannerSmall';
 import { getRatingStars } from '../helperFuncs/getRatingStars'
 
 import { AuthDataContext } from '../../../contexts/AuthContext';

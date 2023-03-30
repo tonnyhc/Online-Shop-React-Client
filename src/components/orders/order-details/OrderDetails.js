@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 import { getOrderDetails, editOrder, deleteOrder } from '../../../services/orderServices';
 
-import { BannerSmall } from '../../banner/BannerSmall';
+import BannerSmall from '../../banner/BannerSmall';
 import EditOrderModal from '../modals/EditOrderModal';
 import DeleteOrderModal from '../modals/DeleteOrderModal';
 import ItemCard from './ItemCard';

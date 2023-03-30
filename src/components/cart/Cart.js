@@ -4,7 +4,7 @@ import { applyDiscountRequest, removeDiscountRequest, createOrder } from "../../
 import { AuthDataContext } from '../../contexts/AuthContext';
 import { BasketContext } from "../../contexts/BasketContext";
 
-import { BannerSmall } from "../banner/BannerSmall";
+import BannerSmall from "../banner/BannerSmall";
 
 
 import styles from './Cart.module.css';

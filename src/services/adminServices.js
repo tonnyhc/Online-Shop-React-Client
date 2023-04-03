@@ -1,4 +1,4 @@
-import { get, del } from "./api"
+import { get, del, post } from "./api"
 
 const url = '/admin-panel'
 
@@ -37,10 +37,56 @@ export const fetchProductList = async () => {
 
 
 export const deleteProduct = async (slug) => {
-    try{
+    try {
         const data = await del(url + `/products/${slug}/delete/`);
         return data;
-    } catch(e){
+    } catch (e) {
+        throw e
+    }
+};
+
+export const updateProduct = async (slug, body, token) => {
+    try {
+        const data = await fetch(`http://localhost:8000/api` + url + `/products/${slug}/edit/`, {
+            method: "PUT",
+            headers: {
+                Authorization: `Token ${token}`,
+            },
+            body
+        });
+        return data;
+    }
+    catch (e) {
+        throw e
+    }
+};
+
+
+export const getCategories = async () => {
+    try {
+        const data = await get(url + '/products/categories');
+        return data;
+    } catch (e) {
+        throw e
+    }
+};
+
+
+export const addCategory = async (body) => {
+    try {
+        const data = await post(url + '/products/categories/create/', body);
+        return data
+    } catch (e) {
+        throw e
+    }
+};
+
+
+export const deleteCategory = async (id) => {
+    try {
+        const data = await del(url + `/products/categories/delete/${id}`);
+        return data;
+    } catch (e) {
         throw e
     }
 }

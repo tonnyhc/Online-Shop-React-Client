@@ -1,19 +1,45 @@
 
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { NavLink, Route, Routes } from 'react-router-dom';
 
 import Dashboard from './dashboard/Dashboard';
 import AddProduct from './add-product/AddProduct';
 import ProductsList from './products-list/ProductsList';
+import CategoriesList from './categories/CategoriesList';
 
 import styles from './AdminPanel.module.css';
+import { getCategories } from '../../services/adminServices';
 
 const AdminPanel = () => {
+    const [categories, setCategories] = useState([]);
     const [productsDropDown, setProductsDropDown] = useState(false);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const data = await getCategories();
+                setCategories(data);
+            } catch (e) {
+                alert(e);
+            }
+        })();
+    }, []);
+
+    const addCategoryToState = (newCat) => {
+        setCategories(oldCats => ([
+            ...oldCats,
+            newCat
+        ]));
+    };
+
+    const removeCategoryFromState = (catId) => {
+        setCategories(oldCats => oldCats.filter(cat => cat.id != catId));
+    };
 
     const handleProductsDropdownClick = useCallback(() => {
         setProductsDropDown(oldValue => !oldValue);
-    })
+    });
+
 
     return (
         <section className={styles.adminSection}>
@@ -88,9 +114,13 @@ const AdminPanel = () => {
             <div className={styles.mainSection}>
                 <Routes>
                     <Route path='/' element={<Dashboard />} />
-                    <Route path='/add-product' element={<AddProduct />} />
-                    <Route path='/products-list' element={<ProductsList /> } />
-                    <Route path='/categories' element={<h1>Categories</h1>} />
+                    <Route path='/add-product' element={<AddProduct categories={categories} />} />
+                    <Route path='/products-list' element={<ProductsList categories={categories} />} />
+                    <Route path='/categories' element={<CategoriesList
+                        removeCategoryFromState={removeCategoryFromState}
+                        addCategoryToState={addCategoryToState}
+                        categories={categories}
+                    />} />
                 </Routes>
 
             </div>

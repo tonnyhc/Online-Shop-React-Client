@@ -54,3 +54,9 @@
 .deleteBtn{
     color: #F6373D;
 }
+
+.hiddenProduct{
+    font-weight: 500;
+    color: #F6373D;
+    float: right;
+}

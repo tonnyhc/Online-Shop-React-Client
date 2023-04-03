@@ -4,7 +4,9 @@ import { addProduct } from '../../../services/adminServices';
 import { AuthDataContext } from '../../../contexts/AuthContext'
 import styles from './AddProduct.module.css'
 
-const AddProduct = () => {
+const AddProduct = ({
+    categories,
+}) => {
     const {userData} = useContext(AuthDataContext);
 
     const [selectedImages, setSelectedImages] = useState([]);
@@ -190,9 +192,9 @@ const AddProduct = () => {
                             <label htmlFor="category">Category</label>
                             <select onChange={handleFormDataChange} name="category" id="category">
                                 <option value="">------</option>
-                                <option value="Sunglasses">Sunglasses</option>
-                                <option value="Lens">Lens</option>
-                                <option value="Prism">Prism</option>
+                                {categories.map(category => 
+                                    <option key={category.category} value={category.category}>{category.category}</option>
+                                )}
                             </select>
                         </div>
 

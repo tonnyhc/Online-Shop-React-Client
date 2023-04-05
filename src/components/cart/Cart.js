@@ -61,12 +61,6 @@ export const Cart = () => {
             town,
             address,
             'post_code': postCode,
-            'items': basket.basketitem_set.map(item => {
-                return {
-                    'slug': item.slug,
-                    'quantity': item.quantity
-                };
-            })
         }
 
         if (!fullName || !phoneNumber || !town || !address || !postCode) {

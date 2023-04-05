@@ -9,6 +9,8 @@ import CategoriesList from './categories/CategoriesList';
 
 import styles from './AdminPanel.module.css';
 import { getCategories } from '../../services/adminServices';
+import OrdersList from './orders/orders-list/OrdersList';
+import OrderDetails from './orders/order-details/OrderDetails';
 
 const AdminPanel = () => {
     const [categories, setCategories] = useState([]);
@@ -121,6 +123,8 @@ const AdminPanel = () => {
                         addCategoryToState={addCategoryToState}
                         categories={categories}
                     />} />
+                    <Route path='/orders' element={<OrdersList />} />
+                    <Route path='/order/:id' element={<OrderDetails />} />
                 </Routes>
 
             </div>

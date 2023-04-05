@@ -7,6 +7,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+ul{
+  padding: 0;
+}
 
 #root {
   max-width: 1920px;

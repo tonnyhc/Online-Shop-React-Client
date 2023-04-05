@@ -191,13 +191,15 @@ const OrderDetails = () => {
                             </div>
                             {/* TODO: Fix this when have vouchers */}
                             <div className={styles.orderItemsProductPrice}>
-                                <span className={styles.priceType}>Vaucher discount : </span>
-                                <span className={styles.priceRight}>16.99 $</span>
+                                <span className={styles.priceType}>Discount : </span>
+                                <span className={styles.priceRight}>{
+                                order.discount?.code ? order.discount.code : '----'  }
+                                </span>
                             </div>
 
                             <div className={styles.orderItemsTotalPrice}>
                                 <span className={styles.priceType}>Total price to pay :</span>
-                                <span className={styles.priceRight}>16.99 $</span>
+                                <span className={styles.priceRight}>{order.discounted_price ? order.discounted_price?.toFixed(2) : order.total_price?.toFixed(2)} $</span>
                             </div>
                         </div>
                     </div>

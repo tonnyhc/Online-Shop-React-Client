@@ -1,0 +1,150 @@
+.detailsSection {
+  margin-top: 25px;
+  padding: 18px 30px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 0px 3px #cecece;
+}
+
+.orderHeader {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dateWrapper {
+  display: flex;
+  gap: 10px;
+}
+
+.dateWrapper .orderDate {
+  font-size: 20px;
+  font-weight: 500;
+}
+.dateWrapper .orderId {
+  color: #cdcfcb;
+  font-weight: 500;
+}
+
+.dateWrapper > span {
+  font-size: 30px;
+}
+
+.orderActions select,
+.orderActions button {
+  border: 1px solid #cecece;
+  border-radius: 4px;
+  box-shadow: 1px 1px 1px #cecece;
+  padding: 6px;
+  font-size: 15px;
+  color: #525565;
+}
+.orderActions button{
+    padding: 6px 22px;
+    margin-left: 10px;
+}
+
+.orderBody{
+    margin-top: 25px;
+    border-top: 1px solid #cecece;
+    padding: 25px 0 0 0 ;
+
+}
+
+.customerInfo{
+    display: flex;
+    justify-content: space-between;
+}
+
+.card{
+    display: flex;
+    gap: 15px;
+    font-size: 17px;
+}
+
+.card .iconWrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #E8F0FB;
+    color: #3864D8;
+    font-size: 20px;
+}
+
+.cardInfo .title{
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.lightSpan{
+    color: #898989;
+}
+
+.productsTable{
+    max-width: 60%;
+    margin-top: 20px;
+    border: 1px solid #cecece;
+}
+.tableHeader{
+    display: flex;
+    padding: 9px 24px;
+    justify-content: space-between;
+    border-bottom: 1px solid #cecece;
+    color: #525565;
+    font-weight: 500;
+}
+.headerWrapper{
+    display: flex;
+}
+
+.productsList{
+    margin: 0;
+}
+
+.product{
+    width: 300px;
+}
+.quantity{
+    width: 100px;
+}
+.unitPrice{
+    width: 100px;
+}
+.total{
+    width: 100px;
+    text-align: right;
+}
+
+.productItem{
+    padding: 8px 24px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #cecece;
+}
+
+.productItem .productTitle{
+    display: flex;
+    gap: 10px;
+}
+.productTitle .itemImg{
+    max-width: 100px;
+    max-height: 100px;
+}
+.productTitle a {
+    color: #3864D8;
+    font-weight: 500;
+    font-size: 18px;
+} 
+
+.orderTotal{
+    padding: 12px 16px;
+    text-align: right;
+}
+.subtotalSpan{
+    display: inline-block;
+    width: 150px;
+    font-size: 19px;
+    font-weight: 600;
+}

@@ -90,3 +90,23 @@ export const deleteCategory = async (id) => {
         throw e
     }
 }
+
+
+export const fetchOrders = async () => {
+    try{
+        const data = await get(url + '/orders/');
+        return data;
+    } catch(e){
+        throw e;
+    }
+}
+
+
+export const getOrderDetails = async (orderId) => {
+    try{
+        const data = await get(url + `/orders/${orderId}/`);
+        return data;
+    } catch(e){
+        throw e
+    }
+}

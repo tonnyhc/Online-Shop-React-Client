@@ -89,7 +89,7 @@ export const deleteCategory = async (id) => {
     } catch (e) {
         throw e
     }
-}
+};
 
 
 export const fetchOrders = async () => {
@@ -99,12 +99,43 @@ export const fetchOrders = async () => {
     } catch(e){
         throw e;
     }
-}
+};
 
 
 export const getOrderDetails = async (orderId) => {
     try{
         const data = await get(url + `/orders/${orderId}/`);
+        return data;
+    } catch(e){
+        throw e
+    }
+};
+
+
+export const changeOrderStatus = async (orderId, body) => {
+    try{
+
+        const data = await post(url + `/orders/${orderId}/change-status/`, body);
+        return data;
+    } catch (e) {
+        alert(e);
+    }
+};
+
+
+export const fetchDiscountCode = async () => {
+    try{
+        const data = await get(url + '/discounts/');
+        return data;
+    } catch (e) {
+        throw e
+    }
+}
+
+
+export const createDiscountCode = async (body) => {
+    try{
+        const data = await post(url + '/discounts/create-discount/', body);
         return data;
     } catch(e){
         throw e

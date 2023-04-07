@@ -11,6 +11,7 @@ import styles from './AdminPanel.module.css';
 import { getCategories } from '../../services/adminServices';
 import OrdersList from './orders/orders-list/OrdersList';
 import OrderDetails from './orders/order-details/OrderDetails';
+import DiscountCodeList from './discount-codes/DiscountCodeList';
 
 const AdminPanel = () => {
     const [categories, setCategories] = useState([]);
@@ -102,6 +103,15 @@ const AdminPanel = () => {
 
                         <li className={styles.navItem}>
                             <span className={styles.navItemTitle}>
+                                <NavLink to='/admin/discounts'>
+                                    <i className="fa-solid fa-tag"></i>
+                                    <span>Discount codes</span>
+                                </NavLink>
+                            </span>
+                        </li>
+
+                        <li className={styles.navItem}>
+                            <span className={styles.navItemTitle}>
                                 <NavLink to='/admin/customers'>
                                     <i className="fa-solid fa-users"></i>
                                     <span>Customers</span>
@@ -123,6 +133,7 @@ const AdminPanel = () => {
                         addCategoryToState={addCategoryToState}
                         categories={categories}
                     />} />
+                    <Route path='/discounts' element={<DiscountCodeList />} />
                     <Route path='/orders' element={<OrdersList />} />
                     <Route path='/order/:id' element={<OrderDetails />} />
                 </Routes>

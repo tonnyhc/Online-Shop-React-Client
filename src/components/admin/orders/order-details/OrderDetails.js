@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { getOrderDetails } from '../../../../services/adminServices';
+import { changeOrderStatus, getOrderDetails } from '../../../../services/adminServices';
 
 import styles from './OrderDetails.module.css';
 
@@ -21,6 +21,23 @@ const OrderDetails = () => {
     }, []);
 
 
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        const status = Object.fromEntries(new FormData(e.target));
+        if (status.status == ''){
+            return;
+        }
+        try{
+            const data = await changeOrderStatus(id, status);
+            setOrder(oldOrder => ({
+                ...oldOrder,
+                order_status: status.status
+            }));
+
+        } catch(e){
+            alert(e);
+        }
+    }
 
     return (
         <>
@@ -40,7 +57,7 @@ const OrderDetails = () => {
                     </div>
 
                     <div className={styles.orderActions}>
-                        <form action="">
+                        <form onSubmit={onSubmit} action="">
                             <select name="status" id="status">
                                 <option value="">Change status</option>
                                 <option value="InPreparation">In preparation</option>

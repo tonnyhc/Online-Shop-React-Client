@@ -7,5 +7,9 @@ React App project for exam
 
 # Functionality
 1. Header 
-Guest Header
-image.png
+- Guest Header
+![Guest Header](https://github.com/tonnyhc/Online-Shop-React-Client/blob/main/screenshots/Header-Guest.png)
+-User Header
+![User Header](https://github.com/tonnyhc/Online-Shop-React-Client/blob/main/screenshots/Header-LogedIn.png)
+- Admin Header
+![Admin Header](https://github.com/tonnyhc/Online-Shop-React-Client/blob/main/screenshots/Header-Admin.png)

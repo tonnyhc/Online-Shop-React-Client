@@ -130,7 +130,7 @@ export const fetchDiscountCode = async () => {
     } catch (e) {
         throw e
     }
-}
+};
 
 
 export const createDiscountCode = async (body) => {
@@ -138,6 +138,15 @@ export const createDiscountCode = async (body) => {
         const data = await post(url + '/discounts/create-discount/', body);
         return data;
     } catch(e){
+        throw e
+    }
+};
+
+export const fetchCustomers = async () => {
+    try {
+        const data = await get(url + '/customers/');
+        return data;
+    } catch (e){
         throw e
     }
 }

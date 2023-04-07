@@ -12,6 +12,7 @@ import { getCategories } from '../../services/adminServices';
 import OrdersList from './orders/orders-list/OrdersList';
 import OrderDetails from './orders/order-details/OrderDetails';
 import DiscountCodeList from './discount-codes/DiscountCodeList';
+import CustomersList from './customers/CustomersList';
 
 const AdminPanel = () => {
     const [categories, setCategories] = useState([]);
@@ -136,6 +137,7 @@ const AdminPanel = () => {
                     <Route path='/discounts' element={<DiscountCodeList />} />
                     <Route path='/orders' element={<OrdersList />} />
                     <Route path='/order/:id' element={<OrderDetails />} />
+                    <Route path='/customers/' element={<CustomersList />} />
                 </Routes>
 
             </div>

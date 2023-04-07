@@ -4,7 +4,7 @@ React App project for exam
     App uses this [Rest Api](https://github.com/tonnyhc/Online-Shop-RESTApi)
     To start development mode - npm i and then npm start in the root folder
 
-#Functionality
+# Functionality
 1. Header 
 Guest Header
 image.png

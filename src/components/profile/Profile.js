@@ -85,7 +85,7 @@ export const Profile = () => {
                         </button>
                     </div>
 
-                    <div className={`${styles.address} ${styles.section}`}>
+                    {/* <div className={`${styles.address} ${styles.section}`}>
                         <div className={styles.addressInfo}>
                             <h3 className={styles.heading}>My addresses</h3>
                             <span>9 saved addresses</span>
@@ -96,7 +96,7 @@ export const Profile = () => {
                             Manage your shipping addresses
                         </button>
 
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className={`${styles.section}`}>

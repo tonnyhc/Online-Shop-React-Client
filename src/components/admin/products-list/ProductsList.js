@@ -36,6 +36,17 @@ const ProductsList = ({
         ))
     };
 
+    const updateProductsOnEdit = (editedProduct) => {
+        setSortedProducts(prevProducts =>
+            prevProducts.map(product => {
+                if (product.id === editedProduct.id) {
+                    return editedProduct;
+                }
+                return product;
+            })
+        );
+    }
+
     const filterProducts = (e) => {
         const field = e.target;
         if (field.value != '') {
@@ -112,6 +123,7 @@ const ProductsList = ({
                                 key={product.id}
                                 {...product}
                                 updateProductsOnDelete={updateProductsOnDelete}
+                                updateProductsOnEdit={updateProductsOnEdit}
                             />
                         )}
                     </div>

@@ -17,7 +17,8 @@ const ProductCard = ({
     category,
     is_published,
 
-    updateProductsOnDelete
+    updateProductsOnDelete,
+    updateProductsOnEdit
 }) => {
     const [editModal, setEditModal] = useState(false);
 
@@ -58,6 +59,8 @@ const ProductCard = ({
                 images={images}
                 closeModal={closeModal}
                 is_published={is_published}
+
+                updateProductsOnEdit={updateProductsOnEdit}
             />}
 
             <article className={styles.productCard}>

@@ -17,7 +17,9 @@ const EditProductModal = ({
     discounted_price,
     images,
     category,
-    is_published
+    is_published,
+
+    updateProductsOnEdit
 
 }) => {
     const { userData } = useContext(AuthDataContext);
@@ -89,6 +91,9 @@ const EditProductModal = ({
         const body = createFormData(formData);
         try {
             const data = await updateProduct(slug, body, token);
+            const result = await data.json()
+            closeModal();
+            updateProductsOnEdit(result);
             console.log(data);
         } catch(e){
             alert(e);

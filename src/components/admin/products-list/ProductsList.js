@@ -45,6 +45,7 @@ const ProductsList = ({
                 return product;
             })
         );
+        
     }
 
     const filterProducts = (e) => {

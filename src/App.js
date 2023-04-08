@@ -20,6 +20,9 @@ import OrderDetails from './components/orders/order-details/OrderDetails';
 import FavoriteProducts from './components/favorite-products/FavoriteProducts';
 import AdminPanel from './components/admin/AdminPanel';
 
+import { RouteGuard } from './components/common/RouteGuard';
+import { IsStaff } from './components/common/IsStaff';
+
 
 function App() {
 
@@ -32,19 +35,25 @@ function App() {
           <Header />
           <main>
             <Routes>
-              <Route path='/admin/*' element={<AdminPanel />} />
+              <Route element={<IsStaff />}>
+                <Route path='/admin/*' element={<AdminPanel />} />
+              </Route>
               <Route path='/' element={<Banner />} />
-              <Route path='/profile' element={<Profile />} />
-              <Route path='/profile/orders' element={<Orders />} />
-              <Route path='/profile/favorites' element={<FavoriteProducts />} />
-              <Route path='/orders/order/:orderId' element={<OrderDetails />} />
-              <Route path='logout' element={<Logout />} />
+
+              <Route element={<RouteGuard />}>
+                <Route path='/profile' element={<Profile />} />
+                <Route path='/profile/orders' element={<Orders />} />
+                <Route path='/profile/favorites' element={<FavoriteProducts />} />
+                <Route path='/orders/order/:orderId' element={<OrderDetails />} />
+                <Route path='logout' element={<Logout />} />
+                <Route path='/cart' element={<Cart />} />
+              </Route>
+
               <Route path='/products' element={<Products />} />
               <Route path='products/:productId' element={<ProductDetails />} />
               <Route path='/about' element={<About />} />
               <Route path='/features' element={<h1>Features page</h1>} />
               <Route path='/contacts' element={<Contacts />} />
-              <Route path='/cart' element={<Cart />} />
               <Route path='/*' element={<h2>404 Not found!</h2>} />
             </Routes>
           </main>
